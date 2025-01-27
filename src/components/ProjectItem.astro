@@ -1,0 +1,24 @@
+---
+import { Project } from "../scripts/models/project";
+import ProjectImage from "./ProjectImage.astro";
+
+interface Props {
+	project: Project | any | null;
+	large: boolean;
+	cssClass: string;
+}
+
+const { project, large, cssClass } = Astro.props;
+---
+
+<div class={"center " + cssClass}>
+	{
+		project.url ? (
+			<a href={project.url} title={project.title} target="_blank" rel="noopener">
+				<ProjectImage project={project} large={large} winner={project.isWinner} />
+			</a>
+		) : (
+			<ProjectImage project={project} large={large} winner={project.isWinner} />
+		)
+	}
+</div>

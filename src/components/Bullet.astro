@@ -1,0 +1,45 @@
+---
+interface Props {
+	title: string;
+	svgPath: string;
+	strokeWidth: string;
+	stroke: string;
+	fill: string;
+	cssclass: string;
+	url: string;
+}
+
+const { title, svgPath, strokeWidth, stroke, fill, cssclass, url } = Astro.props;
+---
+
+<div class="flex-grow flex-col w-full text-md text-vampire dark:text-iron lg:text-md mb-2 ">
+	<div class="flex flex-row items-start justify-start w-full md:justify-center lg:justify-start gap-2">
+		<div>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class={"flex" + (cssclass || "h-8 w-8 fill-current text-ocean dark:text-ocean")}
+				stroke-width={strokeWidth}
+				stroke={stroke}
+				fill={fill || "currentColor"}
+				role="img"
+				viewBox="0 0 24 24"
+				height="24"
+				width="24"
+			>
+				<title>{title}</title>
+				<path d={svgPath}></path>
+			</svg>
+		</div>
+		<div class="flex-shrink justify-start">
+			{
+				url ? (
+					<a href={url} target="_blank" rel="noopener" class="text-vampire dark:text-iron" aria-label={title}>
+						<span class="align-middle">{title}</span>
+					</a>
+				) : (
+					<span class="align-middle">{title}</span>
+				)
+			}
+		</div>
+	</div>
+</div>

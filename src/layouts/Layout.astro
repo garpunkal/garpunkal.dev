@@ -1,0 +1,110 @@
+---
+import '../styles/app.css';
+
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+
+import Profile from "../components/Profile.astro";
+import Footer from "../components/Footer.astro";
+import { GetHome } from "../scripts/squidex.ts";
+
+const home = await GetHome();
+
+interface Props {
+	title: string;
+	header: boolean;
+}
+
+const { title, header } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>{title}</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta
+			name="keywords"
+			content="garpunkal, gareth wright, garpunkal.dev, backend developer, umbraco, umbraco certified developer, vendr, c# developer, senior, dotnet, dotnet core, developer, umbraco certified expert, andover, hampshire, csharp, tailwind, front end, astro, typescript"
+		/>
+		<meta
+			name="description"
+			content="Gareth Wright - Senior C# .net MVC Developer - Umbraco Certified Expert - Front End Developer"
+		/>
+		<meta name="author" content="Gareth Wright" />
+		<meta name="copyright" content="Gareth Wright" />
+		<meta name="theme-color" content="#077DA0" />
+
+		<meta property="og:title" content="Gareth Wright - garpunkal.dev" />
+		<meta property="og:site_name" content="garpunkal.dev" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://garpunkal.dev" />
+		<meta
+			property="og:image"
+			content="https://en.gravatar.com/userimage/11972664/1f60f14a9a99398eefe01621f2c73860.png?size=400"
+		/>
+		<meta property="og:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="https://garpunkal.dev" />
+		<meta name="twitter:title" content="Gareth Wright - garpunkal.dev" />
+		<meta name="twitter:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+		<meta name="twitter:creator" content="@garpunkal" />
+		<meta
+			name="twitter:image:src"
+			content="https://en.gravatar.com/userimage/11972664/1f60f14a9a99398eefe01621f2c73860.png?size=400"
+		/>
+
+		<link rel="publisher" href="https://garpunkal.dev" />
+		<link rel="canonical" href="https://garpunkal.dev" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3TJPB46KB1"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+			gtag("config", "G-3TJPB46KB1");
+		</script>
+		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
+	</head>
+	<body class=" bg-ocean dark:bg-black">
+		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
+		<header>
+			{
+				(header) ? ( <Profile home={home}  /> ) : ""
+			}
+		</header>
+		<main id="main">
+			<slot />
+		</main>
+		<footer>
+			<Footer home={home} />
+		</footer>
+		<script>
+			//import Observer from 'tailwindcss-intersect';
+			//Observer.start();
+
+			if (localStorage.theme === "dark") document?.querySelector("html")?.classList.add("dark");
+
+			let element = document.getElementById("switchTheme");
+			if (element != null) {
+				element.addEventListener("click", function () {
+					let htmlClasses = document?.querySelector("html")?.classList;
+					if (localStorage.theme === "dark") {
+						htmlClasses?.remove("dark");
+						localStorage.theme = "light";
+					} else {
+						htmlClasses?.add("dark");
+						localStorage.theme = "dark";
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

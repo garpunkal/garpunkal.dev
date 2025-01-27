@@ -1,0 +1,24 @@
+---
+import { Picture } from "astro:assets";
+import type { Image } from "../scripts/models/image";
+
+interface Props {
+	image: Image | any | null;
+}
+
+const { image } = Astro.props;
+---
+<button id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
+	<div class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto">
+		<Picture
+			src={image.url}
+			formats={["webp"]}
+			widths={[192, 461, 690]}
+			alt={image.alt}
+			class="object-cover w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
+			width="690"
+			height="690"
+			loading="eager"
+		/>
+	</div> 
+</button>

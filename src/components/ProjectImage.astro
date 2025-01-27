@@ -1,0 +1,55 @@
+---
+import { Picture } from "astro:assets";
+import { Project } from "../scripts/models/project";
+interface Props {
+	project: Project | any | null;
+	large: boolean;
+	winner: boolean;
+}
+
+const { project, large, winner } = Astro.props;
+---
+
+<figure class="relative w-full h-full" role="none">
+	{
+		project.position === "left top" ? (
+			<Picture
+				src={project.image.url}
+				formats={["webp"]}
+				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
+				alt={"screenshot of " + project.image.alt}
+				class="block object-left-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
+				loading="lazy"
+				title={project.title}
+				width={large ? 930 : 223}
+				height={large ? 496 : 164}
+			/>
+		) : (
+			<Picture
+				src={project.image.url}
+				formats={["webp"]}
+				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
+				alt={"screenshot of " + project.image.alt}
+				class="block object-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
+				loading="lazy"
+				title={project.title}
+				width={large ? 930 : 223}
+				height={large ? 496 : 164}
+			/>
+		)
+	}
+
+	{
+		winner ? (
+			<figcaption class="absolute px-2 py-1 text-black left-0 bottom-0 md:px-4 md:py-2 bg-tulip dark:bg-mirage rounded-bl-lg rounded-tr-lg text-sm hover:text-black dark:text-cool">
+				<span class="font-bold hidden lg:block">{project.winnerLabel}</span>
+				<span>{project.title}</span>
+				<span class="hidden lg:block">{project.winnerDescription}</span>
+			</figcaption>
+		) : (
+			<figcaption class="absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm ">
+				{project.title}
+			</figcaption>
+		)
+	}
+</figure>

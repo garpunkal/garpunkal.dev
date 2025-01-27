@@ -1,0 +1,38 @@
+---
+interface Props {
+	href: string;
+	title: string;
+	svgPath?: string;
+	strokeWidth?: string;
+	stroke?: string;
+	fill?: string;
+	cssclass?: string;
+	rel?: string;
+	viewBox?: string
+}
+
+const { href, title, svgPath, strokeWidth, stroke, fill, cssclass, rel, viewBox } = Astro.props;
+---
+<a
+	class="inline-flex justify-center link w-14 h-14 md:w-10 md:h-10"
+	href={href}
+	target="_blank"
+	rel={"noopener " + (rel || "")}
+	aria-label={title}
+	>
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		class={cssclass ||
+			"h-10 w-10 fill-current text-vampire hover:text-ocean dark:text-ocean dark:hover:text-white hover:animate-pulse"}
+		stroke-width={strokeWidth}
+		stroke={stroke}
+		fill={fill || "currentColor"}
+		role="img"
+		viewBox={viewBox || "0 0 30 30"}
+		width="30"
+		height="30"
+	>
+		<title>{title}</title>
+		<path d={svgPath}></path>
+	</svg>
+</a>

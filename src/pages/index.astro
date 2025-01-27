@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Projects from "../components/Projects.astro";
+import Articles from "../components/Articles.astro";
+import Experiences from "../components/Experiences.astro";
+
+import { GetExperiences, GetProjects, GetHome } from "../scripts/squidex.ts";
+import { GetArticles } from "../scripts/devto.ts";
+
+const experiences = await GetExperiences();
+const projects = await GetProjects();
+const home = await GetHome();
+const articles = await GetArticles();
+---
+
+<Layout title="Gareth Wright - garpunkal.dev" header={true}>
+	<Projects home={home} projects={projects} />
+	<Articles home={home} articles={articles} />
+	<Experiences home={home} experiences={experiences} />
+</Layout>
+
+<script>
+	document.querySelectorAll('a[href^="#projects"]').forEach((anchor) => {
+		anchor.addEventListener("click", function (this: HTMLAnchorElement, e) {
+			e.preventDefault();
+			const href = (this as HTMLAnchorElement).getAttribute("href");
+			if (href) {
+				const target = document.querySelector(href);
+				if (target) {
+					target.scrollIntoView({
+						behavior: "smooth",
+					});
+				}
+			}
+		});
+	});
+
+	document.querySelectorAll('a[href^="#top"]').forEach((anchor) => {
+		anchor.addEventListener("click", function (e) {
+			e.preventDefault();
+			window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+		});
+	});
+</script>

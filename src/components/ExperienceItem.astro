@@ -1,0 +1,82 @@
+---
+import { Picture } from "astro:assets";
+import { Experience } from "../scripts/models/experience";
+import { GetMonthYear, GetMonths } from "../scripts/utils.ts";
+interface Props {
+	experience: Experience | any | null;
+}
+
+const { experience } = Astro.props;
+
+if (experience.to == null) {
+	experience.to = new Date();
+}
+---
+
+<div
+	class="flex flex-row flex-wrap w-full py-4 px-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
+	style={"background-color:" + experience.logo.background + ";background-size:auto;"}
+>
+	<div class="w-full h-100pixel flex justify-center">
+		{
+			experience.url ? (
+				<a
+					href={experience.url}
+					target="_blank"
+					rel="noopener"
+					title={experience.title}
+					aria-label={experience.title}
+				>
+					<Picture
+						src={experience.logo.url}
+						formats={["webp"]}
+						widths={[100]}
+						alt={experience.logo.alt}
+						class="flex object-contain rounded-lg lg:rounded-l-lg w-[100px] h-[100px]"
+						loading="lazy"
+						width="100"
+						height="100"
+						style={"backgroundColor:" + experience.logo.background}
+					/>
+				</a>
+			) : (
+				<Picture
+					src={experience.logo.url}
+					formats={["webp"]}
+					widths={[100]}
+					alt={experience.logo.alt}
+					class="flex object-contain rounded-lg lg:rounded-l-lg w-[100px] h-[100px]"
+					loading="lazy"
+					width="100"
+					height="100"
+					style={"backgroundColor:" + experience.logo.background}
+				/>
+			)
+		}
+	</div>
+
+	<div class="w-full mt-2 text-center">
+		<h3 class="text-lg font-bold" style={"color:" + experience.logo.foreground}>
+			{experience.job}
+		</h3>
+		<h4 class="mb-1 text-sm" style={"color:" + experience.logo.foreground}>
+			{experience.title}
+		</h4>
+	</div>
+
+	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
+		<div class="uppercase">
+			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{GetMonthYear(experience.to)}</span>}
+			 -
+			{GetMonthYear(experience.from)}
+		</div>
+
+		{
+			!experience.isCurrent && GetMonths(experience.from, experience.to) != "0 months" ? (
+				<div class="text-xs">{GetMonths(experience.from, experience.to)}</div>
+			) : (
+				<div />
+			)
+		}
+	</div>
+</div>

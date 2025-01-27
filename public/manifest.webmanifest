@@ -1,0 +1,30 @@
+{
+  "name": "garpunkal.dev",
+  "short_name": "garpunkal.dev",
+  "description": "garpunkal.dev",
+  "dir": "auto",
+  "lang": "en-GB",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "orientation": "any",
+  "start_url": "/?homescreen=1",
+  "background_color": "#077da0",
+  "theme_color": "#077da0",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

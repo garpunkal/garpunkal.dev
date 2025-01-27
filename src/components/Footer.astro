@@ -1,0 +1,65 @@
+---
+import UpArrow from "./UpArrow.astro";
+import { Home } from "../scripts/models/home";
+import SvgLink from "./SvgLink.astro";
+import type { Link } from "../scripts/models/link";
+
+interface Props {
+	home: Home | any | null;
+}
+
+const { home } = Astro.props;
+---
+
+<div class="text-cool bg-ocean dark:text-iron dark:bg-black w-full lg:mt-10">
+	<div class="flex flex-wrap items-center flex-row">
+		<UpArrow />
+
+		{
+			home.githubSource ? (
+				<div class="flex flex-wrap justify-center w-full">
+					<a
+						href={home.githubSource.url}
+						title={home.githubSource.title}
+						target="_blank"
+						rel="noopener"
+						class="inline-flex items-center font-bold text-white hover:text-mirage dark:text-pale "
+					>
+						<svg
+							class="h-4 pr-2 text-white fill-current hover:text-mirage dark:text-pale "
+							role="img"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+							width="24px"
+							height="100%"
+						>
+							<title>{home.githubSource.title}</title>
+							<path d={home.githubSource.svgPath} />
+						</svg>
+						{home.githubSource.title}
+					</a>
+				</div>
+			) : (
+				<div />
+			)
+		}
+
+		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center wrapped-links gap-2 lg:gap-8">
+			{
+				home.footerLinks.map((social: Link) => (
+					<div class="flex flex-wrap w-10">
+						<SvgLink
+							href={social.url}
+							title={social.title}
+							svgPath={social.svgPath}
+							rel={social.rel}
+							viewBox={social.viewBox}
+							cssclass={social.cssClass + ' text-white hover:text-mirage dark:text-pale'}
+						/>
+					</div>
+				))
+			}
+			
+		</div>
+	</div>
+</div>
