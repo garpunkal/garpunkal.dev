@@ -17,5 +17,3 @@ SQUIDEX_KEY=YYYYYYYYY
 ## License 
 [MIT License](LICENSE.md)
     
-## Support
-Contact me on X: https://x.com/garpunkal
