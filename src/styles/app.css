@@ -84,11 +84,3 @@
     @apply left-[50%] translate-x-[-50%] opacity-100;
   }
 }
-
-@utility pre-fade-in {
-  @apply opacity-0;
-}
-
-@utility fade-in {
-  @apply opacity-100 transition duration-1000;
-}
