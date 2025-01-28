@@ -2514,10 +2514,20 @@ preferred-pm@^4.0.0:
     find-yarn-workspace-root2 "1.2.16"
     which-pm "^3.0.0"
 
+prettier-plugin-tailwindcss@^0.6.11:
+  version "0.6.11"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.11.tgz#cfacd60c4f81997353ee913e589037f796df0f5f"
+  integrity sha512-YxaYSIvZPAqhrrEpRtonnrXdghZg1irNg4qrjboCXrpybLWVs55cW2N3juhspVJiO0JBvYJT8SYsJpc8OQSnsA==
+
 prettier@2.8.7:
   version "2.8.7"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.7.tgz#bb79fc8729308549d28fe3a98fce73d2c0656450"
   integrity sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==
+
+prettier@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.4.2.tgz#a5ce1fb522a588bf2b78ca44c6e6fe5aa5a2b13f"
+  integrity sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==
 
 prismjs@^1.29.0:
   version "1.29.0"
@@ -2899,16 +2909,6 @@ strip-bom@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/strip-bom/-/strip-bom-3.0.0.tgz#2334c18e9c759f7bdd56fdef7e9ae3d588e68ed3"
   integrity sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==
-
-tailwindcss-animated@^1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/tailwindcss-animated/-/tailwindcss-animated-1.1.2.tgz#cc8aabe5b371abdf20a195809785b3dbf34adcd5"
-  integrity sha512-SI4owS5ojserhgEYIZA/uFVdNjU2GMB2P3sjtjmFA52VxoUi+Hht6oR5+RdT+CxrX9cNNYEa+vbTWHvN9zbj3w==
-
-tailwindcss-intersect@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/tailwindcss-intersect/-/tailwindcss-intersect-1.0.5.tgz#82f4433ae342e0895ecfe9df8c132da2834f4630"
-  integrity sha512-2Ac6TEKg/sJ3RXi0DKR80ZCwk+NHtkoKyWVQN6wDe4xD5rwn1lZsKKxdq2sMFOUAOFoMjCLA7ADUyQPLRtHzQg==
 
 tailwindcss@4.0.0, tailwindcss@^4.0.0:
   version "4.0.0"

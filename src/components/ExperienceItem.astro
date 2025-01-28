@@ -1,7 +1,7 @@
 ---
 import { Picture } from "astro:assets";
 import { Experience } from "../scripts/models/experience";
-import { GetMonthYear, GetMonths } from "../scripts/utils.ts";
+import { getMonthYear, getMonths } from "../scripts/utils.ts";
 interface Props {
 	experience: Experience | any | null;
 }
@@ -66,14 +66,14 @@ if (experience.to == null) {
 
 	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
 		<div class="uppercase">
-			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{GetMonthYear(experience.to)}</span>}
+			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{getMonthYear(experience.to)}</span>}
 			 -
-			{GetMonthYear(experience.from)}
+			{getMonthYear(experience.from)}
 		</div>
 
 		{
-			!experience.isCurrent && GetMonths(experience.from, experience.to) != "0 months" ? (
-				<div class="text-xs">{GetMonths(experience.from, experience.to)}</div>
+			!experience.isCurrent && getMonths(experience.from, experience.to) != "0 months" ? (
+				<div class="text-xs">{getMonths(experience.from, experience.to)}</div>
 			) : (
 				<div />
 			)

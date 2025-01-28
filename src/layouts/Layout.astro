@@ -5,9 +5,9 @@ import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 
 import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
-import { GetHome } from "../scripts/squidex.ts";
+import { getHome } from "../scripts/squidex.ts";
 
-const home = await GetHome();
+const home = await getHome();
 
 interface Props {
 	title: string;
@@ -27,7 +27,7 @@ const { title, header } = Astro.props;
 		<meta name="format-detection" content="telephone=no" />
 		<meta
 			name="keywords"
-			content="garpunkal, gareth wright, garpunkal.dev, backend developer, umbraco, umbraco certified developer, vendr, c# developer, senior, dotnet, dotnet core, developer, umbraco certified expert, andover, hampshire, csharp, tailwind, front end, astro, typescript"
+			content="garpunkal, gareth wright, garpunkal.dev, backend developer, umbraco, umbraco certified developer, c# developer, senior, dotnet, dotnet core, developer, umbraco certified expert, andover, hampshire, csharp, tailwind, front end, astro, typescript"
 		/>
 		<meta
 			name="description"
@@ -61,8 +61,7 @@ const { title, header } = Astro.props;
 		<link rel="canonical" href="https://garpunkal.dev" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3TJPB46KB1"></script>
+		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-3TJPB46KB1"></script>
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -87,15 +86,13 @@ const { title, header } = Astro.props;
 			<Footer home={home} />
 		</footer>
 		<script>
-			//import Observer from 'tailwindcss-intersect';
-			//Observer.start();
 
 			if (localStorage.theme === "dark") document?.querySelector("html")?.classList.add("dark");
 
-			let element = document.getElementById("switchTheme");
-			if (element != null) {
-				element.addEventListener("click", function () {
-					let htmlClasses = document?.querySelector("html")?.classList;
+			const element = document.getElementById("switchTheme");
+			if (element) {
+				element.addEventListener("click", () => {
+					const htmlClasses = document.querySelector("html")?.classList;
 					if (localStorage.theme === "dark") {
 						htmlClasses?.remove("dark");
 						localStorage.theme = "light";

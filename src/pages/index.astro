@@ -4,13 +4,13 @@ import Projects from "../components/Projects.astro";
 import Articles from "../components/Articles.astro";
 import Experiences from "../components/Experiences.astro";
 
-import { GetExperiences, GetProjects, GetHome } from "../scripts/squidex.ts";
-import { GetArticles } from "../scripts/devto.ts";
+import { getExperiences, getProjects, getHome } from "../scripts/squidex.ts";
+import { getArticles } from "../scripts/devto.ts";
 
-const experiences = await GetExperiences();
-const projects = await GetProjects();
-const home = await GetHome();
-const articles = await GetArticles();
+const experiences = await getExperiences();
+const projects = await getProjects();
+const home = await getHome();
+const articles = await getArticles();
 ---
 
 <Layout title="Gareth Wright - garpunkal.dev" header={true}>

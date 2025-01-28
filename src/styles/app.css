@@ -3,94 +3,92 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	--font-sans: "Poppins", sans-serif;
+  --font-sans: "Poppins", sans-serif;
 
-	--color-*: initial;
-	--color-white: white;
-	--color-black: black;
-	--color-ocean: #077da0;
-	--color-mirage: #111827;
-	--color-tulip: #e3b440;
-	--color-iron: #d1d5db;
-	--color-cool: #9ca3af;
-	--color-mercury: #e5e7eb;
-	--color-pale: #a1a1a1;
-	--color-vampire: #4b5563;
-	--color-elephant: #1f3245;
+  --color-*: initial;
+  --color-white: white;
+  --color-black: black;
+  --color-ocean: #077da0;
+  --color-mirage: #111827;
+  --color-tulip: #e3b440;
+  --color-iron: #d1d5db;
+  --color-cool: #9ca3af;
+  --color-mercury: #e5e7eb;
+  --color-pale: #a1a1a1;
+  --color-vampire: #4b5563;
+  --color-elephant: #1f3245;
 
-	--breakpoint-sm: 375px;
-	--breakpoint-md: 768px;
-	--breakpoint-lg: 1024px;
-	--breakpoint-xl: 1280px;
-	--breakpoint-2xl: 1280px;
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1280px;
 }
 
 @layer base {
-	*,
-	::after,
-	::before,
-	::backdrop,
-	::file-selector-button {
-		border-color: var(--color-gray-200, currentColor);
-	}
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  :root {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-ocean dark:bg-black;
+  }
+  h1 {
+    @apply text-ocean dark:text-iron;
+  }
+  h2 {
+    @apply text-mirage dark:text-pale;
+  }
+  h3 {
+    @apply text-vampire dark:text-pale;
+  }
+  a {
+    @apply text-cool dark:text-ocean hover:text-ocean;
+  }
 }
 
 @utility brightness-75 {
-	filter: brightness(0.75);
-}
-@utility brightness-100 {
-	filter: brightness(1);
-}
-@utility container {
-	@apply mx-auto pt-[3.5rem] pb-[3.5rem] px-[1rem];
+  filter: brightness(0.75);
 }
 
+@utility brightness-100 {
+  filter: brightness(1);
+}
+
+@utility container {
+  @apply mx-auto px-[1rem] pt-[3.5rem] pb-[3.5rem];
+}
 
 @utility wrapped-links {
-	
-	@apply flex flex-row flex-wrap md:flex-nowrap;
-  
-	> a {
-	  @apply text-center flex-1 box-border basis-1/4;
-	}
-	> a {
-	  @apply md:basis-1/3;
-	}
-  }
+  @apply flex flex-row flex-wrap md:flex-nowrap;
 
-  @utility skip-to-main-content-link {
-	@apply absolute left-[-9999px] z-999 p-1 bg-black text-white opacity-0;
-  
-	&:focus {
-	  @apply left-[50%] translate-x-[-50%] opacity-100;
-	}
+  > a {
+    @apply box-border flex-1 basis-1/4 text-center;
   }
-
-  @utility pre-fade-in {
-	@apply opacity-0;
+  > a {
+    @apply md:basis-1/3;
   }
+}
 
-  @utility fade-in {
-	@apply opacity-100 transition duration-1000;
+@utility skip-to-main-content-link {
+  @apply absolute left-[-9999px] z-999 bg-black p-1 text-white opacity-0;
+
+  &:focus {
+    @apply left-[50%] translate-x-[-50%] opacity-100;
   }
+}
 
-@layer base {
-	:root {
-		@apply scroll-smooth;
-	}
-	body {
-		@apply bg-ocean dark:bg-black;
-	}
-	h1 {
-		@apply text-ocean dark:text-iron;
-	}
-	h2 {
-		@apply text-mirage dark:text-pale;
-	}
-	h3 {
-		@apply text-vampire dark:text-pale;
-	}
-	a {
-		@apply text-cool dark:text-ocean hover:text-ocean;
-	}
+@utility pre-fade-in {
+  @apply opacity-0;
+}
+
+@utility fade-in {
+  @apply opacity-100 transition duration-1000;
 }

@@ -1,8 +1,8 @@
 // @filename: squidex.ts
-import { DynamicSortMultiple, BuildList } from "./utils";
-import { MapExperience, MapProject, MapHome } from "./mapper";
-import { Project } from './models/project';
-import { Experience } from './models/experience';
+import { dynamicSortMultiple, buildList } from "./utils.ts";
+import { mapExperience, mapProject, mapHome } from "./mapper.ts";
+import { Project } from "./models/project.ts";
+import { Experience } from "./models/experience.ts";
 
 const squidexKey = import.meta.env.SQUIDEX_KEY;
 const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
@@ -15,73 +15,72 @@ squidexHeaders.append("timeout", "1000");
 squidexHeaders.append("retry", "3");
 squidexHeaders.append("retryDelay", "4000");
 
-export async function GetExperiences() {
+export async function getExperiences() {
+  try {
+    const experienceData = await fetch(squidexUrl + "experience", {
+      headers: squidexHeaders,
+    });
+    const experienceJson = await experienceData.json();
 
-    try {
-        const experienceData = await fetch(squidexUrl + "experience", {
-            headers: squidexHeaders
-        });
-        const experienceJson = await experienceData.json();
+    const companyData = await fetch(squidexUrl + "company", {
+      headers: squidexHeaders,
+    });
+    const companyJson = await companyData.json();
 
-        const companyData = await fetch(squidexUrl + "company", {
-            headers: squidexHeaders
-        });
-        const companyJson = await companyData.json();
+    const projectData = await fetch(squidexUrl + "project", {
+      headers: squidexHeaders,
+    });
+    const projectJson = await projectData.json();
 
-        const projectData = await fetch(squidexUrl + "project", {
-            headers: squidexHeaders
-        });
-        const projectJson = await projectData.json();
+    // experiences
+    const experiences: Experience[] = [];
 
-        // experiences
-        const experiences: Experience[] = [];
+    for (const item of experienceJson.items) {
+      const company = companyJson.items.find(function (x: { id: any }) {
+        return x.id === item.data.company[0];
+      });
 
-        for (const item of experienceJson.items) {
-            const company = companyJson.items.find(function (x: { id: any; }) {
-                return x.id === item.data.company[0];
-            });
-
-            const projects = BuildList(item.data.projects, projectJson.items);
-            const contribs = BuildList(item.data.contributions, projectJson.items);
-            experiences.push(MapExperience(item, company, projects, contribs));
-        }
-        experiences.sort(DynamicSortMultiple("-orderDate"));
-
-        return experiences;
-    } catch {
-        return [];
+      const projects = buildList(item.data.projects, projectJson.items);
+      const contribs = buildList(item.data.contributions, projectJson.items);
+      experiences.push(mapExperience(item, company, projects, contribs));
     }
+    experiences.sort(dynamicSortMultiple("-orderDate"));
+
+    return experiences;
+  } catch {
+    return [];
+  }
 }
 
-export async function GetProjects() {
-    try {
-        const projectData = await fetch(squidexUrl + "project", {
-            headers: squidexHeaders
-        });
+export async function getProjects() {
+  try {
+    const projectData = await fetch(squidexUrl + "project", {
+      headers: squidexHeaders,
+    });
 
-        const projectJson = await projectData.json();
+    const projectJson = await projectData.json();
 
-        const projects: Project[] = [];
+    const projects: Project[] = [];
 
-        for (const item of projectJson.items)
-            if (item.data.IsHighlight === true) projects.push(MapProject(item));
-        projects.sort(DynamicSortMultiple("-sortOrder", "title"));
+    for (const item of projectJson.items)
+      if (item.data.IsHighlight === true) projects.push(mapProject(item));
+    projects.sort(dynamicSortMultiple("-sortOrder", "title"));
 
-        return projects;
-    } catch {
-        return [];
-    }
+    return projects;
+  } catch {
+    return [];
+  }
 }
 
-export async function GetHome() {
-    try {
-        const homeData = await fetch(squidexUrl + "home", {
-            headers: squidexHeaders
-        });
+export async function getHome() {
+  try {
+    const homeData = await fetch(squidexUrl + "home", {
+      headers: squidexHeaders,
+    });
 
-        const homeJson = await homeData.json();
-        return MapHome(homeJson.items[0]);
-    } catch {
-        return null;
-    }
+    const homeJson = await homeData.json();
+    return mapHome(homeJson.items[0]);
+  } catch {
+    return null;
+  }
 }
