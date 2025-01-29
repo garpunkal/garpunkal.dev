@@ -85,7 +85,7 @@ const { title, header } = Astro.props;
 		<footer>
 			<Footer home={home} />
 		</footer>
-		<script>
+		<script is:inline>
 
 			if (localStorage.theme === "dark") document?.querySelector("html")?.classList.add("dark");
 
