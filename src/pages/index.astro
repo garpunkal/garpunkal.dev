@@ -20,15 +20,15 @@ const articles = await getArticles();
 
 	<script is:inline>
 		document.querySelectorAll('a[href^="#projects"]').forEach((anchor) => {
-			anchor.addEventListener("click", function (this, e) {
+			anchor.addEventListener("click", function (e) {
 				e.preventDefault();
-				const href = (this).getAttribute("href");
+				const href = this.getAttribute("href");
 				if (href) {
 					const target = document.querySelector(href);
 					if (target) {
 						target.scrollIntoView({
 							behavior: "smooth",
-						});
+						}); 
 					}
 				}
 			});
