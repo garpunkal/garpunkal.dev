@@ -8,7 +8,7 @@ interface Props {
 
 const { image } = Astro.props;
 ---
-<button id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
+<a id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
 	<div class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto">
 		<Picture
 			src={image.url}
@@ -21,4 +21,4 @@ const { image } = Astro.props;
 			loading="eager"
 		/>
 	</div> 
-</button>
+</a>
