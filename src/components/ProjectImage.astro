@@ -16,7 +16,7 @@ const { project, large, winner } = Astro.props;
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}			
-				widths={[128, 170, 298, 327, 403, 604, 930]}
+				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
 				alt={"screenshot of " + project.image.alt}
 				class="block object-left-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
 				loading="lazy"
@@ -28,10 +28,10 @@ const { project, large, winner } = Astro.props;
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}
-				widths={[128, 170, 298, 327, 403, 604, 930]}
+				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
 				alt={"screenshot of " + project.image.alt}
 				class="block object-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
-				loading="lazy" 
+				loading="lazy"
 				title={project.title}
 				width={large ? 930 : 223}
 				height={large ? 496 : 164}
@@ -53,3 +53,4 @@ const { project, large, winner } = Astro.props;
 		)
 	}
 </figure>
+

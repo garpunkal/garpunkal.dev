@@ -4,7 +4,7 @@ import { Article } from "../scripts/models/article";
 import Tag from "./Tag.astro";
 interface Props {
 	article: Article | any | null;
-		cssClass: string;
+	cssClass: string;
 }
 
 const { article, cssClass } = Astro.props;
@@ -12,18 +12,13 @@ const { article, cssClass } = Astro.props;
 
 <div class={cssClass}>
 	<div class="flex-1">
-		<a
-			href={article.canonical_url}
-			target="_blank"
-			rel="noopener"
-			title={article.title}
-		
-		>
+		<a href={article.canonical_url} target="_blank" rel="noopener" title={article.title}>
 			<figure class="relative" role="none">
 				<Picture
 					src={article.cover_image}
 					formats={["webp"]}
-					widths={[98, 105, 172, 335, 403]}
+					widths={[140, 335, 720]}
+					sizes={`(max-width: 375px) 140px, (max-width: 768px) 335px, (max-width: 1024px) 720px`}
 					alt={"screenshot of " + article.title}
 					class="rounded-t-lg dark:brightness-75 dark:hover:brightness-100"
 					loading="lazy"
