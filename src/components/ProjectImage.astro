@@ -15,7 +15,7 @@ const { project, large, winner } = Astro.props;
 		project.position === "left top" ? (
 			<Picture
 				src={project.image.url}
-				formats={["webp"]}
+				formats={["webp"]}			
 				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
 				alt={"screenshot of " + project.image.alt}
 				class="block object-left-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
