@@ -16,7 +16,8 @@ const { project, large, winner } = Astro.props;
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}			
-				widths={[178, 191, 328]}
+				widths={[350, 520, 660, 990]}
+				sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
 				class="block object-left-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
 				loading="lazy"
@@ -28,7 +29,8 @@ const { project, large, winner } = Astro.props;
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}
-				widths={[128, 156, 170, 232, 298, 317, 327, 403, 604, 930]}
+				widths={[350, 520, 660, 990]}
+				sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
 				class="block object-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
 				loading="lazy"
