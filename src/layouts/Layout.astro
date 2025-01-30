@@ -1,11 +1,10 @@
 ---
 import '../styles/app.css';
 
-import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
-
 import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
 import { getHome } from "../scripts/squidex.ts";
+import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
 
 const home = await getHome();
 
