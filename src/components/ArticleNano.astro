@@ -19,7 +19,8 @@ const { article } = Astro.props;
 			<Picture
 				src={article.cover_image}
 				formats={["webp"]}
-				widths={[98, 105, 172, 317, 335, 403]}
+				widths={[109, 117, 184, 404 ]}
+				sizes={`(max-width: 360px) 109px, (max-width: 720px) 117px, (max-width: 1024px) 184px, 404px`}
 				alt={"screenshot of " + article.title}
 				class="block object-left-top w-full h-auto rounded-lg lg:rounded-l-lg object-fit dark:brightness-75 dark:hover:brightness-100"
 				loading="lazy"
