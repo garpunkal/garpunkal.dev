@@ -8,17 +8,19 @@ interface Props {
 
 const { image } = Astro.props;
 ---
-<button id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
+
+<a id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
 	<div class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto">
 		<Picture
 			src={image.url}
 			formats={["webp"]}
-			widths={[192, 461, 690]}
+			widths={[192, 396, 499]}
+			sizes={`(max-width: 375px) 192px, (max-width: 768px) 396px, 499px`}
 			alt={image.alt}
 			class="object-cover w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
-			width="690"
-			height="690"
+			width="499"
+			height="499"
 			loading="eager"
 		/>
-	</div> 
-</button>
+	</div>
+</a>

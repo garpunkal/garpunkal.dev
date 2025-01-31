@@ -36,8 +36,9 @@
 	"devDependencies": {
 		"@astrojs/sitemap": "^3.2.1",
 		"@tailwindcss/postcss": "^4.0.1",
-		"astro-google-fonts-optimizer": "^0.2.2",
 		"astro-robots-txt": "^1.0.0",
-		"astro-favicons": "^3.1.5"
+		"@garpunkal/astro-google-fonts-optimizer": "^1.0.3",
+		"@types/humanize-duration": "^3.27.4",
+		"humanize-duration": "^3.32.1"
 	}
 }
