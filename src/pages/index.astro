@@ -28,12 +28,12 @@ const articles = await getArticles();
 					if (target) {
 						target.scrollIntoView({
 							behavior: "smooth",
-						}); 
+						});
 					}
 				}
 			});
 		});
-	
+
 		document.querySelectorAll('a[href^="#top"]').forEach((anchor) => {
 			anchor.addEventListener("click", function (e) {
 				e.preventDefault();
@@ -41,6 +41,4 @@ const articles = await getArticles();
 			});
 		});
 	</script>
-	
 </Layout>
-

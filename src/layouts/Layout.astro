@@ -1,5 +1,5 @@
 ---
-import '../styles/app.css';
+import "../styles/app.css";
 
 import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
@@ -30,7 +30,7 @@ const { title, header } = Astro.props;
 		/>
 		<meta
 			name="description"
-			content="Gareth Wright - Senior C# .net MVC Developer - Umbraco Certified Expert - Front End Developer"
+			content="Gareth Wright - Senior C# .net Developer - Umbraco Certified Expert - Front End Developer"
 		/>
 		<meta name="author" content="Gareth Wright" />
 		<meta name="copyright" content="Gareth Wright" />
@@ -44,12 +44,12 @@ const { title, header } = Astro.props;
 			property="og:image"
 			content="https://en.gravatar.com/userimage/11972664/1f60f14a9a99398eefe01621f2c73860.png?size=400"
 		/>
-		<meta property="og:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+		<meta property="og:description" content="Senior C# .net Developer & Umbraco Certified Expert" />
 
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:site" content="https://garpunkal.dev" />
 		<meta name="twitter:title" content="Gareth Wright - garpunkal.dev" />
-		<meta name="twitter:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+		<meta name="twitter:description" content="Senior C# .net Developer & Umbraco Certified Expert" />
 		<meta name="twitter:creator" content="@garpunkal" />
 		<meta
 			name="twitter:image:src"
@@ -71,12 +71,10 @@ const { title, header } = Astro.props;
 		</script>
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
 	</head>
-	<body class=" bg-ocean dark:bg-black">
+	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
 		<header>
-			{
-				(header) ? ( <Profile home={home}  /> ) : ""
-			}
+			{header ? <Profile home={home} /> : ""}
 		</header>
 		<main id="main">
 			<slot />
@@ -85,7 +83,6 @@ const { title, header } = Astro.props;
 			<Footer home={home} />
 		</footer>
 		<script is:inline>
-
 			if (localStorage.theme === "dark") document?.querySelector("html")?.classList.add("dark");
 
 			const element = document.getElementById("switchTheme");

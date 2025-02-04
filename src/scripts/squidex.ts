@@ -4,8 +4,7 @@ import { mapExperience, mapProject, mapHome } from "./mapper.ts";
 import { Project } from "./models/project.ts";
 import { Experience } from "./models/experience.ts";
 
-const squidexKey = import.meta.env.SQUIDEX_KEY;
-const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
+const squidexUrl = "https://cloud.squidex.io/api/content/" + import.meta.env.SQUIDEX_KEY + "/";
 
 let squidexHeaders = new Headers();
 squidexHeaders.append("X-Flatten", "true");
@@ -32,7 +31,6 @@ export async function getExperiences() {
     });
     const projectJson = await projectData.json();
 
-    // experiences
     const experiences: Experience[] = [];
 
     for (const item of experienceJson.items) {
@@ -77,7 +75,6 @@ export async function getHome() {
     const homeData = await fetch(squidexUrl + "home", {
       headers: squidexHeaders,
     });
-
     const homeJson = await homeData.json();
     return mapHome(homeJson.items[0]);
   } catch {

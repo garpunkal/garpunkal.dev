@@ -20,13 +20,7 @@ if (experience.to == null) {
 	<div class="w-full h-100pixel flex justify-center">
 		{
 			experience.url ? (
-				<a
-					href={experience.url}
-					target="_blank"
-					rel="noopener"
-					title={experience.title}
-					aria-label={experience.title}
-				>
+				<a href={experience.url} target="_blank" rel="noopener" title={experience.title} aria-label={experience.title}>
 					<Picture
 						src={experience.logo.url}
 						formats={["webp"]}
@@ -69,7 +63,7 @@ if (experience.to == null) {
 	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
 		<div class="uppercase">
 			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{getMonthYear(experience.to)}</span>}
-			 -
+			-
 			{getMonthYear(experience.from)}
 		</div>
 
