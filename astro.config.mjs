@@ -4,10 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 import favicons from "astro-favicons";
+import mkcert from'vite-plugin-mkcert'
 
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()],
+    // @ts-ignore
+    plugins: [tailwindcss(),mkcert()],
   },
   site: "https://garpunkal.dev",
   prefetch: true,
@@ -42,3 +44,4 @@ export default defineConfig({
     }),
   ],
 });
+
