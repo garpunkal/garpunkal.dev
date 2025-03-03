@@ -4,8 +4,7 @@ import { mapExperience, mapProject, mapHome } from "./mapper.ts";
 import { Project } from "./models/project.ts";
 import { Experience } from "./models/experience.ts";
 
-const squidexKey = import.meta.env.SQUIDEX_KEY;
-const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
+const squidexUrl = "https://cloud.squidex.io/api/content/" + import.meta.env.SQUIDEX_KEY + "/";
 
 let squidexHeaders = new Headers();
 squidexHeaders.append("X-Flatten", "true");
@@ -15,72 +14,71 @@ squidexHeaders.append("timeout", "1000");
 squidexHeaders.append("retry", "3");
 squidexHeaders.append("retryDelay", "4000");
 
-export async function getExperiences() {
+async function fetchData(endpoint: string) {
   try {
-    const experienceData = await fetch(squidexUrl + "experience", {
+    const response = await fetch(squidexUrl + endpoint, {
       headers: squidexHeaders,
     });
-    const experienceJson = await experienceData.json();
 
-    const companyData = await fetch(squidexUrl + "company", {
-      headers: squidexHeaders,
-    });
-    const companyJson = await companyData.json();
-
-    const projectData = await fetch(squidexUrl + "project", {
-      headers: squidexHeaders,
-    });
-    const projectJson = await projectData.json();
-
-    // experiences
-    const experiences: Experience[] = [];
-
-    for (const item of experienceJson.items) {
-      const company = companyJson.items.find(function (x: { id: any }) {
-        return x.id === item.data.company[0];
-      });
-
-      const projects = buildList(item.data.projects, projectJson.items);
-      const contribs = buildList(item.data.contributions, projectJson.items);
-      experiences.push(mapExperience(item, company, projects, contribs));
+    if (!response.ok) {
+      throw new Error(`Error fetching ${endpoint} data: ${response.statusText}`);
     }
-    experiences.sort(dynamicSortMultiple("-orderDate"));
 
-    return experiences;
-  } catch {
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch ${endpoint} data:`, error);
+    return null;
+  }
+}
+
+export async function getExperiences() {
+  const experienceJson = await fetchData("experience");
+  const companyJson = await fetchData("company");
+  const projectJson = await fetchData("project");
+
+  if (!experienceJson || !companyJson || !projectJson) {
     return [];
   }
+
+  const experiences: Experience[] = [];
+
+  for (const item of experienceJson.items) {
+    const company = companyJson.items.find((x: { id: any }) => x.id === item.data.company[0]);
+
+    const projects = buildList(item.data.projects, projectJson.items);
+    const contribs = buildList(item.data.contributions, projectJson.items);
+    experiences.push(mapExperience(item, company, projects, contribs));
+  }
+  experiences.sort(dynamicSortMultiple("-orderDate"));
+
+  return experiences;
 }
 
 export async function getProjects() {
-  try {
-    const projectData = await fetch(squidexUrl + "project", {
-      headers: squidexHeaders,
-    });
+  const projectJson = await fetchData("project");
 
-    const projectJson = await projectData.json();
-
-    const projects: Project[] = [];
-
-    for (const item of projectJson.items)
-      if (item.data.IsHighlight === true) projects.push(mapProject(item));
-    projects.sort(dynamicSortMultiple("-sortOrder", "title"));
-
-    return projects;
-  } catch {
+  if (!projectJson) {
     return [];
   }
+
+  const projects: Project[] = [];
+
+  for (const item of projectJson.items) {
+    if (item.data.IsHighlight === true) {
+      projects.push(mapProject(item));
+    }
+  }
+  projects.sort(dynamicSortMultiple("-sortOrder", "title"));
+
+  return projects;
 }
 
 export async function getHome() {
-  try {
-    const homeData = await fetch(squidexUrl + "home", {
-      headers: squidexHeaders,
-    });
+  const homeJson = await fetchData("home");
 
-    const homeJson = await homeData.json();
-    return mapHome(homeJson.items[0]);
-  } catch {
+  if (!homeJson) {
     return null;
   }
+
+  return mapHome(homeJson.items[0]);
 }

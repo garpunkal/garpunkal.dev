@@ -6,21 +6,32 @@ import { mapArticle } from "./mapper.ts";
 const devToApiKey = import.meta.env.DEVTO_API_KEY;
 const devToUrl = "https://dev.to/api/articles/me/published?api-key=";
 
-export async function getArticles(page = 1) {
-  let response = await fetch(devToUrl + devToApiKey + "&page=" + page, {
-    method: "GET",
-    headers: {
-      "api-key": devToApiKey,
-      "Content-Type": "application/vnd.forem.api-v1+json",
-    },
-  });
+export async function getArticles(page = 1, accumulatedArticles: Article[] = [])
+  : Promise<Article[]> {
+  try {
+    const response = await fetch(devToUrl + devToApiKey + "&page=" + page, {
+      method: "GET",
+      headers: {
+        "api-key": devToApiKey,
+        "Content-Type": "application/vnd.forem.api-v1+json",
+      },
+    });
 
-  const posts = await response.json();
+    if (!response.ok) {
+      throw new Error(`Error fetching articles: ${response.statusText}`);
+    }
 
-  if (posts.length >= 30 && posts.length !== 0) getArticles(++page);
+    const posts: any[] = await response.json();
+    const articles = accumulatedArticles.concat(posts.map(mapArticle));
 
-  const articles: Article[] = posts.map((post: any): Article => mapArticle(post));
+    if (posts.length >= 30) {
+      return getArticles(page + 1, articles);
+    }
 
-  articles.sort(dynamicSortMultiple("-published_at"));
-  return articles;
+    articles.sort(dynamicSortMultiple("-published_at"));
+    return articles;
+  } catch (error) {
+    console.error("Failed to fetch articles:", error);
+    return accumulatedArticles;
+  }
 }
