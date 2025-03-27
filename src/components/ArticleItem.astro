@@ -19,8 +19,6 @@ const { article, cssClass } = Astro.props;
 					formats={["webp"]}
 					widths={[240, 320, 404]}
 					sizes={`(max-width: 360px) 240px, (max-width: 720px) 320px, 404px`}
-
-
 					alt={"screenshot of " + article.title}
 					class="rounded-t-lg dark:brightness-75 dark:hover:brightness-100"
 					loading="lazy"

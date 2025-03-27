@@ -12,13 +12,16 @@ interface Props {
 const { home, experiences } = Astro.props;
 
 const sortedExperiences = experiences
-	.sort((n1: Experience, n2: Experience) => (n1.orderDate && n2.orderDate ? (n1.orderDate > n2.orderDate ? 1 : n1.orderDate < n2.orderDate ? -1 : 0) : 0))
+	.sort((n1: Experience, n2: Experience) =>
+		n1.orderDate && n2.orderDate ? (n1.orderDate > n2.orderDate ? 1 : n1.orderDate < n2.orderDate ? -1 : 0) : 0
+	)
 	.reverse();
 ---
+
 <section class="bg-mirage body-font" id="experiences">
 	<div class="container">
-		<Heading title={home?.experiencesLabel}/>
-		
+		<Heading title={home?.experiencesLabel} />
+
 		<div class="flex flex-wrap -m-1 md:-m-2 justify-center">
 			{
 				sortedExperiences.map((experience: Experience) => (
