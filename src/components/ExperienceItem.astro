@@ -14,13 +14,19 @@ if (experience.to == null) {
 ---
 
 <div
-	class="flex flex-row flex-wrap w-full py-4 px-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
+	class="flex flex-row flex-wrap w-full px-4 py-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
 	style={"background-color:" + experience.logo.background + ";background-size:auto;"}
 >
-	<div class="w-full h-100pixel flex justify-center">
+	<div class="flex justify-center w-full h-100pixel">
 		{
 			experience.url ? (
-				<a href={experience.url} target="_blank" rel="noopener" title={experience.title} aria-label={experience.title}>
+				<a
+					href={experience.url}
+					target="_blank"
+					rel="noopener"
+					title={experience.title}
+					aria-label={experience.title}
+				>
 					<Picture
 						src={experience.logo.url}
 						formats={["webp"]}
@@ -60,10 +66,10 @@ if (experience.to == null) {
 		</h4>
 	</div>
 
-	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
+	<div class="w-full py-2 text-sm text-center rounded-b-lg opacity-75" style={"color:" + experience.logo.foreground}>
 		<div class="uppercase">
 			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{getMonthYear(experience.to)}</span>}
-			-
+			 -
 			{getMonthYear(experience.from)}
 		</div>
 

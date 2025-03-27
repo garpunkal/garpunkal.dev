@@ -22,16 +22,16 @@ export function mapArticle(item: any) {
   );
 }
 
-export function mapProject(item: any) { 
+export function mapProject(item: any) {
   return new Project(
     item.data.id,
     item.data.title,
     item.data.position,
     item.data.url,
     new Image(
-      "https://cloud.squidex.io/api/assets/" + import.meta.env.SQUIDEX_KEY + "/" +
-      item.data.image +
-      "?cache=31536000",
+      "https://cloud.squidex.io/api/assets/garpunkaldev/" +
+        item.data.image +
+        "?cache=31536000",
       "",
       item.data.title,
       "",
@@ -57,9 +57,9 @@ export function mapExperience(
     item.data.job,
     item.data.location,
     new Image(
-      "https://cloud.squidex.io/api/assets/" + import.meta.env.SQUIDEX_KEY + "/" +
-      company.data.logo +
-      "?cache=31536000",
+      "https://cloud.squidex.io/api/assets/garpunkaldev/" +
+        company.data.logo +
+        "?cache=31536000",
       company.data.logoBackgroundColour,
       company.data.title,
       company.data.logoForegroundColour,
@@ -84,9 +84,9 @@ export function mapHome(item: any) {
     item.data.subTitle,
     item.data.githubUrl,
     new Image(
-      "https://cloud.squidex.io/api/assets/" + import.meta.env.SQUIDEX_KEY + "/" +
-      item.data.profileImage +
-      "?cache=31536000",
+      "https://cloud.squidex.io/api/assets/garpunkaldev/" +
+        item.data.profileImage +
+        "?cache=31536000",
       "",
       item.data.title,
       "",

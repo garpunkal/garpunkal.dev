@@ -8,8 +8,11 @@ import mkcert from'vite-plugin-mkcert'
 
 export default defineConfig({
   vite: {
-    // @ts-ignore
-    plugins: [tailwindcss(),mkcert()],
+    plugins: [
+        // @ts-ignore
+        mkcert(),
+        tailwindcss()
+      ]   
   },
   site: "https://garpunkal.dev",
   prefetch: true,
@@ -44,4 +47,3 @@ export default defineConfig({
     }),
   ],
 });
-
