@@ -19,7 +19,7 @@ const { project, large, winner } = Astro.props;
 				widths={[350, 520, 660, 990]}
 				sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block object-left-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
+				class="block object-cover object-left-top w-full h-full rounded-lg dark:brightness-75 dark:hover:brightness-100"
 				loading="lazy"
 				title={project.title}
 				width={large ? 930 : 223}
@@ -32,7 +32,7 @@ const { project, large, winner } = Astro.props;
 				widths={[350, 520, 660, 990]}
 				sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block object-top w-full h-full object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg"
+				class="block object-cover object-top w-full h-full rounded-lg dark:brightness-75 dark:hover:brightness-100"
 				loading="lazy"
 				title={project.title}
 				width={large ? 930 : 223}
@@ -43,13 +43,13 @@ const { project, large, winner } = Astro.props;
 
 	{
 		winner ? (
-			<figcaption class="absolute px-2 py-1 text-black left-0 bottom-0 md:px-4 md:py-2 bg-tulip dark:bg-mirage rounded-bl-lg rounded-tr-lg text-sm hover:text-black dark:text-cool">
-				<span class="font-bold hidden lg:block">{project.winnerLabel}</span>
+			<figcaption class="absolute bottom-0 left-0 px-2 py-1 text-sm text-black rounded-tr-lg rounded-bl-lg md:px-4 md:py-2 bg-tulip dark:bg-mirage hover:text-black dark:text-cool">
+				<span class="hidden font-bold lg:block">{project.winnerLabel}</span>
 				<span>{project.title}</span>
 				<span class="hidden lg:block">{project.winnerDescription}</span>
 			</figcaption>
 		) : (
-			<figcaption class="absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm ">
+			<figcaption class="absolute bottom-0 left-0 px-2 py-1 text-sm text-white rounded-tr-lg rounded-bl-lg md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool ">
 				{project.title}
 			</figcaption>
 		)

@@ -15,13 +15,13 @@ squidexHeaders.append("timeout", "1000");
 squidexHeaders.append("retry", "3");
 squidexHeaders.append("retryDelay", "4000");
 
-export async function getExperiences() {
+async function fetchData(endpoint: string) {
   try {
-    const experienceData = await fetch(squidexUrl + "experience", {
+    const response = await fetch(squidexUrl + endpoint, {
       headers: squidexHeaders,
     });
-    const experienceJson = await experienceData.json();
 
+<<<<<<< HEAD
     const companyData = await fetch(squidexUrl + "company", {
       headers: squidexHeaders,
     });
@@ -43,36 +43,63 @@ export async function getExperiences() {
       const projects = buildList(item.data.projects, projectJson.items);
       const contribs = buildList(item.data.contributions, projectJson.items);
       experiences.push(mapExperience(item, company, projects, contribs));
+=======
+    if (!response.ok) {
+      throw new Error(`Error fetching ${endpoint} data: ${response.statusText}`);
+>>>>>>> 12b008cd3c4f0299a7b693cd3fb98227559ee39e
     }
-    experiences.sort(dynamicSortMultiple("-orderDate"));
 
-    return experiences;
-  } catch {
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch ${endpoint} data:`, error);
+    return null;
+  }
+}
+
+export async function getExperiences() {
+  const experienceJson = await fetchData("experience");
+  const companyJson = await fetchData("company");
+  const projectJson = await fetchData("project");
+
+  if (!experienceJson || !companyJson || !projectJson) {
     return [];
   }
+
+  const experiences: Experience[] = [];
+
+  for (const item of experienceJson.items) {
+    const company = companyJson.items.find((x: { id: any }) => x.id === item.data.company[0]);
+
+    const projects = buildList(item.data.projects, projectJson.items);
+    const contribs = buildList(item.data.contributions, projectJson.items);
+    experiences.push(mapExperience(item, company, projects, contribs));
+  }
+  experiences.sort(dynamicSortMultiple("-orderDate"));
+
+  return experiences;
 }
 
 export async function getProjects() {
-  try {
-    const projectData = await fetch(squidexUrl + "project", {
-      headers: squidexHeaders,
-    });
+  const projectJson = await fetchData("project");
 
-    const projectJson = await projectData.json();
-
-    const projects: Project[] = [];
-
-    for (const item of projectJson.items)
-      if (item.data.IsHighlight === true) projects.push(mapProject(item));
-    projects.sort(dynamicSortMultiple("-sortOrder", "title"));
-
-    return projects;
-  } catch {
+  if (!projectJson) {
     return [];
   }
+
+  const projects: Project[] = [];
+
+  for (const item of projectJson.items) {
+    if (item.data.IsHighlight === true) {
+      projects.push(mapProject(item));
+    }
+  }
+  projects.sort(dynamicSortMultiple("-sortOrder", "title"));
+
+  return projects;
 }
 
 export async function getHome() {
+<<<<<<< HEAD
   try {
     const homeData = await fetch(squidexUrl + "home", {
       headers: squidexHeaders,
@@ -84,3 +111,13 @@ export async function getHome() {
     return null;
   }
 }
+=======
+  const homeJson = await fetchData("home");
+
+  if (!homeJson) {
+    return null;
+  }
+
+  return mapHome(homeJson.items[0]);
+}
+>>>>>>> 12b008cd3c4f0299a7b693cd3fb98227559ee39e
