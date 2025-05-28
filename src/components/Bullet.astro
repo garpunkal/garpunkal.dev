@@ -12,13 +12,8 @@ interface Props {
 const { title, svgPath, strokeWidth, stroke, fill, cssclass, url } = Astro.props;
 ---
 
-<<<<<<< HEAD
 <div class="flex-grow flex-col w-full text-md text-vampire dark:text-iron lg:text-md mb-2 ">
 	<div class="flex flex-row items-start justify-start w-full md:justify-center lg:justify-start gap-2">
-=======
-<div class="flex-col flex-grow w-full mb-2 text-md text-vampire dark:text-iron lg:text-md ">
-	<div class="flex flex-row items-start justify-start w-full gap-2 md:justify-center lg:justify-start">
->>>>>>> 12b008cd3c4f0299a7b693cd3fb98227559ee39e
 		<div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +30,7 @@ const { title, svgPath, strokeWidth, stroke, fill, cssclass, url } = Astro.props
 				<path d={svgPath}></path>
 			</svg>
 		</div>
-		<div class="justify-start flex-shrink">
+		<div class="flex-shrink justify-start">
 			{
 				url ? (
 					<a href={url} target="_blank" rel="noopener" class="text-vampire dark:text-iron" aria-label={title}>

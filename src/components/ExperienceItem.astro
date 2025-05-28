@@ -14,10 +14,10 @@ if (experience.to == null) {
 ---
 
 <div
-	class="flex flex-row flex-wrap w-full px-4 py-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
+	class="flex flex-row flex-wrap w-full py-4 px-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
 	style={"background-color:" + experience.logo.background + ";background-size:auto;"}
 >
-	<div class="flex justify-center w-full h-100pixel">
+	<div class="w-full h-100pixel flex justify-center">
 		{
 			experience.url ? (
 				<a
@@ -66,7 +66,7 @@ if (experience.to == null) {
 		</h4>
 	</div>
 
-	<div class="w-full py-2 text-sm text-center rounded-b-lg opacity-75" style={"color:" + experience.logo.foreground}>
+	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
 		<div class="uppercase">
 			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{getMonthYear(experience.to)}</span>}
 			 -

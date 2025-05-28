@@ -11,8 +11,8 @@ interface Props {
 const { home } = Astro.props;
 ---
 
-<div class="w-full text-cool bg-ocean dark:text-iron dark:bg-black lg:mt-10">
-	<div class="flex flex-row flex-wrap items-center">
+<div class="text-cool bg-ocean dark:text-iron dark:bg-black w-full lg:mt-10">
+	<div class="flex flex-wrap items-center flex-row">
 		<UpArrow />
 
 		{
@@ -44,7 +44,7 @@ const { home } = Astro.props;
 			)
 		}
 
-		<div class="container flex flex-row flex-wrap justify-center w-full gap-2 text-sm text-center wrapped-links lg:gap-8">
+		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center wrapped-links gap-2 lg:gap-8">
 			{
 				home.footerLinks.map((social: Link) => (
 					<div class="flex flex-wrap w-10">

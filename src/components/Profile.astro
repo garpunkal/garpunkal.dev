@@ -18,9 +18,9 @@ const { home } = Astro.props;
 	id="profile"
 >
 	<div
-		class="order-2 w-full pt-32 bg-white rounded-lg lg:w-3/5 md:rounded-r-lg lg:rounded-l-lg xl:rounded-r-none dark:bg-mirage dark:text-iron lg:mx-0 lg:order-1 -mt-36 md:-mt-40 md:pt-28 lg:-mt-0 lg:pt-0"
+		class="order-2 w-full pt-32  bg-white rounded-lg lg:w-3/5 md:rounded-r-lg lg:rounded-l-lg xl:rounded-r-none dark:bg-mirage dark:text-iron lg:mx-0 lg:order-1 -mt-36 md:-mt-40 md:pt-28 lg:-mt-0 lg:pt-0"
 	>
-		<div class="flex flex-col justify-start p-4 md:p-12 ">
+		<div class="p-4 md:p-12 flex flex-col justify-start ">
 			<div class="flex flex-col items-center w-full lg:items-start">
 				<h1
 					class="mt-6 text-3xl font-extrabold tracking-tighter lg:mt-3 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
@@ -56,7 +56,7 @@ const { home } = Astro.props;
 				}
 			</div>
 
-			<div class="flex justify-center w-full mt-10 mb-3 lg:mt-6 lg:mb-0 md:justify-between wrapped-links">
+			<div class="w-full mt-10 lg:mt-6 mb-3 lg:mb-0 flex justify-center md:justify-between wrapped-links">
 				{
 					home.socials
 						.filter((x: Link) => x.displayComponent)
