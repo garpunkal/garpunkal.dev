@@ -5,10 +5,10 @@
   "compilerOptions": {
     "target": "ES2024",
     "useDefineForClassFields": true,
-    "module": "NodeNext",
+    "module": "ESNext",
     "lib": ["ES2024", "dom", "dom.iterable"],
     "strict": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,

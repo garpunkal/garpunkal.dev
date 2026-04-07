@@ -21,6 +21,7 @@
 		"dev": "astro dev",
 		"start": "astro dev --host",
 		"build": "astro check && astro build",
+		"deploy": "npm run build && node -e \"require('node:fs').writeFileSync('dist/.nojekyll','')\"",
 		"preview": "astro preview",
 		"astro": "astro"
 	},
@@ -40,5 +41,10 @@
 		"astro-favicons": "^3.1.5",
 		"astro-robots-txt": "^1.0.0",
 		"humanize-duration": "^3.32.2"
+	},
+	"overrides": {
+		"yaml-language-server": {
+			"yaml": ">=2.8.3"
+		}
 	}
 }

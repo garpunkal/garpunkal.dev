@@ -14,6 +14,34 @@ The build currently utilises [SquidexCMS](https://squidex.io), [Astro](https://a
 
 The workflow file is at `.github/workflows/deploy.yml`.
 
+### Trigger Deploy From CMS Webhook
+
+The deploy workflow also listens for GitHub `repository_dispatch` events with `event_type` = `cms_publish`.
+
+Configure your CMS webhook to send a `POST` request to:
+
+```text
+https://api.github.com/repos/garpunkal/garpunkal.dev/dispatches
+```
+
+With headers:
+
+```text
+Accept: application/vnd.github+json
+Authorization: Bearer <GITHUB_TOKEN_WITH_REPO_ACCESS>
+Content-Type: application/json
+```
+
+And JSON body:
+
+```json
+{
+	"event_type": "cms_publish"
+}
+```
+
+Use a GitHub token (PAT or GitHub App token) that has permission to dispatch repository events for this repo.
+
 ## .env file
 
 ```
