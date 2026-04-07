@@ -1,50 +1,53 @@
 {
-	"name": "garpunkal.dev",
-	"type": "module",
-	"version": "1.0.0",
-	"homepage": "https://garpunkal.dev",
-	"description": "Personal website for Gareth Wright",
-	"keywords": [
-		"typescript",
-		"astro",
-		"tailwindcss",
-		"tailwind",
-		"squidex",
-		"vite"
-	],
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/garpunkal/garpunkal.dev"
-	},
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev --host",
-		"build": "astro check && astro build",
-		"deploy": "npm run build && node -e \"require('node:fs').writeFileSync('dist/.nojekyll','')\"",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/check": "^0.9.4",
-		"@tailwindcss/vite": "^4.1.8",
-		"astro": "^5.8.1",
-		"tailwindcss": "^4.1.8",
-		"typescript": "^5.8.3",
-		"vite-plugin-mkcert": "^1.17.8"
-	},
-	"devDependencies": {
-		"@astrojs/sitemap": "^3.4.0",
-		"@garpunkal/astro-google-fonts-optimizer": "^1.0.3",
-		"@tailwindcss/postcss": "^4.1.8",
-		"@types/humanize-duration": "^3.27.4",
-		"astro-favicons": "^3.1.5",
-		"astro-robots-txt": "^1.0.0",
-		"humanize-duration": "^3.32.2"
-	},
-	"overrides": {
-		"yaml-language-server": {
-			"yaml": ">=2.8.3"
-		}
-	}
+  "name": "garpunkal.dev",
+  "type": "module",
+  "version": "1.0.0",
+  "homepage": "https://garpunkal.dev",
+  "description": "Personal website for Gareth Wright",
+  "keywords": [
+    "typescript",
+    "astro",
+    "tailwindcss",
+    "tailwind",
+    "squidex",
+    "vite"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garpunkal/garpunkal.dev"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev --host",
+    "build": "astro check && astro build",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "12",
+    "@tailwindcss/vite": "^4.1.8",
+    "astro": "^5.8.1",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5.8.3",
+    "vite-plugin-mkcert": "^1.17.8"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.4.0",
+    "@garpunkal/astro-google-fonts-optimizer": "^1.0.3",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/humanize-duration": "^3.27.4",
+    "astro-favicons": "^3.1.5",
+    "astro-robots-txt": "^1.0.0",
+    "humanize-duration": "^3.32.2",
+    "wrangler": "^4.80.0"
+  },
+  "overrides": {
+    "yaml-language-server": {
+      "yaml": ">=2.8.3"
+    }
+  }
 }
