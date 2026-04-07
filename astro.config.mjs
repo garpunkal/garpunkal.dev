@@ -6,8 +6,6 @@ import robotsTxt from "astro-robots-txt";
 import favicons from "astro-favicons";
 import mkcert from'vite-plugin-mkcert'
 
-import cloudflare from "@astrojs/cloudflare";
-
 const isDev = process.argv.includes("dev");
 
 export default defineConfig({
@@ -51,6 +49,4 @@ export default defineConfig({
       background: "#077da0",
     }),
   ],
-
-  adapter: cloudflare()
 });
