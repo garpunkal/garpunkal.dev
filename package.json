@@ -21,12 +21,14 @@
     "dev": "astro dev",
     "start": "astro dev --host",
     "build": "astro check && astro build",
-    "deploy": "npm run build && node -e \"require('node:fs').writeFileSync('dist/.nojekyll','')\"",
-    "preview": "astro preview",
-    "astro": "astro"
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "12",
     "@tailwindcss/vite": "^4.1.8",
     "astro": "^5.8.1",
     "tailwindcss": "^4.1.8",
@@ -40,7 +42,8 @@
     "@types/humanize-duration": "^3.27.4",
     "astro-favicons": "^3.1.5",
     "astro-robots-txt": "^1.0.0",
-    "humanize-duration": "^3.32.2"
+    "humanize-duration": "^3.32.2",
+    "wrangler": "^4.80.0"
   },
   "overrides": {
     "yaml-language-server": {
