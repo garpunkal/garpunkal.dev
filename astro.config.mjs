@@ -6,10 +6,13 @@ import robotsTxt from "astro-robots-txt";
 import favicons from "astro-favicons";
 import mkcert from'vite-plugin-mkcert'
 
+const isDev = process.argv.includes("dev");
+
 export default defineConfig({
   vite: {
+    // mkcert is only needed locally for HTTPS dev; keeping it out of CI build avoids Pages build issues.
     // @ts-ignore
-    plugins: [tailwindcss(),mkcert()],
+    plugins: isDev ? [tailwindcss(), mkcert()] : [tailwindcss()],
   },
   site: "https://garpunkal.dev",
   prefetch: true,
@@ -38,11 +41,10 @@ export default defineConfig({
       output: {
         images: true,
         files: true,
-        html: false
+        html: false,
       },
       background: "#077da0",
     }),
   ],
 });
 
-   
