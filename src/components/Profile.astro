@@ -7,10 +7,12 @@ import { Home } from "../scripts/models/home";
 import type { Link } from "../scripts/models/link";
 
 interface Props {
-	home: Home | any | null;
+	home: Home | null;
 }
 
 const { home } = Astro.props;
+const specialisms = home?.specialisms?.filter((x: Link) => x.displayComponent) ?? [];
+const socials = home?.socials?.filter((x: Link) => x.displayComponent) ?? [];
 ---
 
 <section
@@ -25,24 +27,22 @@ const { home } = Astro.props;
 				<h1
 					class="mt-6 text-3xl font-extrabold tracking-tighter lg:mt-3 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
 				>
-					{home.title}
+					{home?.title ?? "garpunkal.dev"}
 				</h1>
 				<h2 class="mb-5 text-2xl font-extrabold tracking-tighter md:mb-8 md:text-3xl lg:text-4xl sm:text-3xl">
 					<a
 						class="text-black dark:text-pale hover:text-black"
-						href={home.githubUrl}
+						href={home?.githubUrl ?? "#"}
 						target="_blank"
 						rel="noopener"
 						title="@garpunkal"
 						aria-label="@garpunkal"
 					>
-						{home.subTitle}
+						{home?.subTitle ?? ""}
 					</a>
 				</h2>
 				{
-					home.specialisms
-						.filter((x: Link) => x.displayComponent)
-						.map((specialism: Link) => (
+					specialisms.map((specialism: Link) => (
 							<Bullet
 								title={specialism.title}
 								cssclass={specialism.cssClass}
@@ -58,9 +58,7 @@ const { home } = Astro.props;
 
 			<div class="w-full mt-10 lg:mt-6 mb-3 lg:mb-0 flex justify-center md:justify-between wrapped-links">
 				{
-					home.socials
-						.filter((x: Link) => x.displayComponent)
-						.map((social:Link) => (
+					socials.map((social:Link) => (
 							<SvgLink href={social.url} title={social.title} svgPath={social.svgPath} rel={social.rel} />
 						))
 				}
@@ -68,7 +66,7 @@ const { home } = Astro.props;
 		</div>
 	</div>
 	<div class="z-10 order-1 w-full -mt-16 lg:w-2/5 lg:order-2 lg:mt-2">
-		<ProfileImage image={home.image} />
+		{home?.image ? <ProfileImage image={home.image} /> : <div />}
 	</div>
 	<div class="flex justify-center order-3 w-full mt-10">
 		<DownArrow anchor="projects" />
