@@ -36,6 +36,9 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          SQUIDEX_KEY: ${{ secrets.SQUIDEX_KEY }}
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Disable Jekyll processing
         run: touch ./dist/.nojekyll
