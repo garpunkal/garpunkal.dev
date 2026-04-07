@@ -5,10 +5,12 @@ import SvgLink from "./SvgLink.astro";
 import type { Link } from "../scripts/models/link";
 
 interface Props {
-	home: Home | any | null;
+	home: Home | null;
 }
   
 const { home } = Astro.props;
+const githubSource = home?.githubSource;
+const footerLinks = home?.footerLinks ?? [];
 ---
 
 <div class="text-cool bg-ocean dark:text-iron dark:bg-black w-full lg:mt-10">
@@ -16,11 +18,11 @@ const { home } = Astro.props;
 		<UpArrow />
 
 		{
-			home.githubSource ? (
+			githubSource ? (
 				<div class="flex flex-wrap justify-center w-full">
 					<a
-						href={home.githubSource.url}
-						title={home.githubSource.title}
+						href={githubSource.url}
+						title={githubSource.title}
 						target="_blank"
 						rel="noopener"
 						class="inline-flex items-center font-bold text-white hover:text-mirage dark:text-pale "
@@ -33,10 +35,10 @@ const { home } = Astro.props;
 							width="24px"
 							height="100%"
 						>
-							<title>{home.githubSource.title}</title>
-							<path d={home.githubSource.svgPath} />
+							<title>{githubSource.title}</title>
+							<path d={githubSource.svgPath} />
 						</svg>
-						{home.githubSource.title}
+						{githubSource.title}
 					</a>
 				</div>
 			) : (
@@ -46,7 +48,7 @@ const { home } = Astro.props;
 
 		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center wrapped-links gap-2 lg:gap-8">
 			{
-				home.footerLinks.map((social: Link) => (
+				footerLinks.map((social: Link) => (
 					<div class="flex flex-wrap w-10">
 						<SvgLink
 							href={social.url}
