@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+
+  # Triggered from Squidex via Webhook (repository_dispatch)
   repository_dispatch:
     types:
       - cms_publish
+
+  # Manual trigger (useful for testing)
   workflow_dispatch:
 
 permissions:
