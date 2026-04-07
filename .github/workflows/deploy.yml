@@ -60,10 +60,17 @@ jobs:
       - name: Disable Jekyll
         run: touch ./dist/.nojekyll
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Package Pages artifact
+        run: |
+          tar --dereference --hard-dereference -cvf artifact.tar -C ./dist .
+          gzip -n artifact.tar
+
+      - name: Upload Pages artifact
+        uses: actions/upload-artifact@v6
         with:
-          path: ./dist
+          name: github-pages
+          path: artifact.tar.gz
+          retention-days: 1
 
   deploy:
     environment:
