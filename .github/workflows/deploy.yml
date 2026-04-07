@@ -5,13 +5,18 @@ on:
     branches:
       - main
 
-  # Triggered from Squidex via Webhook (repository_dispatch)
-  repository_dispatch:
-    types:
-      - cms_publish
-
-  # Manual trigger (useful for testing)
+  # Triggered manually from Squidex
   workflow_dispatch:
+    inputs:
+      content_id:
+        description: 'Content ID from Squidex'
+        required: false
+      schema:
+        description: 'Schema name'
+        required: false
+      event_type:
+        description: 'Squidex event (Created, Updated, Published...)'
+        required: false
 
 permissions:
   contents: read
@@ -32,6 +37,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug Squidex Trigger
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Triggered by Squidex!"
+          echo "Content ID : ${{ inputs.content_id }}"
+          echo "Schema     : ${{ inputs.schema }}"
+          echo "Event Type : ${{ inputs.event_type }}"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -47,7 +60,7 @@ jobs:
           SQUIDEX_KEY: ${{ secrets.SQUIDEX_KEY }}
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
-      - name: Disable Jekyll processing
+      - name: Disable Jekyll
         run: touch ./dist/.nojekyll
 
       - name: Upload artifact
