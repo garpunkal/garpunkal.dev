@@ -1,12 +1,13 @@
 ---
-import '../styles/app.css';
+import "../styles/app.css";
 
 import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
 import { getHome } from "../scripts/squidex.ts";
 import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
-import analyticsScriptUrl from "../scripts/client/analytics.js?url";
-import themeToggleScriptUrl from "../scripts/client/theme-toggle.js?url";
+import { initAnalytics } from "../scripts/client/analytics.ts";
+import { initThemeToggle } from "../scripts/client/theme-toggle.ts";
+import { initSmoothScroll } from "../scripts/client/smooth-scroll.ts";
 
 const home = await getHome();
 
@@ -61,15 +62,17 @@ const { title, header } = Astro.props;
 		<link rel="publisher" href="https://garpunkal.dev" />
 		<link rel="canonical" href="https://garpunkal.dev" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<script type="module" src={analyticsScriptUrl}></script>
+
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
+
+		<script type="module" is:inline>
+			initAnalytics();
+		</script>
 	</head>
-	<body class=" bg-ocean dark:bg-black">
+	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
 		<header>
-			{
-				(header) ? ( <Profile home={home}  /> ) : ""
-			}
+			{header ? <Profile home={home} /> : ""}
 		</header>
 		<main id="main">
 			<slot />
@@ -77,6 +80,9 @@ const { title, header } = Astro.props;
 		<footer>
 			<Footer home={home} />
 		</footer>
-		<script type="module" src={themeToggleScriptUrl}></script>
+		<script type="module" is:inline>
+			initThemeToggle();
+			initSmoothScroll();
+		</script>
 	</body>
 </html>

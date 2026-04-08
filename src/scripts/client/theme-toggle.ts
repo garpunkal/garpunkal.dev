@@ -1,4 +1,4 @@
-export function initThemeToggle() {
+export function initThemeToggle(): void {
   if (localStorage.theme === "dark") {
     document.querySelector("html")?.classList.add("dark");
   }
@@ -21,5 +21,3 @@ export function initThemeToggle() {
     localStorage.theme = "dark";
   });
 }
-
-initThemeToggle();
