@@ -5,6 +5,7 @@ import Projects from "../components/Projects.astro";
 import Experiences from "../components/Experiences.astro";
 
 import { getExperiences, getProjects, getHome } from "../scripts/squidex.ts";
+import smoothScrollScriptUrl from "../scripts/client/smooth-scroll.ts?url";
 // import { getArticles } from "../scripts/devto.ts";
 
 const experiences = await getExperiences();
@@ -18,10 +19,7 @@ const home = await getHome();
 	<!-- <Articles home={home} articles={articles} /> -->
 	<Experiences home={home} experiences={experiences} />
 
-	<script>
-		import { initSmoothScroll } from "../scripts/client/smooth-scroll.ts";
-		initSmoothScroll();
-	</script>
+	<script type="module" src={smoothScrollScriptUrl}></script>
 	
 </Layout>
 
