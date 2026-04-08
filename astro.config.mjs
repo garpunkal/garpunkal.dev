@@ -10,6 +10,9 @@ export default defineConfig({
   vite: {
     // @ts-ignore
     plugins: [tailwindcss(),mkcert()],
+    build: {
+      assetsInlineLimit: 0,
+    },
   },
   site: "https://garpunkal.dev",
   prefetch: true,

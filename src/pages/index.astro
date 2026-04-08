@@ -5,7 +5,7 @@ import Projects from "../components/Projects.astro";
 import Experiences from "../components/Experiences.astro";
 
 import { getExperiences, getProjects, getHome } from "../scripts/squidex.ts";
-import smoothScrollScriptUrl from "../scripts/client/smooth-scroll.ts?url";
+import smoothScrollScriptUrl from "../scripts/client/smooth-scroll.js?url";
 // import { getArticles } from "../scripts/devto.ts";
 
 const experiences = await getExperiences();

@@ -1,12 +1,6 @@
 const MEASUREMENT_ID = "G-3TJPB46KB1";
 
-declare global {
-  interface Window {
-    dataLayer: unknown[];
-  }
-}
-
-export function initAnalytics(): void {
+export function initAnalytics() {
   const analyticsScript = document.createElement("script");
   analyticsScript.async = true;
   analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
@@ -14,10 +8,12 @@ export function initAnalytics(): void {
 
   window.dataLayer = window.dataLayer || [];
 
-  const gtag = (...args: unknown[]) => {
+  const gtag = (...args) => {
     window.dataLayer.push(args);
   };
 
   gtag("js", new Date());
   gtag("config", MEASUREMENT_ID);
 }
+
+initAnalytics();

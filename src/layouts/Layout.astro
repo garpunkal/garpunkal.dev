@@ -5,8 +5,8 @@ import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
 import { getHome } from "../scripts/squidex.ts";
 import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
-import analyticsScriptUrl from "../scripts/client/analytics.ts?url";
-import themeToggleScriptUrl from "../scripts/client/theme-toggle.ts?url";
+import analyticsScriptUrl from "../scripts/client/analytics.js?url";
+import themeToggleScriptUrl from "../scripts/client/theme-toggle.js?url";
 
 const home = await getHome();
 

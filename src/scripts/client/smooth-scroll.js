@@ -1,9 +1,9 @@
-export function initSmoothScroll(): void {
+export function initSmoothScroll() {
   document.querySelectorAll('a[href^="#projects"]').forEach((anchor) => {
     anchor.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const clickedAnchor = event.currentTarget as HTMLAnchorElement | null;
+      const clickedAnchor = event.currentTarget;
       const href = clickedAnchor?.getAttribute("href");
       if (!href) {
         return;
@@ -27,3 +27,5 @@ export function initSmoothScroll(): void {
     });
   });
 }
+
+initSmoothScroll();
