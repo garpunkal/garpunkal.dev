@@ -5,9 +5,7 @@ import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
 import { getHome } from "../scripts/squidex.ts";
 import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
-import { initAnalytics } from "../scripts/client/analytics.ts";
-import { initThemeToggle } from "../scripts/client/theme-toggle.ts";
-import { initSmoothScroll } from "../scripts/client/smooth-scroll.ts";
+import clientEntryScriptUrl from "../scripts/client/entry.js?url";
 
 const home = await getHome();
 
@@ -64,10 +62,7 @@ const { title, header } = Astro.props;
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
-
-		<script type="module" is:inline>
-			initAnalytics();
-		</script>
+		<script type="module" src={clientEntryScriptUrl}></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
@@ -80,9 +75,5 @@ const { title, header } = Astro.props;
 		<footer>
 			<Footer home={home} />
 		</footer>
-		<script type="module" is:inline>
-			initThemeToggle();
-			initSmoothScroll();
-		</script>
 	</body>
 </html>
