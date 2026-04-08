@@ -18,7 +18,10 @@ const home = await getHome();
 	<!-- <Articles home={home} articles={articles} /> -->
 	<Experiences home={home} experiences={experiences} />
 
-	<script src="/scripts/smooth-scroll.js"></script>
+	<script>
+		import { initSmoothScroll } from "../scripts/client/smooth-scroll.ts";
+		initSmoothScroll();
+	</script>
 	
 </Layout>
 

@@ -59,9 +59,10 @@ const { title, header } = Astro.props;
 		<link rel="publisher" href="https://garpunkal.dev" />
 		<link rel="canonical" href="https://garpunkal.dev" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3TJPB46KB1"></script>
-		<script src="/scripts/analytics-init.js"></script>
+		<script>
+			import { initAnalytics } from "../scripts/client/analytics.ts";
+			initAnalytics();
+		</script>
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
 	</head>
 	<body class=" bg-ocean dark:bg-black">
@@ -77,6 +78,9 @@ const { title, header } = Astro.props;
 		<footer>
 			<Footer home={home} />
 		</footer>
-		<script src="/scripts/theme-toggle.js"></script>
+		<script>
+			import { initThemeToggle } from "../scripts/client/theme-toggle.ts";
+			initThemeToggle();
+		</script>
 	</body>
 </html>
