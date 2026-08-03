@@ -1,15 +1,16 @@
 ---
-import { Home } from "../scripts/models/home";
+
 import { Project } from "../scripts/models/project";
 import ProjectItem from "./ProjectItem.astro";
 import Heading from "./Heading.astro";
 
 interface Props {
-	home: Home | any | null;
+
 	projects: Project[] | any | null;
+	title: string | any | null;
 }
 
-const { home, projects } = Astro.props;
+const { projects, title } = Astro.props;
 
 const sortedProjects = projects
 	.sort((n1: Project, n2: Project) => (n1.sortOrder > n2.sortOrder ? 1 : n1.sortOrder < n2.sortOrder ? -1 : 0))
@@ -19,7 +20,7 @@ const sortedProjects = projects
 
 <section class="text-pale bg-mirage dark:text-iron0 body-font" id="projects">
 	<div class="container">
-		<Heading title={home.projectsLabel}/>
+		<Heading title={title}/>
 		<div class="flex flex-wrap -m-1 md:-m-2 mb-2 md:mb-2">
 			{
 				sortedProjects
@@ -33,7 +34,7 @@ const sortedProjects = projects
 					))
 			}
 		</div>
-		<div class="flex flex-wrap -m-1 md:-m-2 justify-center">
+			<div class="flex flex-wrap -m-1 md:-m-2 justify-center">
 			{
 				sortedProjects
 					.slice(6, projects.length)

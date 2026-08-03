@@ -13,6 +13,7 @@ export class Project {
   winnerLabel: string;
   winnerDescription: string;
   winnerUrl: string;
+  personal: boolean;
 
   constructor(
     id: number,
@@ -26,6 +27,7 @@ export class Project {
     winnerLabel: string,
     winnerDescription: string,
     winnerUrl: string,
+    personal: boolean
   ) {
     this.id = id;
     this.title = title;
@@ -38,5 +40,6 @@ export class Project {
     this.winnerLabel = winnerLabel;
     this.winnerDescription = winnerDescription;
     this.winnerUrl = winnerUrl;
+    this.personal = personal;
   }
 }

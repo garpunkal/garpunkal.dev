@@ -42,6 +42,7 @@ export function mapProject(item: any) {
     item.data.winnerLabel,
     item.data.winnerDescription,
     item.data.winnerUrl,
+    item.data.personal ?? false
   );
 }
 
@@ -98,6 +99,7 @@ export function mapHome(item: any) {
     item.data.projectsLabel,
     item.data.articlesLabel,
     item.data.experiencesLabel,
+    item.data.personalProjectLabel
   );
 }
 
