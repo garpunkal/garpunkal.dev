@@ -62,7 +62,7 @@ const { title, header } = Astro.props;
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
-		<script type="module" src={clientEntryScriptUrl}></script>
+		<script is:inline type="module" src={clientEntryScriptUrl}></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>

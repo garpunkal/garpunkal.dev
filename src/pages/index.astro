@@ -9,11 +9,8 @@ const experiences = await getExperiences();
 const projects = await getProjects();
 const home = await getHome();
 ---
-
 <Layout title="Gareth Wright - garpunkal.dev" header={true}>
 	<Projects projects={projects.filter(x=>!x.personal)} title={home?.projectsLabel} />
 	<Experiences home={home} experiences={experiences} />
 	<Projects projects={projects.filter(x=>x.personal)} title={home?.personalProjectsLabel}/>
-	
 </Layout>
-
