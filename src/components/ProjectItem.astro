@@ -11,7 +11,7 @@ interface Props {
 const { project, large, cssClass } = Astro.props;
 ---
 
-<div class={"center " + cssClass}>
+<div class={"center group relative transition-transform duration-300 ease-out hover:scale-105 hover:z-10 active:scale-105 active:z-10 " + cssClass}>
 	{
 		project.url ? (
 			<a href={project.url} title={project.title} target="_blank" rel="noopener">

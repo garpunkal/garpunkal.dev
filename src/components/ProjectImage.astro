@@ -10,7 +10,7 @@ interface Props {
 const { project, large, winner } = Astro.props;
 ---
 
-<figure class="relative w-full h-full">
+<figure class="relative w-full h-full overflow-hidden rounded-lg">
 	{
 		project.position === "left top" ? (
 			<Picture
@@ -44,6 +44,11 @@ const { project, large, winner } = Astro.props;
 			/>
 		)
 	}
+
+	<span
+		aria-hidden="true"
+		class="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:animate-shimmer group-active:opacity-100 group-active:animate-shimmer"
+	/>
 
 	{
 		winner ? (
