@@ -16,6 +16,7 @@ export class Home {
   articlesLabel: string;
   experiencesLabel: string;
   personalProjectsLabel: string;
+  skillsLabel: string;
 
   constructor(
     id: number,
@@ -30,7 +31,8 @@ export class Home {
     projectsLabel: string,
     articlesLabel: string,
     experiencesLabel: string,
-    personalProjectsLabel: string
+    personalProjectsLabel: string,
+    skillsLabel: string
   ) {
     this.id = id;
     this.title = title;
@@ -45,5 +47,6 @@ export class Home {
     this.articlesLabel = articlesLabel;
     this.experiencesLabel = experiencesLabel;
     this.personalProjectsLabel = personalProjectsLabel;
+    this.skillsLabel = skillsLabel;
   }
 }

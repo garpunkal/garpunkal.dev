@@ -1,8 +1,9 @@
 // @filename: squidex.ts
 import { dynamicSortMultiple, buildList } from "./utils.ts";
-import { mapExperience, mapProject, mapHome } from "./mapper.ts";
+import { mapExperience, mapProject, mapHome, mapSkill } from "./mapper.ts";
 import { Project } from "./models/project.ts";
 import { Experience } from "./models/experience.ts";
+import { Skill } from "./models/skill.ts";
 
 const squidexKey = import.meta.env.SQUIDEX_KEY;
 const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
@@ -67,6 +68,25 @@ export async function getProjects() {
     projects.sort(dynamicSortMultiple("-sortOrder", "title"));
 
     return projects;
+  } catch {
+    return [];
+  }
+}
+
+export async function getSkills() {
+  try {
+    const skillData = await fetch(squidexUrl + "skill", {
+      headers: squidexHeaders,
+    });
+
+    const skillJson = await skillData.json();
+
+    const skills: Skill[] = [];
+
+    for (const item of skillJson.items) skills.push(mapSkill(item));
+    skills.sort(dynamicSortMultiple("-percentage", "title"));
+
+    return skills;
   } catch {
     return [];
   }

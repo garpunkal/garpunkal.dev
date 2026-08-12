@@ -1,0 +1,40 @@
+---
+import { Skill } from "../scripts/models/skill";
+
+interface Props {
+	skill: Skill | any | null;
+}
+
+const { skill } = Astro.props;
+
+const style = [
+	skill.background && `background-color: ${skill.background};`,
+	skill.foreground && `color: ${skill.foreground};`,
+]
+	.filter(Boolean)
+	.join(" ");
+---
+
+<div
+	class="dark:bg-black inline-flex items-center px-4 py-4 m-1 font-medium text-mercury rounded bg-ocean dark:text-mercury"
+	style={style}
+>
+	{
+		skill.url ? (
+			<a
+				href={skill.url}
+				target="_blank"
+				rel="noopener"
+				title={skill.title}
+				class="hover:opacity-75"
+				aria-label={skill.title}
+			>
+				{skill.title}
+			</a>
+		) : (
+			<span title={skill.title} aria-label={skill.title}>
+				{skill.title}
+			</span>
+		)
+	}
+</div>

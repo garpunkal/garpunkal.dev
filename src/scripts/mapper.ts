@@ -7,6 +7,7 @@ import { Experience } from "./models/experience.ts";
 import { Link } from "./models/link.ts";
 import { Image } from "./models/image.ts";
 import { Article } from "./models/article.ts";
+import { Skill } from "./models/skill.ts";
 
 export function mapArticle(item: any) {
   return new Article(
@@ -99,7 +100,19 @@ export function mapHome(item: any) {
     item.data.projectsLabel,
     item.data.articlesLabel,
     item.data.experiencesLabel,
-    item.data.personalProjectLabel
+    item.data.personalProjectLabel,
+    item.data.skillsLabel
+  );
+}
+
+export function mapSkill(item: any) {
+  return new Skill(
+    item.data.id,
+    item.data.title,
+    item.data.url,
+    item.data.background,
+    item.data.foreground,
+    item.data.percentage ?? 100,
   );
 }
 
