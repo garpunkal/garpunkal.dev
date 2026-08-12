@@ -68,6 +68,23 @@ function initSmoothScroll() {
 	});
 }
 
+function initSkillCloudShuffle() {
+	const skillCloud = document.getElementById("skillCloud");
+	if (!skillCloud) {
+		return;
+	}
+
+	// re-shuffle on every load so the cloud layout isn't static per build
+	const items = Array.from(skillCloud.children);
+	for (let i = items.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[items[i], items[j]] = [items[j], items[i]];
+	}
+
+	items.forEach((item) => skillCloud.appendChild(item));
+}
+
 initAnalytics();
 initThemeToggle();
 initSmoothScroll();
+initSkillCloudShuffle();

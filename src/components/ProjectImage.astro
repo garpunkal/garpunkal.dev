@@ -19,11 +19,13 @@ const { project, large, winner } = Astro.props;
 				widths={[300, 540, 616, 720, 990]}
 				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block object-left-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video"
+				class="block w-full h-full object-left-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video"
 				loading="lazy"
 				title={project.title}
 				width={large ? 616 : 300}
 				height={large ? 328 : 168}
+				fit="cover"
+				position="left top"
 			/>
 		) : (
 			<Picture
@@ -32,11 +34,13 @@ const { project, large, winner } = Astro.props;
 				widths={[300, 540, 616, 720, 990]}
 				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block object-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video "
+				class="block w-full h-full object-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video "
 				loading="lazy"
 				title={project.title}
 				width={large ? 616 : 300}
 				height={large ? 328 : 168}
+				fit="cover"
+				position="top"
 			/>
 		)
 	}
