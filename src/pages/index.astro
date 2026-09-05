@@ -14,11 +14,11 @@ const home = await getHome();
 const skills = await getSkills();
 const articles = await getArticles();
 ---
+
 <Layout title="Gareth Wright - garpunkal.dev" header={true}>
-	<Projects projects={projects.filter(x=>!x.personal)} title={home?.projectsLabel} />
-	<Experiences home={home} experiences={experiences} />	
+	<Projects projects={projects.filter((x) => !x.personal)} title={home?.projectsLabel} />
+	<Experiences home={home} experiences={experiences} />
 	<SkillCloud skills={skills} title={home?.skillsLabel ?? "Skills"} />
+	<Projects projects={projects.filter((x) => x.personal)} title={home?.personalProjectsLabel} />
 	<Articles home={home} articles={articles} />
-	<Projects projects={projects.filter(x=>x.personal)} title={home?.personalProjectsLabel}/>
 </Layout>
- 
