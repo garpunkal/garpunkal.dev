@@ -17,7 +17,7 @@ export default defineConfig({
   site: "https://garpunkal.dev",
   prefetch: true,
   image: {
-    domains: ["res.cloudinary.com", "cloud.squidex.io"],
+    domains: ["res.cloudinary.com", "cloud.squidex.io", "media2.dev.to"],
   },
   integrations: [
     sitemap(),

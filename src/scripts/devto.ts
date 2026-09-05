@@ -3,7 +3,7 @@ import { Article } from "./models/article.ts";
 import { dynamicSortMultiple } from "./utils.ts";
 import { mapArticle } from "./mapper.ts";
 
-const devToApiKey = import.meta.env.DEVTO_API_KEY;
+const devToApiKey = import.meta.env.DEVTO_API_KEY ?? import.meta.env.DEV_KEY;
 const devToUrl = "https://dev.to/api/articles/me/published?api-key=";
 const publicDevToUrl = "https://dev.to/api/articles?username=garpunkal";
 
