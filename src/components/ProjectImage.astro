@@ -52,13 +52,13 @@ const { project, large, winner } = Astro.props;
 
 	{
 		winner ? (
-			<figcaption class="absolute px-2 py-1 text-black left-0 bottom-0 md:px-4 md:py-2 bg-tulip dark:bg-mirage rounded-bl-lg rounded-tr-lg text-sm hover:text-black dark:text-cool">
+			<figcaption class="absolute px-2 py-1 text-black left-0 bottom-0 md:px-4 md:py-2 bg-tulip dark:bg-mirage rounded-bl-lg rounded-tr-lg text-sm md:text-base hover:text-black dark:text-cool shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
 				<span class="font-bold hidden lg:block">{project.winnerLabel}</span>
 				<span>{project.title}</span>
 				<span class="hidden lg:block">{project.winnerDescription}</span>
 			</figcaption>
 		) : (
-			<figcaption class="absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm ">
+			<figcaption class="absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm md:text-base shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
 				{project.title}
 			</figcaption>
 		)

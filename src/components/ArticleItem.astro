@@ -13,7 +13,7 @@ const { article, cssClass } = Astro.props;
 <div class={cssClass}>
 	<div class="flex-1">
 		<a href={article.canonical_url} target="_blank" rel="noopener" title={article.title}>
-			<figure class="relative" role="none">
+			<figure class="group relative overflow-hidden rounded-t-lg" role="none">
 				<Picture
 					src={article.cover_image}
 					formats={["webp"]}
@@ -27,6 +27,10 @@ const { article, cssClass } = Astro.props;
 					title={article.title}
 					width="404"
 					height="170"
+				/>
+				<span
+					aria-hidden="true"
+					class="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:animate-shimmer group-active:opacity-100 group-active:animate-shimmer"
 				/>
 			</figure>
 			<div class="px-6 pt-6">
