@@ -19,14 +19,45 @@ const sortedExperiences = experiences
 	<div class="container">
 		<Heading title={home?.experiencesLabel}/>
 		
-		<div class="flex flex-wrap -m-1 md:-m-2 justify-center">
+		<ol class="relative mx-auto max-w-[1040px] list-none px-0 pb-0 pt-4 max-md:pl-6" data-experience-timeline>
+			<span class="pointer-events-none absolute left-1/2 z-0 w-[3px] bg-cool max-md:left-0" data-experience-rail aria-hidden="true" />
 			{
-				sortedExperiences.map((experience: Experience) => (
-					<div class="flex flex-wrap w-full md:w-1/2 lg:w-1/3 p-2">
+				sortedExperiences.map((experience: Experience, index: number) => (
+					<li class:list={["relative z-[1] box-border w-1/2 pb-0 pr-[3.75rem] after:absolute after:right-[-12px] after:top-[1.15rem] after:size-6 after:rounded-full after:border-4 after:border-mirage after:bg-[var(--timeline-marker)] after:transition-transform after:duration-150 after:ease-in-out before:absolute before:right-0 before:top-[1.85rem] before:h-[2px] before:w-[3.75rem] before:bg-[var(--timeline-marker)] has-[.experience-card:hover]:after:scale-[1.45] max-md:w-full max-md:pb-4 max-md:pl-7 max-md:pr-0 max-md:after:left-[calc(-1.5rem-12px)] max-md:after:right-auto max-md:before:left-[-1.5rem] max-md:before:right-auto max-md:before:w-[3.25rem]", index % 2 === 1 && "md:ml-[50%] md:max-lg:mt-[-15rem] lg:mt-[-8rem] md:pl-[3.75rem] md:pr-0 md:after:left-[-12px] md:after:right-auto md:before:left-0 md:before:right-auto"]} style={"--timeline-marker:" + experience.logo.background}>
 						<ExperienceItem experience={experience} />
-					</div>
+					</li>
 				))
 			}
-		</div>
+		</ol>
 	</div>
 </section>
+
+<script>
+	const timelines = document.querySelectorAll<HTMLOListElement>("[data-experience-timeline]");
+
+	const positionRail = (timeline: HTMLOListElement) => {
+		const rail = timeline.querySelector<HTMLElement>("[data-experience-rail]");
+		const entries = timeline.querySelectorAll<HTMLElement>(":scope > li");
+
+		if (!rail || entries.length === 0) return;
+
+		const timelineTop = timeline.getBoundingClientRect().top;
+		const markerCenter = (entry: HTMLElement) => {
+			const entryStyles = getComputedStyle(entry, "::after");
+			const entryTop = entry.getBoundingClientRect().top - timelineTop;
+			return entryTop + parseFloat(entryStyles.top) + parseFloat(entryStyles.height) / 2;
+		};
+		const top = markerCenter(entries[0]);
+		const bottom = markerCenter(entries[entries.length - 1]);
+
+		rail.style.top = `${top}px`;
+		rail.style.height = `${Math.max(0, bottom - top)}px`;
+	};
+
+	for (const timeline of timelines) {
+		const update = () => requestAnimationFrame(() => positionRail(timeline));
+		update();
+		new ResizeObserver(update).observe(timeline);
+		window.addEventListener("resize", update);
+	}
+</script>

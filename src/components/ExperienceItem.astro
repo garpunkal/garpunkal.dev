@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import { Experience } from "../scripts/models/experience";
 import { getMonthYear, getMonths } from "../scripts/utils.ts";
+
 interface Props {
 	experience: Experience | any | null;
 }
@@ -13,74 +14,29 @@ if (experience.to == null) {
 }
 ---
 
-<div
-	class="flex flex-row flex-wrap w-full py-4 px-4 rounded-lg dark:brightness-75 dark:hover:brightness-100"
-	style={"background-color:" + experience.logo.background + ";background-size:auto;"}
->
-	<div class="w-full h-100pixel flex justify-center">
-		{
-			experience.url ? (
-				<a
-					href={experience.url}
-					target="_blank"
-					rel="noopener"
-					title={experience.title}
-					aria-label={experience.title}
-				>
-					<Picture
-						src={experience.logo.url}
-						formats={["webp"]}
-						widths={[100]}
-						sizes="100px"
-						fit="contain"
-						alt={experience.logo.alt}
-						class="flex object-contain rounded-lg lg:rounded-l-lg w-[100px] h-[100px]"
-						loading="lazy"
-						width="100"
-						height="100"
-						style={"background-color:" + experience.logo.background}
-					/>
-				</a>
-			) : (
-				<Picture
-					src={experience.logo.url}
-					formats={["webp"]}
-					widths={[100]}
-					sizes="100px"
-					fit="contain"
-					alt={experience.logo.alt}
-					class="flex object-contain rounded-lg lg:rounded-l-lg w-[100px] h-[100px]"
-					loading="lazy"
-					width="100"
-					height="100"
-					style={"background-color:" + experience.logo.background}
-				/>
-			)
-		}
+<a class="block text-inherit no-underline transition-opacity duration-200 dark:opacity-60 dark:hover:opacity-100 dark:focus-visible:opacity-100 dark:active:opacity-100 focus-visible:rounded-[0.35rem] focus-visible:outline-2 focus-visible:outline-[var(--experience-accent)] focus-visible:outline-offset-4" href={experience.url} target={experience.url ? "_blank" : undefined} rel={experience.url ? "noopener" : undefined} style={"--experience-accent:" + experience.logo.background}>
+<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-[var(--experience-accent)] bg-[var(--experience-accent)] p-5 px-6" style={"--experience-accent:" + experience.logo.background}>
+	<div class="mb-4 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
+		<span>{getMonthYear(experience.from)}</span>
+		<span aria-hidden="true"> - </span>
+		<span>{experience.isCurrent ? "Current" : getMonthYear(experience.to)}</span>
 	</div>
 
-	<div class="w-full mt-2 text-center">
-		<h3 class="text-lg font-bold" style={"color:" + experience.logo.foreground}>
-			{experience.job}
-		</h3>
-		<h4 class="mb-1 text-sm" style={"color:" + experience.logo.foreground}>
-			{experience.title}
-		</h4>
-	</div>
-
-	<div class="w-full py-2 rounded-b-lg text-sm text-center opacity-75" style={"color:" + experience.logo.foreground}>
-		<div class="uppercase">
-			{experience.isCurrent ? <span class="font-bold">CURRENT</span> : <span>{getMonthYear(experience.to)}</span>}
-			 -
-			{getMonthYear(experience.from)}
+	<div class="flex gap-4 max-lg:flex-col">
+		<div class="mr-4 h-24 w-24 shrink-0 overflow-hidden rounded-[0.3rem] bg-[var(--experience-accent)] max-lg:mr-0">
+			<Picture src={experience.logo.url} formats={["webp"]} widths={[200]} sizes="96px" fit="contain" alt={experience.logo.alt} class="h-full w-full object-contain" loading="lazy" width="200" height="200" style={"background-color:" + experience.logo.background} />
 		</div>
 
-		{
-			!experience.isCurrent && getMonths(experience.from, experience.to) != "0 months" ? (
-				<div class="text-xs">{getMonths(experience.from, experience.to)}</div>
-			) : (
-				<div />
-			)
-		}
+		<div class="min-w-0">
+			<h3 class="m-0 text-xl font-bold" style={"color:" + experience.logo.foreground}>{experience.job}</h3>
+			<h4 class="m-0 mt-[0.2rem] text-sm font-medium" style={"color:" + experience.logo.foreground}>{experience.title}</h4>
+			<div class="mt-[0.55rem] flex flex-col gap-[0.15rem] text-xs opacity-75" style={"color:" + experience.logo.foreground}>
+				<span>{experience.location}</span>
+				{!experience.isCurrent && getMonths(experience.from, experience.to) != "0 months" && <span>{getMonths(experience.from, experience.to)}</span>}
+			</div>
+		</div>
 	</div>
-</div>
+
+	{!experience.hideDescription && experience.description && <p class="mb-0 mt-4 text-[0.86rem] leading-[1.6] opacity-[0.84]" style={"color:" + experience.logo.foreground}>{experience.description}</p>}
+</article>
+</a>
