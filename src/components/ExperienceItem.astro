@@ -14,7 +14,7 @@ if (experience.to == null) {
 }
 ---
 
-<a class="block text-inherit no-underline transition-opacity duration-200 dark:opacity-60 dark:hover:opacity-100 dark:focus-visible:opacity-100 dark:active:opacity-100 focus-visible:rounded-[0.35rem] focus-visible:outline-2 focus-visible:outline-[var(--experience-accent)] focus-visible:outline-offset-4" href={experience.url} target={experience.url ? "_blank" : undefined} rel={experience.url ? "noopener" : undefined} style={"--experience-accent:" + experience.logo.background}>
+<a class="block text-inherit no-underline transition-opacity duration-200 dark:opacity-60 dark:hover:opacity-100 dark:focus-visible:opacity-100 dark:active:opacity-100 focus-visible:rounded-[0.35rem] focus-visible:outline-2 focus-visible:outline-[var(--experience-accent)] focus-visible:outline-offset-4" href={experience.url || undefined} target={experience.url ? "_blank" : undefined} rel={experience.url ? "noopener" : undefined} style={"--experience-accent:" + experience.logo.background}>
 <article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-[var(--experience-accent)] bg-[var(--experience-accent)] p-5 px-6" style={"--experience-accent:" + experience.logo.background}>
 	<div class="mb-4 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
 		<span>{getMonthYear(experience.from)}</span>
