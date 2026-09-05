@@ -19,7 +19,7 @@ const sortedExperiences = experiences
 	<div class="container">
 		<Heading title={home?.experiencesLabel}/>
 		
-		<ol class="relative mx-auto max-w-[1040px] list-none px-0 pb-0 pt-4 max-md:pl-6" data-experience-timeline>
+		<ol class="relative mx-auto w-full list-none px-0 pb-0 pt-4 max-md:pl-6" data-experience-timeline>
 			<span class="pointer-events-none absolute left-1/2 z-0 w-[3px] bg-cool max-md:left-0" data-experience-rail aria-hidden="true" />
 			{
 				sortedExperiences.map((experience: Experience, index: number) => (
