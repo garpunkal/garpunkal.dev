@@ -10,19 +10,27 @@ const publicDevToUrl = "https://dev.to/api/articles?username=garpunkal";
 export async function getArticles(page = 1, accumulatedArticles: Article[] = [])
   : Promise<Article[]> {
   try {
-    const url = devToApiKey
+    const authenticatedUrl = devToApiKey
       ? devToUrl + devToApiKey + "&page=" + page
-      : publicDevToUrl + "&page=" + page;
-    const response = await fetch(url, {
+      : null;
+    const publicUrl = publicDevToUrl + "&page=" + page;
+    const response = await fetch(authenticatedUrl ?? publicUrl, {
       method: "GET",
       headers: { "Content-Type": "application/vnd.forem.api-v1+json" },
     });
 
-    if (!response.ok) {
+    const fallbackResponse = authenticatedUrl && !response.ok
+      ? await fetch(publicUrl, {
+          method: "GET",
+          headers: { "Content-Type": "application/vnd.forem.api-v1+json" },
+        })
+      : response;
+
+    if (!fallbackResponse.ok) {
       throw new Error(`Error fetching articles: ${response.statusText}`);
     }
 
-    const posts: any[] = await response.json();
+    const posts: any[] = await fallbackResponse.json();
     const articles = accumulatedArticles.concat(posts.map(mapArticle));
 
     if (posts.length >= 30) {
