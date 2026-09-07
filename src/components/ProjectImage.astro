@@ -72,8 +72,8 @@ const drips = Array.from({ length: dripCount }, () => {
 			drips.map((drip) => (
 				<div
 					class:list={[
-						// scale-x-125 overlaps each column into its neighbours to hide the sub-pixel seam left by independently animated transforms
-						"h-full scale-x-125 scale-y-0 transition-transform ease-[cubic-bezier(0.65,0,0.35,1)] [transition-duration:var(--dur)] [transition-delay:var(--del)] group-hover:scale-y-100",
+						// scale-x-150 overlaps each column into its neighbours to hide the sub-pixel seam left by independently animated transforms
+						"h-full scale-x-150 scale-y-0 transition-transform ease-[cubic-bezier(0.65,0,0.35,1)] [transition-duration:var(--dur)] [transition-delay:var(--del)] group-hover:scale-y-100",
 						drip.fromBottom ? "origin-bottom" : "origin-top",
 						winner ? "bg-tulip dark:bg-mirage" : "bg-ocean dark:bg-mirage",
 					]}
