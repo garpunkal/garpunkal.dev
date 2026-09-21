@@ -15,7 +15,7 @@ const { article } = Astro.props;
 		class="flex flex-row flex-wrap"
 	
 	>
-		<figure class="flex w-2/6" role="none">
+		<figure class="group relative flex w-2/6 overflow-hidden" role="none">
 			<Picture
 				src={article.cover_image}
 				formats={["webp"]}
@@ -27,6 +27,10 @@ const { article } = Astro.props;
 				title={article.title}
 				width="172"
 				height="72"
+			/>
+			<span
+				aria-hidden="true"
+				class="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:animate-shimmer group-active:opacity-100 group-active:animate-shimmer"
 			/>
 		</figure>
 		<div class="flex items-center w-4/6 px-2 md:px-4">
