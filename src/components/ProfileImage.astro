@@ -3,24 +3,73 @@ import { Picture } from "astro:assets";
 import type { Image } from "../scripts/models/image";
 
 interface Props {
-	image: Image | any | null;
+  image: Image | any | null;
 }
 
 const { image } = Astro.props;
 ---
 
-<a id="switchTheme" aria-label="dark mode" title="dark mode" class="w-full cursor-pointer">
-	<div class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto">
-		<Picture
-			src={image.url}
-			formats={["webp"]}
-			widths={[192, 396, 499]}
-			sizes={`(max-width: 375px) 192px, (max-width: 768px) 396px, 499px`}
-			alt={image.alt}
-			class="object-cover w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
-			width="499"
-			height="499"
-			loading="eager"
-		/>
-	</div>
+<svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;pointer-events:none;overflow:hidden">
+  <defs>
+    <filter id="ca-animated" color-interpolation-filters="sRGB" x="-5%" y="0%" width="110%" height="100%">
+      <feColorMatrix in="SourceGraphic" type="matrix" result="r"
+        values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+      <feOffset in="r" dx="0" dy="0" result="r-off">
+        <animate
+          attributeName="dx"
+          values="-6;-2;-5;-3;-6;-2;-6"
+          keyTimes="0;0.15;0.3;0.5;0.65;0.8;1"
+          calcMode="spline"
+          keySplines="0 0 1 1;0 0 0.5 1;0.5 0 1 1;0 0 0.5 1;0.5 0 1 1;0 0 1 1"
+          dur="2s"
+          repeatCount="indefinite"
+          begin="switchTheme.mouseover"
+          end="switchTheme.mouseout"
+          fill="remove"/>
+      </feOffset>
+      <feColorMatrix in="SourceGraphic" type="matrix" result="g"
+        values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+      <feColorMatrix in="SourceGraphic" type="matrix" result="b"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+      <feOffset in="b" dx="0" dy="0" result="b-off">
+        <animate
+          attributeName="dx"
+          values="6;2;5;3;6;2;6"
+          keyTimes="0;0.15;0.3;0.5;0.65;0.8;1"
+          calcMode="spline"
+          keySplines="0 0 1 1;0 0 0.5 1;0.5 0 1 1;0 0 0.5 1;0.5 0 1 1;0 0 1 1"
+          dur="2s"
+          repeatCount="indefinite"
+          begin="switchTheme.mouseover"
+          end="switchTheme.mouseout"
+          fill="remove"/>
+      </feOffset>
+
+      <feBlend in="r-off" in2="g" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="b-off" mode="screen" result="rgb-out"/>
+      <feComposite in="rgb-out" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+<a
+  id="switchTheme"
+  aria-label="dark mode"
+  title="dark mode"
+  class="w-full cursor-pointer profile-chromatic"
+>
+  <div
+    class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto"
+  >
+    <Picture
+      src={image.url}
+      formats={["webp"]}
+      widths={[192, 396, 499]}
+      sizes={`(max-width: 375px) 192px, (max-width: 768px) 396px, 499px`}
+      alt={image.alt}
+      class="object-cover w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
+      width="499"
+      height="499"
+      loading="eager"
+    />
+  </div>
 </a>

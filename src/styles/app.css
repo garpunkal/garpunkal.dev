@@ -111,3 +111,9 @@
     background-position: 150% 0;
   }
 }
+
+/* ─── Profile image chromatic aberration ────────────────────────── */
+
+@utility profile-chromatic {
+  filter: url(#ca-animated);
+}
