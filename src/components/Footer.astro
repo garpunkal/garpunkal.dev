@@ -16,7 +16,7 @@ const { home } = Astro.props;
 		<UpArrow />
 
 		{
-			home.githubSource ? (
+			home?.githubSource ? (
 				<div class="flex flex-wrap justify-center w-full">
 					<a
 						href={home.githubSource.url}
@@ -46,7 +46,7 @@ const { home } = Astro.props;
 
 		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center wrapped-links gap-2 lg:gap-8">
 			{
-				home.footerLinks.map((social: Link) => (
+				home?.footerLinks?.map((social: Link) => (
 					<div class="flex flex-wrap w-10">
 						<SvgLink
 							href={social.url}

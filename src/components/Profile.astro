@@ -13,6 +13,7 @@ interface Props {
 const { home } = Astro.props;
 ---
 
+{home && (
 <section
 	class="container flex flex-wrap items-center h-auto mt-20 mb-2 lg:mb-0 lg:mt-2"
 	id="profile"
@@ -74,3 +75,4 @@ const { home } = Astro.props;
 		<DownArrow anchor="projects" />
 	</div>
 </section>
+)}
