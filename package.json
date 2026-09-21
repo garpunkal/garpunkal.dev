@@ -45,5 +45,11 @@
 	},
 	"overrides": {
 		"sharp": "^0.35.3"
+	},
+	"allowScripts": {
+		"@tailwindcss/oxide@4.1.8": true,
+		"canvas@3.2.3": true,
+		"esbuild@0.25.5": true,
+		"esbuild@0.28.1": true
 	}
 }
