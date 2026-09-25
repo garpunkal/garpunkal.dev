@@ -54,6 +54,38 @@
   }
 }
 
+@utility drip {
+  @apply h-full scale-x-150 scale-y-0 transition-[transform];
+  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  transition-duration: var(--dur, 300ms);
+  transition-delay: var(--del, 0ms);
+
+  .group:hover & {
+    @apply scale-y-100;
+  }
+}
+
+@utility fade-in-scale {
+  @apply opacity-0 scale-90 transition-all duration-200 ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+
+  .group:hover & {
+    @apply opacity-100 scale-100;
+  }
+}
+
+@utility project-card {
+  @apply group relative transition-transform duration-300 ease-out hover:scale-105 hover:z-10;
+}
+
+@utility section-heading {
+  @apply w-full mt-4 mb-6 md:mt-8 md:mb-10 text-3xl font-extrabold tracking-tighter text-center md:text-left text-cool md:text-6xl dark:text-pale lg:mt-0;
+}
+
+@utility skill-chip {
+  @apply dark:bg-black inline-flex items-center px-3 py-2 md:px-5 md:py-4 m-1 font-medium text-white rounded-md shadow-sm bg-ocean dark:text-mercury text-sm relative transition-[transform,box-shadow,background-color,color] duration-100 ease-in-out hover:bg-tulip hover:text-black hover:scale-150 hover:shadow-lg hover:z-10 active:scale-150 active:shadow-xl active:z-10 cursor-pointer;
+}
+
 @utility brightness-75 {
   filter: brightness(0.75);
 }
@@ -111,8 +143,6 @@
     background-position: 150% 0;
   }
 }
-
-/* ─── Profile image chromatic aberration ────────────────────────── */
 
 @utility profile-chromatic {
   filter: url(#ca-animated);

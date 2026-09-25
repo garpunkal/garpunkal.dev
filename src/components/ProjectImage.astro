@@ -72,8 +72,8 @@ const drips = Array.from({ length: dripCount }, () => {
 			drips.map((drip) => (
 				<div
 					class:list={[
-						// scale-x-150 overlaps each column into its neighbours to hide the sub-pixel seam left by independently animated transforms
-						"h-full scale-x-150 scale-y-0 transition-transform ease-[cubic-bezier(0.65,0,0.35,1)] [transition-duration:var(--dur)] [transition-delay:var(--del)] group-hover:scale-y-100",
+						// drip utility handles scale, transition timing/duration/delay, and group-hover reveal
+						"drip",
 						drip.fromBottom ? "origin-bottom" : "origin-top",
 						winner ? "bg-tulip dark:bg-mirage" : "bg-ocean dark:bg-mirage",
 					]}
@@ -86,7 +86,8 @@ const drips = Array.from({ length: dripCount }, () => {
 	<div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none overflow-hidden">
 		<span
 			class:list={[
-				"font-bold text-sm md:text-lg w-full line-clamp-2 opacity-0 scale-90 transition-all duration-200 delay-150 ease-out group-hover:opacity-100 group-hover:scale-100",
+				// fade-in-scale handles opacity/scale reveal; --reveal-delay staggers per element
+				"font-bold text-sm md:text-lg w-full line-clamp-2 fade-in-scale [--reveal-delay:150ms]",
 				winner ? "text-black dark:text-cool" : "text-white dark:text-cool",
 			]}
 		>
@@ -95,10 +96,10 @@ const drips = Array.from({ length: dripCount }, () => {
 		{
 			winner && (
 				<>
-					<span class="text-xs md:text-base w-full line-clamp-2 text-black dark:text-cool opacity-0 scale-90 transition-all duration-200 delay-[190ms] ease-out group-hover:opacity-100 group-hover:scale-100">
+					<span class="text-xs md:text-base w-full line-clamp-2 text-black dark:text-cool fade-in-scale [--reveal-delay:190ms]">
 						{project.winnerLabel}
 					</span>
-					<span class="text-xs md:text-base w-full line-clamp-2 text-black dark:text-cool opacity-0 scale-90 transition-all duration-200 delay-[230ms] ease-out group-hover:opacity-100 group-hover:scale-100">
+					<span class="text-xs md:text-base w-full line-clamp-2 text-black dark:text-cool fade-in-scale [--reveal-delay:230ms]">
 						{project.winnerDescription}
 					</span>
 				</>

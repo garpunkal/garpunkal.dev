@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
         "garpunkal"
-    ]
-}
+    ],
+    "css.validate": false,
+    "css.lint.unknownAtRules": "ignore",
+    "scss.validate": false,
+    "tailwindCSS.experimental.configFile": null,
+    "files.associations": {
+        "*.css": "tailwindcss"
+    }
+}
