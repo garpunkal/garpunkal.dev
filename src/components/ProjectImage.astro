@@ -18,8 +18,8 @@ const loadingAttr = isAboveFold ? "eager" : "lazy";
 const fetchPriority = isAboveFold ? "high" : "auto";
 
 const imageWidths = large
-	? ([400, 616, 800, 990] as const)
-	: ([160, 240, 320] as const);
+	? [400, 616, 800, 990]
+	: [160, 240, 320];
 
 // Large: full width on mobile → 50 % of viewport on md/lg (max ~616 px)
 // Small: 50 % on mobile → 33 % md → 25 % lg (max ~300 px)
