@@ -5,9 +5,10 @@ interface Props {
 	project: Project | any | null;
 	large: boolean;
 	winner: boolean;
+	personal?: boolean;
 }
 
-const { project, large, winner } = Astro.props;
+const { project, large, winner, personal = false } = Astro.props;
 
 // vertical drips that grow in from the top or bottom edge on hover, with random widths and stagger so they trickle in like dripping/rising paint before filling the panel
 const dripCount = 40;
@@ -61,7 +62,7 @@ const drips = Array.from({ length: dripCount }, () => {
 				{project.title}
 			</figcaption>
 		) : (
-			<figcaption class="absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 bg-ocean dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm md:text-base shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
+			<figcaption class={`absolute px-2 py-1 text-white left-0 bottom-0 md:px-4 md:py-2 ${personal ? 'bg-slate text-white' : 'bg-ocean text-white'} dark:bg-mirage dark:text-cool rounded-bl-lg rounded-tr-lg text-sm md:text-base shadow-[0_4px_6px_rgba(0,0,0,0.5)]`}>
 				{project.title}
 			</figcaption>
 		)
@@ -75,7 +76,7 @@ const drips = Array.from({ length: dripCount }, () => {
 						// drip utility handles scale, transition timing/duration/delay, and group-hover reveal
 						"drip",
 						drip.fromBottom ? "origin-bottom" : "origin-top",
-						winner ? "bg-tulip dark:bg-mirage" : "bg-ocean dark:bg-mirage",
+						winner ? "bg-tulip dark:bg-mirage" : personal ? "bg-slate dark:bg-mirage" : "bg-ocean dark:bg-mirage",
 					]}
 					style={`flex-grow:${drip.grow}; flex-basis:0%; --dur:${drip.duration}ms; --del:${drip.delay}ms;`}
 				/>

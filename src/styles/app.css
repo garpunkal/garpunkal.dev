@@ -11,6 +11,7 @@
   --color-ocean: #077da0;
   --color-mirage: #111827;
   --color-tulip: #e3b440;
+  --color-slate: #475569;
   --color-iron: #d1d5db;
   --color-cool: #9ca3af;
   --color-mercury: #e5e7eb;
@@ -85,7 +86,7 @@
 }
 
 @utility skill-chip {
-  @apply dark:bg-black inline-flex items-center px-3 py-2 md:px-5 md:py-4 m-1 font-medium text-white rounded-md shadow-sm bg-ocean dark:text-mercury text-sm relative transition-[transform,box-shadow,background-color,color] duration-100 ease-in-out hover:bg-tulip hover:text-black hover:scale-150 hover:shadow-lg hover:z-10 active:scale-150 active:shadow-xl active:z-10 cursor-pointer;
+  @apply dark:bg-black inline-flex items-center px-3 py-2 md:px-5 md:py-4 m-1 font-medium text-white rounded-md shadow-sm bg-ocean dark:text-mercury text-sm relative transition-[transform,box-shadow,background-color,color] duration-100 ease-in-out hover:bg-slate hover:text-white hover:scale-150 hover:shadow-lg hover:z-10 active:scale-150 active:shadow-xl active:z-10 cursor-pointer;
 }
 
 @utility brightness-75 {

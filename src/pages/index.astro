@@ -19,6 +19,6 @@ const articles = await getArticles();
 	<Projects projects={projects.filter((x) => !x.personal)} title={home?.projectsLabel} />
 	<Experiences home={home} experiences={experiences} />
 	<SkillCloud skills={skills} title={home?.skillsLabel ?? "Skills"} />
-	<Projects projects={projects.filter((x) => x.personal)} title={home?.personalProjectsLabel} />
+	<Projects projects={projects.filter((x) => x.personal)} title={home?.personalProjectsLabel} personal={true} />
 	<Articles home={home} articles={articles} />
 </Layout>
