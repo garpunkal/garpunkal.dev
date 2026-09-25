@@ -25,10 +25,11 @@ const sortedProjects = projects
 			{
 				sortedProjects
 					.slice(0, 6)
-					.map((project: Project) => (
+					.map((project: Project, i: number) => (
 						<ProjectItem
 							project={project}
 							large={true}
+							index={i}
 							cssClass="flex flex-wrap w-full lg:flex-grow md:w-1/2 lg:w-1/2 p-2"
 						/>
 					))
@@ -39,8 +40,8 @@ const sortedProjects = projects
 				sortedProjects
 					.slice(6, projects.length)
 					.sort((a: Project, b: Project) => a.title.localeCompare(b.title))
-					.map((project: Project) => (
-						<ProjectItem project={project} large={false} cssClass="flex flex-wrap w-1/2 md:w-1/3 lg:w-1/4 p-2" />
+					.map((project: Project, i: number) => (
+						<ProjectItem project={project} large={false} index={i} cssClass="flex flex-wrap w-1/2 md:w-1/3 lg:w-1/4 p-2" />
 					))
 			}
 		</div>
