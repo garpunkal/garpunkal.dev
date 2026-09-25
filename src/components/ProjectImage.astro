@@ -5,29 +5,9 @@ interface Props {
 	project: Project | any | null;
 	large: boolean;
 	winner: boolean;
-	/** Zero-based index within its row – used to eager-load the first LCP candidate */
-	index?: number;
 }
 
-const { project, large, winner, index = 0 } = Astro.props;
-
-// Images displayed at ~168×94 (small) vs ~616×328 (large)
-// Sizes strings reflect the actual CSS column widths at each breakpoint.
-const isAboveFold = large && index === 0;
-const loadingAttr = isAboveFold ? "eager" : "lazy";
-const fetchPriority = isAboveFold ? "high" : "auto";
-
-const imageWidths = large
-	? ([400, 616, 800, 990] as const)
-	: ([160, 240, 320] as const);
-
-// Large: full width on mobile → 50 % of viewport on md/lg (max ~616 px)
-// Small: 50 % on mobile → 33 % md → 25 % lg (max ~300 px)
-const imageSizes = large
-	? "(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 616px"
-	: "(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 300px";
-
-const imageQuality = large ? 75 : 65;
+const { project, large, winner } = Astro.props;
 
 // vertical drips that grow in from the top or bottom edge on hover, with random widths and stagger so they trickle in like dripping/rising paint before filling the panel
 const dripCount = 40;
@@ -46,13 +26,11 @@ const drips = Array.from({ length: dripCount }, () => {
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}
-				widths={imageWidths}
-				sizes={imageSizes}
-				quality={imageQuality}
+				widths={[300, 540, 616, 720, 990]}
+				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
 				class="block w-full h-full object-left-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video"
-				loading={loadingAttr}
-				fetchpriority={fetchPriority}
+				loading="lazy"
 				title={project.title}
 				width={large ? 616 : 300}
 				height={large ? 328 : 168}
@@ -63,13 +41,11 @@ const drips = Array.from({ length: dripCount }, () => {
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}
-				widths={imageWidths}
-				sizes={imageSizes}
-				quality={imageQuality}
+				widths={[300, 540, 616, 720, 990]}
+				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block w-full h-full object-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video"
-				loading={loadingAttr}
-				fetchpriority={fetchPriority}
+				class="block w-full h-full object-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video "
+				loading="lazy"
 				title={project.title}
 				width={large ? 616 : 300}
 				height={large ? 328 : 168}

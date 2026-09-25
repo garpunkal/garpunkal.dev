@@ -6,20 +6,19 @@ interface Props {
 	project: Project | any | null;
 	large: boolean;
 	cssClass: string;
-	index?: number;
 }
 
-const { project, large, cssClass, index = 0 } = Astro.props;
+const { project, large, cssClass } = Astro.props;
 ---
 
 <div class={"group project-card " + cssClass}>
 	{
 		project.url ? (
 			<a href={project.url} title={project.title} target="_blank" rel="noopener">
-				<ProjectImage project={project} large={large} winner={project.isWinner} index={index} />
+				<ProjectImage project={project} large={large} winner={project.isWinner} />
 			</a>
 		) : (
-			<ProjectImage project={project} large={large} winner={project.isWinner} index={index} />
+			<ProjectImage project={project} large={large} winner={project.isWinner} />
 		)
 	}
 </div>
