@@ -25,29 +25,29 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/check": "^0.9.4",
-		"@tailwindcss/vite": "^4.1.8",
-		"astro": "^7.1.6",
+		"@astrojs/check": "0.9.10",
+		"@tailwindcss/vite": "4.3.3",
+		"astro": "7.3.5",
 		"canvas": "^3.2.3",
 		"d3-cloud": "^1.2.9",
-		"tailwindcss": "^4.1.8",
-		"typescript": "^5.8.3",
-		"vite-plugin-mkcert": "^1.17.8"
+		"tailwindcss": "4.3.3",
+		"typescript": "5.9.3",
+		"vite-plugin-mkcert": "2.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/sitemap": "^3.7.3",
+		"@astrojs/sitemap": "3.7.4",
 		"@garpunkal/astro-google-fonts-optimizer": "^1.0.3",
-		"@tailwindcss/postcss": "^4.1.8",
+		"@tailwindcss/postcss": "4.3.3",
 		"@types/humanize-duration": "^3.27.4",
-		"astro-favicons": "^3.1.6",
+		"astro-favicons": "3.1.8",
 		"astro-robots-txt": "^1.0.0",
-		"humanize-duration": "^3.32.2"
+		"humanize-duration": "3.35.0"
 	},
 	"overrides": {
 		"sharp": "^0.35.3"
 	},
 	"allowScripts": {
-		"@tailwindcss/oxide@4.1.8": true,
+		"@tailwindcss/oxide@4.3.3": true,
 		"canvas@3.2.3": true,
 		"esbuild@0.25.5": true,
 		"esbuild@0.28.1": true
