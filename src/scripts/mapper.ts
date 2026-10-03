@@ -30,9 +30,11 @@ export function mapProject(item: any) {
     item.data.position,
     item.data.url,
     new Image(
-      "https://cloud.squidex.io/api/assets/garpunkaldev/" +
-        item.data.image +
-        "?cache=31536000",
+      item.data.image
+        ? "https://cloud.squidex.io/api/assets/garpunkaldev/" +
+            item.data.image +
+            "?cache=31536000"
+        : "",
       "",
       item.data.title,
       "",

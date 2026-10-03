@@ -19,40 +19,47 @@ const drips = Array.from({ length: dripCount }, () => {
 	const fromBottom = Math.random() < 0.5;
 	return { delay, duration, grow, fromBottom };
 });
+
+// Map a position string to its Tailwind object-position class and the sharp `position` value.
+// To add a new position, add a single entry here.
+const positionMap: Record<string, { cls: string; pos: string }> = {
+	"left top":      { cls: "object-top-left",    pos: "left top" },
+	"center top":    { cls: "object-top",          pos: "top" },
+	"right top":     { cls: "object-top-right",   pos: "right top" },
+	"left middle":   { cls: "object-left",         pos: "left" },
+	"center middle": { cls: "object-center",       pos: "center" },
+	"right middle":  { cls: "object-right",        pos: "right" },
+	"left bottom":   { cls: "object-bottom-left",  pos: "left bottom" },
+	"center bottom": { cls: "object-bottom",       pos: "bottom" },
+	"right bottom":  { cls: "object-bottom-right", pos: "right bottom" },
+	"center":        { cls: "object-center",       pos: "center" },
+};
+
+const { cls: positionClass, pos: sharpPosition } =
+	positionMap[project.position ?? ""] ?? { cls: "object-top", pos: "top" };
 ---
 
 <figure class="relative w-full h-full overflow-hidden rounded-lg">
 	{
-		project.position === "left top" ? (
+		project.image?.url ? (
 			<Picture
 				src={project.image.url}
 				formats={["webp"]}
 				widths={[300, 540, 616, 720, 990]}
 				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
 				alt={"screenshot of " + project.image.alt}
-				class="block w-full h-full object-left-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video"
+				class={`block w-full h-full ${positionClass} object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video`}
 				loading="lazy"
 				title={project.title}
 				width={large ? 616 : 300}
 				height={large ? 328 : 168}
 				fit="cover"
-				position="left top"
+				position={sharpPosition}
 			/>
 		) : (
-			<Picture
-				src={project.image.url}
-				formats={["webp"]}
-				widths={[300, 540, 616, 720, 990]}
-				sizes={`(max-width: 360px) 300px, (max-width: 720px) 540px, (max-width: 1024px) 720px, 990px`}
-				alt={"screenshot of " + project.image.alt}
-				class="block w-full h-full object-top object-cover dark:brightness-75 dark:hover:brightness-100 rounded-lg aspect-video "
-				loading="lazy"
-				title={project.title}
-				width={large ? 616 : 300}
-				height={large ? 328 : 168}
-				fit="cover"
-				position="top"
-			/>
+			<div class="w-full aspect-video rounded-lg bg-slate/30 flex items-center justify-center">
+				<span class="text-xs text-pale/50">No image</span>
+			</div>
 		)
 	}
 

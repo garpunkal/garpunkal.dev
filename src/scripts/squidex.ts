@@ -64,7 +64,7 @@ export async function getProjects() {
     const projects: Project[] = [];
 
     for (const item of projectJson.items)
-      if (item.data.IsHighlight === true) projects.push(mapProject(item));
+      projects.push(mapProject(item));
     projects.sort(dynamicSortMultiple("-sortOrder", "title"));
 
     return projects;
