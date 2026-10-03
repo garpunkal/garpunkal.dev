@@ -8,6 +8,15 @@ interface Props {
 }
 
 const { article, cssClass } = Astro.props;
+
+const dripCount = 40;
+const drips = Array.from({ length: dripCount }, () => {
+	const delay = Math.random() * 150;
+	const duration = 200 + Math.random() * 120;
+	const grow = 0.4 + Math.random() * 1.8;
+	const fromBottom = Math.random() < 0.5;
+	return { delay, duration, grow, fromBottom };
+});
 ---
 
 <div class={cssClass}>
@@ -28,10 +37,30 @@ const { article, cssClass } = Astro.props;
 					width="404"
 					height="170"
 				/>
-				<span
-					aria-hidden="true"
-					class="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:animate-shimmer group-active:opacity-100 group-active:animate-shimmer"
-				/>
+				<div class="absolute inset-0 overflow-hidden rounded-t-lg pointer-events-none flex">
+					{
+						drips.map((drip) => (
+							<div
+								class:list={[
+									"drip",
+									drip.fromBottom ? "origin-bottom" : "origin-top",
+									"bg-ocean dark:bg-mirage",
+								]}
+								style={`flex-grow:${drip.grow}; flex-basis:0%; --dur:${drip.duration}ms; --del:${drip.delay}ms;`}
+							/>
+						))
+					}
+				</div>
+				<div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none overflow-hidden">
+					<span
+						class:list={[
+							"font-bold text-sm md:text-lg w-full line-clamp-2 fade-in-scale [--reveal-delay:150ms]",
+							"text-white dark:text-cool",
+						]}
+					>
+						{article.title}
+					</span>
+				</div>
 			</figure>
 			<div class="px-6 pt-6">
 				<h2 class="mb-3 text-lg font-bold text-white dark:text-cool min-h-[56px]">

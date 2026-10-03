@@ -23,7 +23,7 @@ const { home } = Astro.props;
 						title={home.githubSource.title}
 						target="_blank"
 						rel="noopener"
-						class="inline-flex items-center font-bold text-white hover:text-slate dark:text-pale "
+						class="inline-flex items-center font-bold text-white hover:text-black dark:text-pale hover:dark:text-white"
 					>
 						<svg
 							class="h-4 pr-2 text-white fill-current hover:text-mirage dark:text-pale "
@@ -44,10 +44,10 @@ const { home } = Astro.props;
 			)
 		}
 
-		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center wrapped-links gap-2 lg:gap-8">
+		<div class="container flex flex-row w-full text-center text-sm flex-wrap justify-center items-center wrapped-links gap-2 lg:gap-8">
 			{
 				home?.footerLinks?.map((social: Link) => (
-					<div class="flex flex-wrap w-10">
+					<div class="flex flex-wrap w-10 items-center justify-center">
 						<SvgLink
 							href={social.url}
 							title={social.title}
@@ -60,6 +60,14 @@ const { home } = Astro.props;
 				))
 			}
 			
+			<div class="flex flex-wrap w-10 items-center justify-center">
+				<SvgLink
+					href="/colours"
+					title="Colour Palette"
+					svgPath="M5 3H25V27H5ZM6 4V26H24V4ZM6 4H24V17H6ZM6 19.5H17V21.5H6ZM6 23H12V24.5H6Z"
+					cssclass="text-white hover:text-mirage dark:text-pale"
+				/>
+			</div>
 		</div>
 	</div>
 </div>
