@@ -84,7 +84,7 @@ export async function getSkills() {
     const skills: Skill[] = [];
 
     for (const item of skillJson.items) skills.push(mapSkill(item));
-    skills.sort(dynamicSortMultiple("-percentage", "title"));
+    skills.sort(dynamicSortMultiple("title"));
 
     return skills;
   } catch {
