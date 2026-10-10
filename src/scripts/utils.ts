@@ -1,24 +1,23 @@
 // @filename: utils.ts
 import humanizeDuration from "humanize-duration";
 
-export function dynamicSortMultiple(...args: string[]) {
-  const sortCriteria: any[] = [];
-  for (let i = 0; i < args.length; i++) {
-    const splittedArg = args[i].split(/ +/);
-    sortCriteria[sortCriteria.length] = [
-      splittedArg[0],
-      splittedArg[1] ? splittedArg[1].toUpperCase() : "ASC",
-    ];
-  }
+export function dynamicSort(property: string, isAscDesc: string) {
   return function (obj1: any, obj2: any) {
-    let i = 0,
-      result = 0;
-    const numberOfProperties = sortCriteria.length;
-    while (result === 0 && i < numberOfProperties) {
-      result = dynamicSort(sortCriteria[i][0], sortCriteria[i][1])(obj1, obj2);
-      i++;
+    const val1 =
+      typeof obj1[property] === "string"
+        ? obj1[property].toLowerCase()
+        : obj1[property] ?? "";
+
+    const val2 =
+      typeof obj2[property] === "string"
+        ? obj2[property].toLowerCase()
+        : obj2[property] ?? "";
+
+    if (isAscDesc === "DESC") {
+      return val1 > val2 ? -1 : val1 < val2 ? 1 : 0;
     }
-    return result;
+
+    return val1 > val2 ? 1 : val1 < val2 ? -1 : 0;
   };
 }
 
