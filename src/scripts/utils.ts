@@ -18,25 +18,7 @@ export function dynamicSortMultiple(...args: string[]) {
   };
 }
 
-export function dynamicSort(property: string, isAscDesc: string) {
-  return function (obj1: any, obj2: any) {
-    const val1 =
-      typeof obj1[property] === "string"
-        ? obj1[property].toLowerCase()
-        : obj1[property] ?? "";
 
-    const val2 =
-      typeof obj2[property] === "string"
-        ? obj2[property].toLowerCase()
-        : obj2[property] ?? "";
-
-    if (isAscDesc === "DESC") {
-      return val1 > val2 ? -1 : val1 < val2 ? 1 : 0;
-    }
-
-    return val1 > val2 ? 1 : val1 < val2 ? -1 : 0;
-  };
-}
 export function dynamicSort(property: string, isAscDesc: string) {
   return function (obj1: any, obj2: any) {
     const val1 =
