@@ -7,34 +7,61 @@ interface Props {
 
 const { skill } = Astro.props;
 
-const style = [
-	skill.background && `background-color: ${skill.background};`,
+const leftColStyle = [
+	`background-color: ${skill.background || '#1f3245'};`,
 	skill.foreground && `color: ${skill.foreground};`,
 ]
 	.filter(Boolean)
 	.join(" ");
 ---
 
-<div
-	class="skill-chip"
-	style={style}
->
-	{
-		skill.url ? (
-			<a
-				href={skill.url}
-				target="_blank"
-				rel="noopener"
-				title={skill.title}
-				class="hover:opacity-75"
-				aria-label={skill.title}
-			>
-				{skill.title}
-			</a>
-		) : (
-			<span title={skill.title} aria-label={skill.title}>
-				{skill.title}
+{
+	skill.url ? (
+		<a
+			href={skill.url}
+			target="_blank"
+			rel="noopener noreferrer"
+			title={skill.title}
+			class="skill-chip group no-underline inline-flex flex-row items-stretch"
+			aria-label={skill.title}
+		>
+			{skill.logo && (
+				<span class="skill-chip-left" style={leftColStyle}>
+					<img
+						src={skill.logo}
+						alt=""
+						class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
+						loading="lazy"
+					/>
+				</span>
+			)}
+			<span class="skill-chip-right">
+				<span class="whitespace-nowrap font-medium text-xs md:text-sm text-white dark:text-mercury">
+					{skill.title}
+				</span>
 			</span>
-		)
-	}
-</div>
+		</a>
+	) : (
+		<div
+			class="skill-chip group inline-flex flex-row items-stretch"
+			title={skill.title}
+			aria-label={skill.title}
+		>
+			{skill.logo && (
+				<span class="skill-chip-left" style={leftColStyle}>
+					<img
+						src={skill.logo}
+						alt=""
+						class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
+						loading="lazy"
+					/>
+				</span>
+			)}
+			<span class="skill-chip-right">
+				<span class="whitespace-nowrap font-medium text-xs md:text-sm text-white dark:text-mercury">
+					{skill.title}
+				</span>
+			</span>
+		</div>
+	)
+}

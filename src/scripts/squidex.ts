@@ -5,7 +5,7 @@ import { Project } from "./models/project.ts";
 import { Experience } from "./models/experience.ts";
 import { Skill } from "./models/skill.ts";
 
-const squidexKey = import.meta.env.SQUIDEX_KEY;
+const squidexKey = import.meta.env.SQUIDEX_KEY || import.meta.env.SQUIDEX_APP_NAME;
 const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
 
 let squidexHeaders = new Headers();
@@ -75,15 +75,25 @@ export async function getProjects() {
 
 export async function getSkills() {
   try {
-    const skillData = await fetch(squidexUrl + "skill", {
-      headers: squidexHeaders,
-    });
+    const [skillData, skillGroupData] = await Promise.all([
+      fetch(squidexUrl + "skill", { headers: squidexHeaders }),
+      fetch(squidexUrl + "skillgroup", { headers: squidexHeaders }),
+    ]);
 
-    const skillJson = await skillData.json();
+    const [skillJson, skillGroupJson] = await Promise.all([
+      skillData.json(),
+      skillGroupData.json(),
+    ]);
 
+    const groupItems = skillGroupJson.items || [];
     const skills: Skill[] = [];
 
-    for (const item of skillJson.items) skills.push(mapSkill(item));
+    for (const item of skillJson.items) {
+      const groupItem = groupItems.find((g: any) => {
+        return item.data.group && item.data.group[0] === g.id;
+      });
+      skills.push(mapSkill(item, groupItem));
+    }
     skills.sort(dynamicSortMultiple("title"));
 
     return skills;

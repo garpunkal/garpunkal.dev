@@ -51,11 +51,12 @@ const { image } = Astro.props;
     </filter>
   </defs>
 </svg>
-<a
+<button
+  type="button"
   id="switchTheme"
-  aria-label="dark mode"
-  title="dark mode"
-  class="w-full cursor-pointer profile-chromatic"
+  aria-label="Toggle dark/light theme"
+  title="Toggle dark/light theme"
+  class="w-full cursor-pointer profile-chromatic bg-transparent border-0 p-0 text-left block"
 >
   <div
     class="w-48 h-48 mx-auto bg-center bg-cover rounded-full lg:w-auto lg:h-auto"
@@ -65,11 +66,11 @@ const { image } = Astro.props;
       formats={["webp"]}
       widths={[192, 396, 499]}
       sizes={`(max-width: 375px) 192px, (max-width: 768px) 396px, 499px`}
-      alt={image.alt}
+      alt={image.alt || "Gareth Wright profile picture"}
       class="object-cover w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
       width="499"
       height="499"
       loading="eager"
     />
   </div>
-</a>
+</button>

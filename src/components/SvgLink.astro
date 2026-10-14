@@ -14,16 +14,16 @@ interface Props {
 const { href, title, svgPath, strokeWidth, stroke, fill, cssclass, rel, viewBox } = Astro.props;
 ---
 <a
-	class="inline-flex justify-center link w-14 h-14 md:w-10 md:h-10"
+	class="inline-flex justify-center link w-14 h-14 md:w-10 md:h-10 transition-opacity duration-200 dark:opacity-75 dark:hover:opacity-100 hover:opacity-100 focus-visible:opacity-100"
 	href={href}
 	target="_blank"
 	rel={"noopener " + (rel || "")}
-	aria-label={title}
+	aria-label={title || "Link"}
 	>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		class={cssclass ||
-			"h-10 w-10 fill-current text-vampire hover:text-slate dark:text-ocean dark:hover:text-white hover:animate-pulse"}
+			"h-10 w-10 fill-current text-vampire hover:text-slate dark:text-iron dark:hover:text-white hover:animate-pulse"}
 		stroke-width={strokeWidth}
 		stroke={stroke}
 		fill={fill || "currentColor"}

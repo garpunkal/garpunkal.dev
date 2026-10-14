@@ -5,7 +5,10 @@ export class Skill {
   url: string;
   background: string;
   foreground: string;
-  percentage: number;
+  group: string[];
+  logo: string;
+  groupTitle: string;
+  groupOrder: number;
 
   constructor(
     id: number,
@@ -13,13 +16,19 @@ export class Skill {
     url: string,
     background: string,
     foreground: string,
-    percentage: number,
+    group: string[],
+    logo: string = "",
+    groupTitle: string = "",
+    groupOrder: number = 999,
   ) {
     this.id = id;
     this.title = title;
     this.url = url;
     this.background = background;
     this.foreground = foreground;
-    this.percentage = percentage;
+    this.group = group ?? [];
+    this.logo = logo ?? "";
+    this.groupTitle = groupTitle || (this.group[0] ?? "");
+    this.groupOrder = groupOrder;
   }
 }

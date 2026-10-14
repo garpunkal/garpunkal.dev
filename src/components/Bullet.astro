@@ -13,8 +13,8 @@ const { title, svgPath, strokeWidth, stroke, fill, cssclass, url } = Astro.props
 ---
 
 <div class="flex-grow flex-col w-full text-md text-vampire dark:text-iron lg:text-md mb-2 ">
-	<div class="flex flex-row items-start justify-start w-full md:justify-center lg:justify-start gap-2">
-		<div>
+	<div class="flex flex-row items-start justify-start w-full md:justify-center lg:justify-start gap-2 group">
+		<div class="transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class={"flex" + (cssclass || "h-8 w-8 fill-current text-ocean dark:text-ocean")}

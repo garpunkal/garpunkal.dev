@@ -4,22 +4,76 @@ import SkillItem from "./SkillItem.astro";
 import Heading from "./Heading.astro";
 
 interface Props {
-	skills: Skill[] | any | null;
-	title: string | any | null;
+  skills: Skill[] | any | null;
+  title: string | any | null;
 }
 
 const { skills, title } = Astro.props;
+
+interface GroupBucket {
+  title: string;
+  sortOrder: number;
+  skills: Skill[];
+}
+
+const groupMap = new Map<string, GroupBucket>();
+const ungrouped: Skill[] = [];
+
+for (const skill of (skills as Skill[])) {
+  const gTitle = skill.groupTitle || (skill.group?.[0] ?? "");
+  const gOrder = skill.groupOrder ?? 999;
+
+  if (!gTitle) {
+    ungrouped.push(skill);
+  } else {
+    if (!groupMap.has(gTitle)) {
+      groupMap.set(gTitle, { title: gTitle, sortOrder: gOrder, skills: [] });
+    }
+    groupMap.get(gTitle)!.skills.push(skill);
+  }
+}
+
+// Dynamically sort active groups by Squidex skillgroup sortOrder
+const activeGroups = [...groupMap.values()]
+  .filter((g) => g.skills.length > 0)
+  .sort((a, b) => a.sortOrder - b.sortOrder)
+  .map((g) => [g.title, g.skills] as [string, Skill[]]);
+
+if (ungrouped.length > 0) {
+  activeGroups.push(["Other", ungrouped]);
+}
+
+// If nothing is grouped at all, fall back to flat list
+const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
 ---
 
-<section class="text-pale bg-mirage dark:text-iron0 body-font" id="skills">
-	<div class="container">
-		<Heading title={title} />
-		<div id="skillCloud" class="flex flex-wrap justify-center -m-1 md:-m-2 mb-2 md:mb-2">
-			{
-				skills.map((skill: Skill) => (
-					<SkillItem skill={skill} />
-				))
-			}
-		</div>
-	</div>
+<section class="text-iron bg-mirage dark:text-iron body-font" id="skills">
+  <div class="container">
+    <Heading title={title} />
+    {
+      isGrouped ? (
+        <div class="space-y-8">
+          {activeGroups.map(([group, groupSkills]) => (
+            <div class="skill-group">
+              <h3 class="skill-group-label">{group}</h3>
+              <div class="flex flex-wrap -m-1 md:-m-2">
+                {groupSkills.map((skill: Skill) => (
+                  <SkillItem skill={skill} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div
+          id="skillCloud"
+          class="flex flex-wrap justify-center -m-1 md:-m-2 mb-2 md:mb-2"
+        >
+          {skills.map((skill: Skill) => (
+            <SkillItem skill={skill} />
+          ))}
+        </div>
+      )
+    }
+  </div>
 </section>

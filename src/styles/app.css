@@ -51,7 +51,7 @@
     @apply text-vampire dark:text-pale;
   }
   a {
-    @apply text-cool dark:text-ocean hover:text-ocean;
+    @apply text-ocean dark:text-iron hover:text-black dark:hover:text-white transition-colors duration-200;
   }
 }
 
@@ -82,11 +82,32 @@
 }
 
 @utility section-heading {
-  @apply w-full mt-4 mb-6 md:mt-8 md:mb-10 text-3xl font-extrabold tracking-tighter text-center md:text-left text-cool md:text-6xl dark:text-pale lg:mt-0;
+  @apply w-full mt-4 mb-6 md:mt-8 md:mb-10 text-3xl font-extrabold tracking-tighter text-center md:text-left text-white md:text-6xl dark:text-mercury lg:mt-0;
 }
 
 @utility skill-chip {
-  @apply dark:bg-black inline-flex items-center px-3 py-2 md:px-5 md:py-4 m-1 font-medium text-white rounded-md shadow-sm bg-ocean dark:text-mercury text-sm relative transition-[transform,box-shadow,background-color,color] duration-100 ease-in-out hover:bg-slate hover:text-white hover:scale-150 hover:shadow-lg hover:z-10 active:scale-150 active:shadow-xl active:z-10 cursor-pointer;
+  @apply dark:bg-black/80 inline-flex flex-row items-stretch text-center whitespace-nowrap max-w-full m-1 rounded-md overflow-hidden shadow-xs bg-elephant/70 border border-slate/40 text-sm relative transition-[transform,box-shadow,background-color,border-color,color] duration-150 ease-in-out hover:bg-elephant hover:border-slate/80 hover:text-white hover:scale-125 hover:shadow-2xl hover:z-30 active:scale-125 active:shadow-2xl active:z-30 cursor-pointer min-h-10.5 md:min-h-11.5;
+}
+
+@utility skill-chip-left {
+  @apply w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75;
+}
+
+.skill-chip:hover .skill-chip-left,
+.skill-chip:focus-visible .skill-chip-left {
+  opacity: 1;
+}
+
+@utility skill-chip-right {
+  @apply flex-1 min-w-max flex items-center justify-center px-4 py-2 text-center;
+}
+
+@utility skill-group {
+  @apply pb-6 border-b border-slate/30 last:border-b-0 last:pb-0;
+}
+
+@utility skill-group-label {
+  @apply text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 pl-1;
 }
 
 @utility brightness-75 {
@@ -98,7 +119,7 @@
 }
 
 @utility container {
-  @apply mx-auto px-2 py-4 md:px-[1rem] md:py-[3.5rem];
+  @apply mx-auto px-2 py-4 md:px-4 md:py-14;
 }
 
 @utility wrapped-links {
@@ -119,7 +140,6 @@
     @apply left-[50%] translate-x-[-50%] opacity-100;
   }
 }
-
 
 @utility profile-chromatic {
   filter: url(#ca-animated);

@@ -15,7 +15,7 @@ const { project, large, cssClass, personal = false } = Astro.props;
 <div class={"group project-card " + cssClass}>
 	{
 		project.url ? (
-			<a href={project.url} title={project.title} target="_blank" rel="noopener">
+			<a href={project.url} title={project.title} aria-label={`View project: ${project.title}`} target="_blank" rel="noopener">
 				<ProjectImage project={project} large={large} winner={project.isWinner} personal={personal} />
 			</a>
 		) : (

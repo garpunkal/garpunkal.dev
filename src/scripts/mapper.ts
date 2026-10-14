@@ -8,6 +8,7 @@ import { Link } from "./models/link.ts";
 import { Image } from "./models/image.ts";
 import { Article } from "./models/article.ts";
 import { Skill } from "./models/skill.ts";
+import { SkillGroup } from "./models/skill-group.ts";
 
 export function mapArticle(item: any) {
   return new Article(
@@ -107,14 +108,52 @@ export function mapHome(item: any) {
   );
 }
 
-export function mapSkill(item: any) {
+export function mapSkillGroup(item: any) {
+  return new SkillGroup(
+    item.id,
+    item.data.title,
+    Number(item.data.sortOrder) || 999
+  );
+}
+
+export function mapSkill(item: any, groupItem?: any) {
+  let logoUrl = "";
+  if (item.data.logo) {
+    const v = item.version ?? 1;
+    if (Array.isArray(item.data.logo) && item.data.logo.length > 0) {
+      logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo[0]}?v=${v}`;
+    } else if (typeof item.data.logo === "string") {
+      if (item.data.logo.startsWith("http") || item.data.logo.startsWith("/")) {
+        logoUrl = item.data.logo;
+      } else {
+        logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo}?v=${v}`;
+      }
+    }
+  }
+
+  const background = item.data.background || "#1E293B";
+  const foreground = item.data.foreground || "#FFFFFF";
+
+  let groupTitle = "";
+  let groupOrder = 999;
+
+  if (groupItem && groupItem.data) {
+    groupTitle = groupItem.data.title;
+    groupOrder = Number(groupItem.data.sortOrder) || 999;
+  }
+
+  const group = groupTitle ? [groupTitle] : [];
+
   return new Skill(
     item.data.id,
     item.data.title,
     item.data.url,
-    item.data.background,
-    item.data.foreground,
-    item.data.percentage ?? 100,
+    background,
+    foreground,
+    group,
+    logoUrl,
+    groupTitle,
+    groupOrder,
   );
 }
 
