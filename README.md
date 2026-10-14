@@ -48,7 +48,7 @@ Personal portfolio and developer showcase for **Gareth Wright** ([garpunkal.dev]
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v20+ recommended)
+- [Node.js](https://nodejs.org/) (v22.12.0+ recommended)
 - [npm](https://www.npmjs.com/)
 
 ### Installation
