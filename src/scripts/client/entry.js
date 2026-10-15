@@ -1,3 +1,5 @@
+import { initProfileStarfield } from "./profile-starfield.ts";
+
 const MEASUREMENT_ID = "G-3TJPB46KB1";
 
 function initAnalytics() {
@@ -71,3 +73,4 @@ function initSmoothScroll() {
 initAnalytics();
 initThemeToggle();
 initSmoothScroll();
+initProfileStarfield();
