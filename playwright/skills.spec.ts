@@ -7,17 +7,16 @@ test.describe('Skills Section', () => {
     const skillsSection = page.locator('#skills');
     await expect(skillsSection).toBeVisible();
 
-    // Verify all 7 active categories are present in the DOM
+    // Verify the five thematic pillars are present in the DOM
     const expectedGroups = [
-      'Backend',
-      'Frontend',
-      'Cloud',
-      'CMS',
-      'AI',
-      'Tools',
-      'Patterns, Practices and Security',
+      'Architecture & Backend',
+      'CMS & Content Platforms',
+      'Frontend & UI',
+      'Cloud, DevOps & Tooling',
+      'AI & Emerging Tech',
     ];
 
+    await expect(page.locator('.skill-group-label')).toHaveCount(expectedGroups.length);
     for (const group of expectedGroups) {
       const groupLabel = page.locator('.skill-group-label', { hasText: new RegExp(`^${group}$`, 'i') });
       await expect(groupLabel).toBeVisible();
@@ -83,4 +82,3 @@ test.describe('Skills Section', () => {
     expect(parseFloat(opacityAfter)).toBeCloseTo(1, 1);
   });
 });
-

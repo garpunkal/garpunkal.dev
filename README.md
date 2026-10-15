@@ -32,14 +32,12 @@ Personal portfolio and developer showcase for **Gareth Wright** ([garpunkal.dev]
   - Keyboard skip-to-main-content navigation link.
   - High-contrast color palettes tested for legibility across light and dark themes.
 - **⚡ Grouped Skill Cloud**:
-  - Over 160+ technologies classified across 7 active categories:
-    - **Backend**
-    - **Frontend**
-    - **Cloud**
-    - **CMS**
-    - **AI**
-    - **Tools**
-    - **Patterns, Practices and Security**
+  - 160+ technologies organized into five thematic pillars for quick scanning:
+    - **Architecture & Backend**
+    - **CMS & Content Platforms**
+    - **Frontend & UI**
+    - **Cloud, DevOps & Tooling**
+    - **AI & Emerging Tech**
   - Integrated drop-shadow vector badges with official brand colors.
 
 ---
@@ -104,7 +102,7 @@ npm run sync-skills
   - **Canonical URL**: Official documentation or vendor product page (strictly avoiding Wikipedia or search engines).
   - **Icon Slug**: The official brand slug on **simpleicons.org**.
   - **Brand Colors**: Primary background HEX and contrast-tested foreground color.
-  - **Category**: Mapped into one of the 7 active skill groups.
+  - **Category**: Mapped into one of the five active skill pillars.
 - Downloads clean vector SVGs from **simpleicons.org**, sanitizes them for Squidex XML compliance, and uploads them to the Squidex `icons` asset folder.
 
 #### Targeted or Forced Runs:
@@ -151,7 +149,7 @@ npm run test:ui
   - Verifies every link on the page has valid `href` and accessible text.
   - Validates theme toggle functionality between light and dark modes.
 - **Skills Section** ([`playwright/skills.spec.ts`](playwright/skills.spec.ts)):
-  - Verifies rendering of all 7 categories.
+  - Verifies rendering of all five thematic pillars.
   - Asserts skill chips render logos and titles.
   - Tests that skill icons decrease opacity in dark mode (`dark:opacity-75`) and transition to full opacity on hover.
 - **Core Routes** ([`playwright/home.spec.ts`](playwright/home.spec.ts)):

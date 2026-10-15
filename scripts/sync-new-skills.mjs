@@ -49,6 +49,13 @@ const APP_NAME = env.SQUIDEX_KEY || env.SQUIDEX_APP_NAME || "garpunkaldev";
 const CLIENT_ID = env.SQUIDEX_CLIENT_ID;
 const CLIENT_SECRET = env.SQUIDEX_CLIENT_SECRET;
 const GEMINI_API_KEY = env.GEMINI_API_KEY;
+const SKILL_GROUPS = [
+  "Architecture & Backend",
+  "CMS & Content Platforms",
+  "Frontend & UI",
+  "Cloud, DevOps & Tooling",
+  "AI & Emerging Tech",
+];
 
 if (!CLIENT_ID || !CLIENT_SECRET) {
   console.error("❌ Error: Missing SQUIDEX_CLIENT_ID or SQUIDEX_CLIENT_SECRET in .env");
@@ -65,58 +72,45 @@ if (!CLIENT_ID || !CLIENT_SECRET) {
 function inferGroup(title) {
   const t = title.toLowerCase();
 
-  // CMS
+  // CMS & content platforms
   if (
     t.includes("cms") ||
-    ["umbraco", "sitecore", "sitefinity", "squidex", "wordpress", "strapi", "sanity", "contentful", "drupal", "power pages", "usync"].some(k => t.includes(k))
+    ["umbraco", "sitecore", "sitefinity", "squidex", "wordpress", "strapi", "sanity", "contentful", "drupal", "power pages", "usync", "headless", "jamstack", "ecommerce"].some(k => t.includes(k))
   ) {
-    return "cms";
+    return "CMS & Content Platforms";
   }
 
   // AI
   if (
-    t.includes("ai") ||
+    /\bai\b/.test(t) ||
     t.includes("llm") ||
     ["gemini", "claude", "copilot", "ollama", "gpt", "openai", "anthropic", "langchain", "llama", "deepseek"].some(k => t.includes(k))
   ) {
-    return "ai";
+    return "AI & Emerging Tech";
   }
 
-  // Cloud & DevOps
-  if (
-    ["azure", "aws", "gcp", "cloud", "docker", "kubernetes", "k8s", "helm", "k9s", "terraform", "vercel", "netlify", "serverless", "devops", "pipeline"].some(k => t.includes(k))
-  ) {
-    return "cloud";
-  }
-
-  // Tools & IDEs
+  // Cloud, DevOps & Tooling
   if (
     [
-      "jira", "teams", "git", "figma", "k9s", "powershell", "hyper-v", "azure devops", "storage explorer", "tool",
-      "studio", "vscode", "visual studio", "ide", "editor", "postman", "insomnia", "jetbrains", "rider", "antigravity", "sql server management studio", "docker"
+      "azure", "aws", "gcp", "cloud", "docker", "kubernetes", "k8s", "helm", "k9s", "terraform", "vercel", "netlify",
+      "serverless", "devops", "pipeline", "octopus", "dns", "entra", "iis", "git", "jira", "teams", "slack", "figma",
+      "powershell", "hyper-v", "storage explorer", "tool", "studio", "vscode", "visual studio", "ide", "editor",
+      "postman", "bruno", "insomnia", "jetbrains", "rider", "antigravity", "sql server management studio", "playwright",
+      "browserstack", "kibana", "lighthouse", "office", "visio", "markdown", "dotpeek", "dependabot", "keepass",
+      "ssl", "let's encrypt", "oauth", "jwt", "content security policies", "owasp"
     ].some(k => t.includes(k))
   ) {
-    return "tools";
+    return "Cloud, DevOps & Tooling";
   }
 
-  // Frontend
+  // Frontend & UI
   if (
-    ["frontend", "html", "css", "javascript", "typescript", "react", "vue", "angular", "svelte", "astro", "tailwind", "sass", "bootstrap", "vite", "webpack", "storybook", "ui"].some(k => t.includes(k))
+    ["frontend", "html", "css", "javascript", "typescript", "react", "vue", "angular", "svelte", "astro", "tailwind", "sass", "bootstrap", "vite", "webpack", "storybook", "ui", "accessibility"].some(k => t.includes(k))
   ) {
-    return "frontend";
+    return "Frontend & UI";
   }
 
-  // Patterns, Practices and Security
-  if (
-    [
-      "security", "auth", "jwt", "oauth", "owasp", "csp", "saml", "sso", "ssl", "tls", "encrypt", "entra", "dependabot", "keepass",
-      "pattern", "cqrs", "mvc", "solid", "oop", "architecture", "microservices", "clean", "design", "agile", "scrum", "review", "management", "leadership", "tdd", "testing", "playwright", "mstest", "delivery", "sustainable"
-    ].some(k => t.includes(k))
-  ) {
-    return "patterns, practices and security";
-  }
-
-  return "backend";
+  return "Architecture & Backend";
 }
 
 /**
@@ -446,7 +440,7 @@ async function main() {
     return;
   }
 
-  const availableGroupTitles = (groupsData.items || []).map(g => g.data.title).filter(Boolean);
+  const availableGroupTitles = SKILL_GROUPS.filter(title => skillGroupMap.has(title.toLowerCase()));
 
   if (GEMINI_API_KEY) {
     console.log("🤖 Gemini AI Mode Active: Canonical URLs, colors, groups, and simpleicons.org slugs will be determined via AI.\n");
@@ -486,7 +480,7 @@ async function main() {
       let targetGroupId = null;
       let assignedGroupName = "";
 
-      if (aiData?.group) {
+      if (aiData?.group && SKILL_GROUPS.some(group => group.toLowerCase() === aiData.group.toLowerCase())) {
         const found = groupsData.items?.find(g => (g.data.title || "").toLowerCase() === aiData.group.toLowerCase());
         if (found) {
           targetGroupId = found.id;
@@ -496,8 +490,12 @@ async function main() {
 
       if (!targetGroupId) {
         const groupKey = inferGroup(title);
-        targetGroupId = skillGroupMap.get(groupKey) || skillGroupMap.get("patterns, practices and security") || skillGroupMap.get("backend");
+        targetGroupId = skillGroupMap.get(groupKey.toLowerCase());
         assignedGroupName = groupKey;
+      }
+
+      if (!targetGroupId) {
+        throw new Error(`No Squidex skill group exists for "${assignedGroupName || inferGroup(title)}".`);
       }
 
       patchBody.group = { iv: [targetGroupId] };
