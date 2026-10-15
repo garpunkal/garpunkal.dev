@@ -1,8 +1,8 @@
-// Matrix code rain — multi-directional, subtle overlay on the ocean blue background.
-// ~60% of streams fall down, with a mix of up / right / left for variety.
+// Matrix code rain — subtle overlay for the footer.
+// Multi-directional streams (down / right / left) with subtle colors.
 // Canvas is transparent each frame so the site background shows through.
 
-// Multi-char tokens for vertical streams (down / up)
+// Multi-char tokens for vertical streams (down)
 const TOKENS: string[] = [
 	// C# keywords & constructs
 	"var", "int", "bool", "void", "null", "new", "get", "set",
@@ -34,36 +34,18 @@ const COLUMN_WIDTH = 24;  // horizontal grid spacing for vertical streams
 const ROW_HEIGHT   = FONT_SIZE + 2; // vertical grid spacing for horizontal streams
 const FONT_FAMILY  = "monospace";
 
-// Colour palette (visible on ocean-blue #077da0)
-const HEAD_ALPHA  = 0.55;
-const TRAIL_ALPHA = 0.22;
-const HEAD_COLOUR  = "255,255,255"; // white
-const MID_COLOUR   = "160,230,255"; // light cyan
-const TAIL_COLOUR  = "100,190,220"; // muted sky-blue
+// Colour palette (subtle overlay on footer background)
+const HEAD_ALPHA   = 0.35;
+const TRAIL_ALPHA  = 0.12;
+const HEAD_COLOUR  = "220,240,250"; // soft white/cyan
+const MID_COLOUR   = "130,195,225"; // soft muted cyan
+const TAIL_COLOUR  = "80,150,185";  // deep muted blue-teal
 
-// Direction weights: [direction, weight] — no upward streams
 type Direction = "down" | "right" | "left";
-const DIRECTION_WEIGHTS: [Direction, number][] = [
-	["down",  0.40],
-	["right", 0.30],
-	["left",  0.30],
-];
-
-function pickDirection(): Direction {
-	const r = Math.random();
-	let acc = 0;
-	for (const [dir, w] of DIRECTION_WEIGHTS) {
-		acc += w;
-		if (r < acc) return dir;
-	}
-	return "down";
-}
 
 interface Stream {
 	direction: Direction;
-	// Lane: column index for down/up; row index for right/left
 	lane: number;
-	// Head position along the travel axis (grid units, can be negative while staggered)
 	head: number;
 	speed: number;
 	progress: number;
@@ -72,23 +54,27 @@ interface Stream {
 	resetAt: number;
 }
 
-export function initProfileStarfield(): void {
-	const canvas = document.getElementById("profileParticles") as HTMLCanvasElement | null;
-	if (!canvas) return;
+export function initFooterStarfield(): void {
+	const rawCanvas = document.getElementById("footerParticles");
+	if (!(rawCanvas instanceof HTMLCanvasElement)) return;
+	const canvas: HTMLCanvasElement = rawCanvas;
 
 	if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-	const ctx = canvas.getContext("2d");
-	if (!ctx) return;
+	const rawCtx = canvas.getContext("2d");
+	if (!rawCtx) return;
+	const ctx: CanvasRenderingContext2D = rawCtx;
 
-	const wrapper = canvas.parentElement!;
+	const rawWrapper = canvas.parentElement;
+	if (!rawWrapper) return;
+	const wrapper: HTMLElement = rawWrapper;
 
 	let streams: Stream[] = [];
 	let rafId: number;
 	let w = 0;
 	let h = 0;
-	let colCount = 0; // number of vertical lanes
-	let rowCount = 0; // number of horizontal lanes
+	let colCount = 0;
+	let rowCount = 0;
 
 	function randomToken(direction: Direction): string {
 		if (direction === "down") {
@@ -132,14 +118,14 @@ export function initProfileStarfield(): void {
 
 		streams = [];
 
-		// Vertical lanes (down only) — ~60% density, randomised
+		// Vertical lanes (down only) — ~60% density
 		for (let i = 0; i < colCount; i++) {
 			if (Math.random() < 0.60) {
 				streams.push(makeStream("down", i));
 			}
 		}
 
-		// Horizontal lanes (right / left) — ~65% density, randomised
+		// Horizontal lanes (right / left) — ~65% density
 		for (let i = 0; i < rowCount; i++) {
 			if (Math.random() < 0.65) {
 				const dir = Math.random() < 0.50 ? "right" : "left";
@@ -201,11 +187,9 @@ export function initProfileStarfield(): void {
 			const headPos = Math.floor(s.head);
 
 			for (let i = 0; i < s.length; i++) {
-				// Trail position is behind the head
 				const pos = headPos - i;
 				if (pos < 0 || pos > streamDepth(s.direction)) continue;
 
-				// Randomly shimmer a character
 				if (Math.random() < 0.025) {
 					s.chars[i] = randomToken(s.direction);
 				}
