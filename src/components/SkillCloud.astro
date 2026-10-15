@@ -56,7 +56,7 @@ const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
           {activeGroups.map(([group, groupSkills]) => (
             <div class="skill-group">
               <h3 class="skill-group-label">{group}</h3>
-              <div class="flex flex-wrap -m-1 md:-m-2">
+              <div class="flex flex-wrap justify-center md:justify-start -m-1 md:-m-2">
                 {groupSkills.map((skill: Skill) => (
                   <SkillItem skill={skill} />
                 ))}

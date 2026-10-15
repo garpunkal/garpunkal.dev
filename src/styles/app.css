@@ -107,7 +107,7 @@
 }
 
 @utility skill-group-label {
-  @apply text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 pl-1;
+  @apply text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 text-center md:text-left md:pl-1;
 }
 
 @utility brightness-75 {
