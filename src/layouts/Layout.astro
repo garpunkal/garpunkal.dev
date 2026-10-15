@@ -5,7 +5,6 @@ import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
 import { getHome } from "../scripts/squidex.ts";
 import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
-import clientEntryScriptUrl from "../scripts/client/entry.js?url";
 
 const home = await getHome();
 
@@ -71,7 +70,7 @@ const { title, header } = Astro.props;
 		<link rel="manifest" href="/manifest.webmanifest" />
 
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
-		<script is:inline type="module" src={clientEntryScriptUrl}></script>
+		<script src="../scripts/client/entry.js"></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
