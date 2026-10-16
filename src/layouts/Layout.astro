@@ -14,6 +14,75 @@ interface Props {
 }
 
 const { title, header } = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, "") : "https://garpunkal.dev";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const sameAsLinks = [
+	home?.githubUrl,
+	...(home?.socials?.map((s: any) => s.url) ?? []),
+].filter((url): url is string => typeof url === "string" && url.startsWith("http"));
+
+const sameAs = Array.from(new Set(sameAsLinks));
+
+const specialismTitles = home?.specialisms?.map((s: any) => s.title).filter(Boolean) ?? [];
+const defaultKnowsAbout = [
+	".NET",
+	"C#",
+	"Solutions Architecture",
+	"Umbraco",
+	"TypeScript",
+	"Astro",
+	"Front End Development",
+	"Azure DevOps",
+	"Cloud Architecture",
+];
+const knowsAbout = Array.from(new Set([...specialismTitles, ...defaultKnowsAbout]));
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "Person",
+			"@id": `${siteUrl}/#person`,
+			name: home?.title || "Gareth Wright",
+			alternateName: ["garpunkal", "@garpunkal"],
+			url: siteUrl,
+			image: "https://en.gravatar.com/userimage/11972664/1f60f14a9a99398eefe01621f2c73860.png?size=400",
+			jobTitle: "Senior .NET & C# Solutions Architect",
+			description: "Senior .NET & C# Solutions Architect, Umbraco Certified Expert, and Front End Developer.",
+			sameAs,
+			knowsAbout,
+		},
+		{
+			"@type": "WebSite",
+			"@id": `${siteUrl}/#website`,
+			url: siteUrl,
+			name: "garpunkal.dev",
+			description: "Senior .NET & C# Solutions Architect & Umbraco Certified Expert.",
+			publisher: {
+				"@id": `${siteUrl}/#person`,
+			},
+			inLanguage: "en-GB",
+		},
+		{
+			"@type": "ProfilePage",
+			"@id": `${canonicalUrl}#webpage`,
+			url: canonicalUrl,
+			name: title,
+			isPartOf: {
+				"@id": `${siteUrl}/#website`,
+			},
+			about: {
+				"@id": `${siteUrl}/#person`,
+			},
+			mainEntity: {
+				"@id": `${siteUrl}/#person`,
+			},
+			inLanguage: "en-GB",
+		},
+	],
+};
 ---
 
 <!doctype html>
@@ -30,7 +99,7 @@ const { title, header } = Astro.props;
 		/>
 		<meta
 			name="description"
-			content="Gareth Wright - Senior C# .net MVC Developer - Umbraco Certified Expert - Front End Developer"
+			content="Gareth Wright - Senior .NET & C# Solutions Architect - Umbraco Certified Expert - Front End Developer"
 		/>
 		<meta name="author" content="Gareth Wright" />
 		<meta name="copyright" content="Gareth Wright" />
@@ -44,12 +113,12 @@ const { title, header } = Astro.props;
 			property="og:image"
 			content="https://en.gravatar.com/userimage/11972664/1f60f14a9a99398eefe01621f2c73860.png?size=400"
 		/>
-		<meta property="og:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+		<meta property="og:description" content="Senior .NET & C# Solutions Architect & Umbraco Certified Expert." />
 
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:site" content="https://garpunkal.dev" />
 		<meta name="twitter:title" content="Gareth Wright - garpunkal.dev" />
-		<meta name="twitter:description" content="Senior C# .net MVC Developer & Umbraco Certified Expert." />
+		<meta name="twitter:description" content="Senior .NET & C# Solutions Architect & Umbraco Certified Expert." />
 		<meta name="twitter:creator" content="@garpunkal" />
 		<meta
 			name="twitter:image:src"
@@ -57,7 +126,7 @@ const { title, header } = Astro.props;
 		/>
 
 		<link rel="publisher" href="https://garpunkal.dev" />
-		<link rel="canonical" href="https://garpunkal.dev" />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
 		<link rel="icon" href="/favicon.ico" sizes="any" />
@@ -69,11 +138,13 @@ const { title, header } = Astro.props;
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#077DA0" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
 		<script src="../scripts/client/entry.js"></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">
-		<a href="#main" class="skip-to-main-content-link">Skip to main content</a>
+		<a href="#main" class="absolute left-[-9999px] z-999 bg-black p-1 text-white opacity-0 focus:left-1/2 focus:-translate-x-1/2 focus:opacity-100">Skip to main content</a>
 		<header>
 			{header ? <Profile home={home} /> : ""}
 		</header>

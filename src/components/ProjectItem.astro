@@ -12,7 +12,7 @@ interface Props {
 const { project, large, cssClass, personal = false } = Astro.props;
 ---
 
-<div class={"group project-card " + cssClass}>
+<div class={"group relative transition-transform duration-300 ease-out hover:scale-105 hover:z-10 " + cssClass}>
 	{
 		project.url ? (
 			<a href={project.url} title={project.title} aria-label={`View project: ${project.title}`} target="_blank" rel="noopener">
