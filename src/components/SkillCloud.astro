@@ -47,7 +47,7 @@ if (ungrouped.length > 0) {
 const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
 ---
 
-<section class="text-iron bg-mirage dark:text-iron body-font" id="skills">
+<section class="text-iron bg-transparent dark:text-iron body-font" id="skills">
   <div class="container">
     <Heading title={title} />
     {
@@ -55,7 +55,7 @@ const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
         <div class="space-y-8">
           {activeGroups.map(([group, groupSkills]) => (
             <div class="pb-6 border-b border-slate/30 last:border-b-0 last:pb-0">
-              <h3 class="text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 text-left">
+              <h3 class="skill-group-label text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 text-left">
                 {group}
               </h3>
               <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 md:gap-3">

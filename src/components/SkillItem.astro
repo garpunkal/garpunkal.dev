@@ -14,19 +14,25 @@ const leftColStyle = [
 	.filter(Boolean)
 	.join(" ");
 
+const wrapperClasses = [
+	"skill-chip group relative block w-full text-left min-h-10 md:min-h-11 cursor-pointer no-underline select-none",
+	"hover:z-30 focus-within:z-30 focus-visible:outline-none",
+	"after:content-[''] after:absolute after:inset-x-0 after:top-full after:h-2 after:pointer-events-none group-hover:after:pointer-events-auto",
+].join(" ");
+
 const chipClasses = [
-	"group relative w-full flex flex-row items-stretch text-left rounded-md overflow-hidden",
+	"relative w-full h-full flex flex-row items-stretch text-left rounded-md overflow-hidden",
 	"bg-gradient-to-r from-elephant/90 via-elephant/75 to-mirage/95 dark:from-[#1b2b3b] dark:via-[#131f2b] dark:to-[#0a1017]",
-	"border border-slate/40 hover:border-ocean/60 focus-visible:border-ocean/60",
+	"border border-slate/40 group-hover:border-ocean/60 group-focus-visible:border-ocean/60",
 	"shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]",
-	"hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_16px_32px_-4px_rgba(0,0,0,0.55),0_6px_14px_-2px_rgba(7,125,160,0.3)]",
-	"hover:from-[#263e54] hover:via-elephant hover:to-[#172736]",
-	"hover:text-white hover:z-30 hover:-translate-y-1.5 hover:scale-[1.08] hover:duration-300 hover:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-	"focus-visible:from-[#263e54] focus-visible:via-elephant focus-visible:to-[#172736]",
-	"focus-visible:text-white focus-visible:z-30 focus-visible:-translate-y-1.5 focus-visible:scale-[1.08] focus-visible:duration-300 focus-visible:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-	"text-sm cursor-pointer min-h-10 md:min-h-11 will-change-transform no-underline",
+	"group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_16px_32px_-4px_rgba(0,0,0,0.55),0_6px_14px_-2px_rgba(7,125,160,0.3)]",
+	"group-hover:from-[#263e54] group-hover:via-elephant group-hover:to-[#172736]",
+	"group-hover:text-white group-hover:-translate-y-1.5 group-hover:scale-[1.08] group-hover:duration-300 group-hover:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+	"group-focus-visible:from-[#263e54] group-focus-visible:via-elephant group-focus-visible:to-[#172736]",
+	"group-focus-visible:text-white group-focus-visible:-translate-y-1.5 group-focus-visible:scale-[1.08] group-focus-visible:duration-300 group-focus-visible:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+	"text-sm min-h-10 md:min-h-11 will-change-transform",
 	"transition-[transform,box-shadow,background-image,border-color,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)]",
-	"active:-translate-y-0.5 active:scale-[1.02] active:duration-100",
+	"group-active:-translate-y-0.5 group-active:scale-[1.02] group-active:duration-100",
 	"motion-reduce:transform-none motion-reduce:transition-none",
 ].join(" ");
 ---
@@ -38,72 +44,76 @@ const chipClasses = [
 			target="_blank"
 			rel="noopener noreferrer"
 			title={skill.title}
-			class={chipClasses}
+			class={wrapperClasses}
 			aria-label={skill.title}
 		>
-			{skill.logo && (
-				<span
-					class="relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-85 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
-					style={leftColStyle}
-				>
-					<img
-						src={skill.logo}
-						alt=""
-						class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
-						loading="lazy"
-					/>
+			<div class={chipClasses}>
+				{skill.logo && (
+					<span
+						class="skill-chip-left relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
+						style={leftColStyle}
+					>
+						<img
+							src={skill.logo}
+							alt=""
+							class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
+							loading="lazy"
+						/>
+					</span>
+				)}
+				<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
+					<span
+						data-skill-label
+						class:list={[
+							"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
+							"transition-transform duration-250 ease-out",
+							"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
+							"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
+							"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
+							"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
+						]}
+					>
+						{skill.title}
+					</span>
 				</span>
-			)}
-			<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
-				<span
-					data-skill-label
-					class:list={[
-						"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
-						"transition-transform duration-250 ease-out",
-						"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
-						"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
-						"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
-						"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
-					]}
-				>
-					{skill.title}
-				</span>
-			</span>
+			</div>
 		</a>
 	) : (
 		<div
-			class={chipClasses}
+			class={wrapperClasses}
 			title={skill.title}
 			aria-label={skill.title}
 		>
-			{skill.logo && (
-				<span
-					class="relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-85 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
-					style={leftColStyle}
-				>
-					<img
-						src={skill.logo}
-						alt=""
-						class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
-						loading="lazy"
-					/>
+			<div class={chipClasses}>
+				{skill.logo && (
+					<span
+						class="skill-chip-left relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
+						style={leftColStyle}
+					>
+						<img
+							src={skill.logo}
+							alt=""
+							class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
+							loading="lazy"
+						/>
+					</span>
+				)}
+				<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
+					<span
+						data-skill-label
+						class:list={[
+							"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
+							"transition-transform duration-250 ease-out",
+							"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
+							"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
+							"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
+							"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
+						]}
+					>
+						{skill.title}
+					</span>
 				</span>
-			)}
-			<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
-				<span
-					data-skill-label
-					class:list={[
-						"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
-						"transition-transform duration-250 ease-out",
-						"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
-						"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
-						"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
-						"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
-					]}
-				>
-					{skill.title}
-				</span>
-			</span>
+			</div>
 		</div>
 	)
 }

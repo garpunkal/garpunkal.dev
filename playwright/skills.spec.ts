@@ -81,4 +81,34 @@ test.describe('Skills Section', () => {
     const opacityAfter = await iconLeft.evaluate((el) => window.getComputedStyle(el).opacity);
     expect(parseFloat(opacityAfter)).toBeCloseTo(1, 1);
   });
+
+  test('should maintain stable hover at the bottom edge without bouncing', async ({ page }) => {
+    await page.goto('/');
+
+    const firstChip = page.locator('#skills .skill-chip').first();
+    await expect(firstChip).toBeVisible();
+    await firstChip.scrollIntoViewIfNeeded();
+
+    const box = await firstChip.boundingBox();
+    expect(box).not.toBeNull();
+
+    // Position pointer 2px inside the bottom boundary
+    const x = box!.x + box!.width / 2;
+    const y = box!.y + box!.height - 2;
+
+    await page.mouse.move(x, y);
+    // Wait for animation transition
+    await page.waitForTimeout(350);
+
+    // Verify the chip remains hovered (matches :hover) continuously
+    const isHovered = await firstChip.evaluate((el) => el.matches(':hover'));
+    expect(isHovered).toBe(true);
+
+    // Verify over multiple animation frames that it does not chatter or lose hover
+    for (let i = 0; i < 5; i++) {
+      await page.waitForTimeout(100);
+      const stillHovered = await firstChip.evaluate((el) => el.matches(':hover'));
+      expect(stillHovered).toBe(true);
+    }
+  });
 });

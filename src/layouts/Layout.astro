@@ -3,6 +3,7 @@ import "../styles/app.css";
 
 import Profile from "../components/Profile.astro";
 import Footer from "../components/Footer.astro";
+import VectorCanvas from "../components/VectorCanvas.astro";
 import { getHome } from "../scripts/squidex.ts";
 import { GoogleFontsOptimizer } from "@garpunkal/astro-google-fonts-optimizer";
 
@@ -11,9 +12,10 @@ const home = await getHome();
 interface Props {
 	title: string;
 	header: boolean;
+	mirageBackground?: boolean;
 }
 
-const { title, header } = Astro.props;
+const { title, header, mirageBackground = true } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, "") : "https://garpunkal.dev";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -145,13 +147,16 @@ const jsonLd = {
 	</head>
 	<body class="bg-ocean dark:bg-black">
 		<a href="#main" class="absolute left-[-9999px] z-[999] bg-black p-1 text-white opacity-0 focus:left-1/2 focus:-translate-x-1/2 focus:opacity-100">Skip to main content</a>
-		<header>
+		<header class="relative z-20 bg-ocean dark:bg-black">
 			{header ? <Profile home={home} /> : ""}
 		</header>
-		<main id="main">
-			<slot />
+		<main id="main" class={mirageBackground ? "relative z-10 bg-mirage" : ""}>
+			{mirageBackground && <VectorCanvas />}
+			<div class="relative z-10">
+				<slot />
+			</div>
 		</main>
-		<footer> 
+		<footer class="relative z-20 bg-ocean dark:bg-black"> 
 			<Footer home={home} />
 		</footer>
 	</body>
