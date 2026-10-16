@@ -42,7 +42,7 @@ const drips = Array.from({ length: dripCount }, () => {
 						drips.map((drip) => (
 							<div
 								class:list={[
-									"drip",
+									"h-full scale-x-150 scale-y-0 transition-[scale] ease-[cubic-bezier(0.65,0,0.35,1)] duration-[var(--dur,300ms)] delay-[var(--del,0ms)] group-hover:scale-y-100",
 									drip.fromBottom ? "origin-bottom" : "origin-top",
 									"bg-ocean dark:bg-mirage",
 								]}
@@ -54,7 +54,7 @@ const drips = Array.from({ length: dripCount }, () => {
 				<div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none overflow-hidden">
 					<span
 						class:list={[
-							"font-bold text-sm md:text-md.w-full line-clamp-2 fade-in-scale [--reveal-delay:150ms]",
+							"font-bold text-sm md:text-base w-full line-clamp-2 opacity-0 scale-90 transition-all duration-200 ease-out delay-[150ms] group-hover:opacity-100 group-hover:scale-100",
 							"text-white dark:text-cool",
 						]}
 					>

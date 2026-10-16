@@ -22,12 +22,12 @@ function initThemeToggle() {
 		document.querySelector("html")?.classList.add("dark");
 	}
 
-	const switchThemeButton = document.getElementById("switchTheme");
-	if (!switchThemeButton) {
-		return;
-	}
+	document.addEventListener("click", (event) => {
+		const target = event.target;
+		if (!(target instanceof Element)) return;
+		const switchThemeButton = target.closest("#switchTheme, [data-switch-theme]");
+		if (!switchThemeButton) return;
 
-	switchThemeButton.addEventListener("click", () => {
 		const htmlClasses = document.querySelector("html")?.classList;
 
 		if (localStorage.theme === "dark") {

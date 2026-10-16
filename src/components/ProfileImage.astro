@@ -9,11 +9,27 @@ interface Props {
 const { image } = Astro.props;
 ---
 
-<svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;pointer-events:none;overflow:hidden">
+<svg
+  aria-hidden="true"
+  focusable="false"
+  width="0"
+  height="0"
+  style="position:absolute;pointer-events:none;overflow:hidden"
+>
   <defs>
-    <filter id="ca-animated" color-interpolation-filters="sRGB" x="-5%" y="0%" width="110%" height="100%">
-      <feColorMatrix in="SourceGraphic" type="matrix" result="r"
-        values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+    <filter
+      id="ca-animated"
+      color-interpolation-filters="sRGB"
+      x="-5%"
+      y="0%"
+      width="110%"
+      height="100%"
+    >
+      <feColorMatrix
+        in="SourceGraphic"
+        type="matrix"
+        result="r"
+        values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
       <feOffset in="r" dx="0" dy="0" result="r-off">
         <animate
           attributeName="dx"
@@ -25,12 +41,18 @@ const { image } = Astro.props;
           repeatCount="indefinite"
           begin="switchTheme.mouseover"
           end="switchTheme.mouseout"
-          fill="remove"/>
+          fill="remove"></animate>
       </feOffset>
-      <feColorMatrix in="SourceGraphic" type="matrix" result="g"
-        values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
-      <feColorMatrix in="SourceGraphic" type="matrix" result="b"
-        values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+      <feColorMatrix
+        in="SourceGraphic"
+        type="matrix"
+        result="g"
+        values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix>
+      <feColorMatrix
+        in="SourceGraphic"
+        type="matrix"
+        result="b"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"></feColorMatrix>
       <feOffset in="b" dx="0" dy="0" result="b-off">
         <animate
           attributeName="dx"
@@ -42,12 +64,12 @@ const { image } = Astro.props;
           repeatCount="indefinite"
           begin="switchTheme.mouseover"
           end="switchTheme.mouseout"
-          fill="remove"/>
+          fill="remove"></animate>
       </feOffset>
 
-      <feBlend in="r-off" in2="g" mode="screen" result="rg"/>
-      <feBlend in="rg" in2="b-off" mode="screen" result="rgb-out"/>
-      <feComposite in="rgb-out" in2="SourceGraphic" operator="in"/>
+      <feBlend in="r-off" in2="g" mode="screen" result="rg"></feBlend>
+      <feBlend in="rg" in2="b-off" mode="screen" result="rgb-out"></feBlend>
+      <feComposite in="rgb-out" in2="SourceGraphic" operator="in"></feComposite>
     </filter>
   </defs>
 </svg>

@@ -16,18 +16,29 @@ if (experience.to == null) {
 
 {experience.url ? (
 	<a
-		class="group block cursor-pointer text-inherit no-underline transition-all duration-200 hover:scale-[1.01] focus-visible:rounded-[0.35rem] focus-visible:outline-2 focus-visible:outline-(--experience-accent) focus-visible:outline-offset-4"
+		class="group block cursor-pointer text-inherit no-underline transition-all duration-300 hover:scale-[1.015] hover:-translate-y-0.5 focus-visible:rounded-[0.35rem] focus-visible:outline-2 focus-visible:outline-(--experience-accent) focus-visible:outline-offset-4"
 		href={experience.url}
 		target="_blank"
 		rel="noopener"
 		aria-label={`${experience.job} at ${experience.title}`}
 		style={"--experience-accent:" + experience.logo.background}
 	>
-		<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-(--experience-accent) bg-(--experience-accent) p-5 px-6" style={"--experience-accent:" + experience.logo.background}>
-			<div class="mb-4 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
-				<span>{getMonthYear(experience.from)}</span>
-				<span aria-hidden="true"> - </span>
-				<span>{experience.isCurrent ? "Current" : getMonthYear(experience.to)}</span>
+		<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-(--experience-accent) bg-(--experience-accent) p-5 px-6 transition-all duration-300 shadow-md group-hover:shadow-[0_14px_32px_-6px_rgba(0,0,0,0.55),0_0_22px_-3px_var(--experience-accent)]" style={"--experience-accent:" + experience.logo.background}>
+			<div class="mb-4 flex items-center justify-between gap-2 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
+				<div>
+					<span>{getMonthYear(experience.from)}</span>
+					<span aria-hidden="true"> - </span>
+					<span>{experience.isCurrent ? "Current" : getMonthYear(experience.to)}</span>
+				</div>
+				{experience.isCurrent && (
+					<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[0.65rem] font-semibold tracking-wider uppercase backdrop-blur-xs shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+						<span class="relative flex h-2 w-2">
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+						</span>
+						Active
+					</span>
+				)}
 			</div>
 
 			<div class="flex gap-4 max-lg:flex-col">
@@ -50,11 +61,22 @@ if (experience.to == null) {
 	</a>
 ) : (
 	<div class="group block text-inherit no-underline" style={"--experience-accent:" + experience.logo.background}>
-		<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-(--experience-accent) bg-(--experience-accent) p-5 px-6" style={"--experience-accent:" + experience.logo.background}>
-			<div class="mb-4 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
-				<span>{getMonthYear(experience.from)}</span>
-				<span aria-hidden="true"> - </span>
-				<span>{experience.isCurrent ? "Current" : getMonthYear(experience.to)}</span>
+		<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-(--experience-accent) bg-(--experience-accent) p-5 px-6 transition-all duration-300 shadow-md group-hover:shadow-[0_14px_32px_-6px_rgba(0,0,0,0.55),0_0_22px_-3px_var(--experience-accent)]" style={"--experience-accent:" + experience.logo.background}>
+			<div class="mb-4 flex items-center justify-between gap-2 text-[0.72rem] font-bold uppercase tracking-[0.08em]" style={"color:" + experience.logo.foreground}>
+				<div>
+					<span>{getMonthYear(experience.from)}</span>
+					<span aria-hidden="true"> - </span>
+					<span>{experience.isCurrent ? "Current" : getMonthYear(experience.to)}</span>
+				</div>
+				{experience.isCurrent && (
+					<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[0.65rem] font-semibold tracking-wider uppercase backdrop-blur-xs shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+						<span class="relative flex h-2 w-2">
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+						</span>
+						Active
+					</span>
+				)}
 			</div>
 
 			<div class="flex gap-4 max-lg:flex-col">

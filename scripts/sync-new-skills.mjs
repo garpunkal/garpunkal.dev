@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // scripts/sync-new-skills.mjs
 import fs from "fs";
 import path from "path";
@@ -233,11 +234,19 @@ Respond ONLY with a valid JSON object matching this schema without any markdown 
   "background": "official brand HEX color (e.g. #0078D4) or high quality primary brand color",
   "foreground": "#FFFFFF or #000000 based on contrast against the background",
   "group": "most appropriate category selected exactly from the available skill categories list",
-  "iconSlug": "best matching brand slug from simpleicons.org (Simple Icons) or devicon (lowercase alphanumeric, e.g. 'csharp', 'azure', 'dotnet', 'googlemaps', 'keepassxc', 'slack', 'jira', 'docker')",
+  "iconSlug": "best matching brand or concept slug for icon providers like simpleicons.org, devicon, iconify, or lucide (lowercase alphanumeric, e.g. 'csharp', 'azure', 'dotnet', 'googlemaps', 'keepassxc', 'slack', 'jira', 'docker', 'htmx')",
   "searchKeywords": ["alternative_slug1", "alternative_slug2"]
 }`;
 
-  const models = ["gemini-3.8-flash", "gemini-flash-latest"];
+  // Ordered list of models: resilient flash-lite models first, then full flash models
+  const models = [
+    "gemini-flash-lite-latest",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview",
+    "gemini-3.8-flash",
+    "gemini-flash-latest",
+  ];
 
   for (const model of models) {
     try {
@@ -272,7 +281,13 @@ Respond ONLY with a valid JSON object matching this schema without any markdown 
 }
 
 /**
- * Fetch vector SVG icon for a skill title, searching simpleicons.org first, then Devicon & remote CDNs
+ * Fetch vector SVG icon for a skill title across all major icon providers:
+ * 1. SimpleIcons (in-memory 3,460+ brand icons via npm package)
+ * 2. SimpleIcons CDN & GitHub raw
+ * 3. Devicon (original & plain variants via jsDelivr CDN)
+ * 4. Iconify API (Logos, SimpleIcons, Devicon, SkillIcons, Tabler, Lucide, MDI, VS Code icons)
+ * 5. GilBarbara SVG Logos
+ * 6. VectorLogoZone
  */
 async function fetchIconSvg(title, aiData = null) {
   const cleanTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -294,7 +309,7 @@ async function fetchIconSvg(title, aiData = null) {
 
   const uniqueCandidates = [...new Set(candidates)];
 
-  // 1. Search simpleicons.org (Simple Icons) library (3,460+ brand icons in package)
+  // 1. Search simpleicons.org (Simple Icons) library (in-memory 3,460+ brand icons)
   for (const slug of uniqueCandidates) {
     const icon = SIMPLE_ICONS_BY_SLUG.get(slug) || SIMPLE_ICONS_BY_TITLE.get(slug);
     if (icon?.svg) {
@@ -303,32 +318,48 @@ async function fetchIconSvg(title, aiData = null) {
         slug: icon.slug,
         hex: icon.hex ? `#${icon.hex}` : null,
         title: icon.title,
-        source: "simpleicons.org",
+        source: "simpleicons.org (in-memory)",
       };
     }
   }
 
-  // 2. Query remote simpleicons.org CDN & fallbacks
+  // 2. Query remote icon providers
   for (const slug of uniqueCandidates) {
-    const urls = [
-      `https://cdn.simpleicons.org/${slug}`,
-      `https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/${slug}.svg`,
-      `https://unpkg.com/simple-icons/icons/${slug}.svg`,
-      `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${slug}.svg`,
-      `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`,
-      `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-plain.svg`,
+    const providers = [
+      { name: "simpleicons.org CDN", url: `https://cdn.simpleicons.org/${slug}` },
+      { name: "simpleicons.org GitHub", url: `https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/${slug}.svg` },
+      { name: "devicon (original)", url: `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg` },
+      { name: "devicon (plain)", url: `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-plain.svg` },
+      { name: "iconify (logos)", url: `https://api.iconify.design/logos:${slug}.svg` },
+      { name: "iconify (simple-icons)", url: `https://api.iconify.design/simple-icons:${slug}.svg` },
+      { name: "iconify (devicon)", url: `https://api.iconify.design/devicon:${slug}.svg` },
+      { name: "iconify (skill-icons)", url: `https://api.iconify.design/skill-icons:${slug}.svg` },
+      { name: "iconify (vscode-icons)", url: `https://api.iconify.design/vscode-icons:file-type-${slug}.svg` },
+      { name: "iconify (tabler:brand)", url: `https://api.iconify.design/tabler:brand-${slug}.svg` },
+      { name: "iconify (tabler)", url: `https://api.iconify.design/tabler:${slug}.svg` },
+      { name: "iconify (lucide)", url: `https://api.iconify.design/lucide:${slug}.svg` },
+      { name: "iconify (mdi)", url: `https://api.iconify.design/mdi:${slug}.svg` },
+      { name: "gilbarbara/logos", url: `https://raw.githubusercontent.com/gilbarbara/logos/main/logos/${slug}.svg` },
+      { name: "vectorlogozone", url: `https://www.vectorlogo.zone/logos/${slug}/${slug}-icon.svg` },
     ];
 
-    for (const url of urls) {
+    for (const provider of providers) {
       try {
-        const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
+        const res = await fetch(provider.url, { signal: AbortSignal.timeout(3000) });
         if (res.ok) {
           const svgText = await res.text();
-          if (svgText.includes("<svg") && (svgText.includes("path") || svgText.includes("polygon"))) {
+          if (
+            svgText.includes("<svg") &&
+            (svgText.includes("<path") ||
+              svgText.includes("<polygon") ||
+              svgText.includes("<g") ||
+              svgText.includes("<circle") ||
+              svgText.includes("<rect"))
+          ) {
             return {
               svg: sanitizeSvg(svgText, "#FFFFFF"),
               slug,
-              source: url.includes("simpleicons") || url.includes("simple-icons") ? "simpleicons.org" : "devicon",
+              source: provider.name,
             };
           }
         }
@@ -585,18 +616,26 @@ async function main() {
     let finalFg = skill.data.foreground;
 
     if (needs.needsBg) {
+      const geminiBg = aiData?.background
+        ? (aiData.background.startsWith("#") ? aiData.background : `#${aiData.background}`)
+        : null;
+
       finalBg = (fetched?.hex && /^#[0-9A-Fa-f]{6}$/.test(fetched.hex))
         ? fetched.hex.toUpperCase()
-        : ((aiData?.background && /^#[0-9A-Fa-f]{6}$/.test(aiData.background))
-          ? aiData.background.toUpperCase()
+        : ((geminiBg && /^#[0-9A-Fa-f]{6}$/.test(geminiBg))
+          ? geminiBg.toUpperCase()
           : (KNOWN_COLORS[key]?.bg || hashToHex(title)));
       patchBody.background = { iv: finalBg };
       console.log(`  + Assigned Background: ${finalBg}`);
     }
 
     if (needs.needsFg) {
-      finalFg = (aiData?.foreground && /^#[0-9A-Fa-f]{6}$/.test(aiData.foreground))
-        ? aiData.foreground.toUpperCase()
+      const geminiFg = aiData?.foreground
+        ? (aiData.foreground.startsWith("#") ? aiData.foreground : `#${aiData.foreground}`)
+        : null;
+
+      finalFg = (geminiFg && /^#[0-9A-Fa-f]{6}$/.test(geminiFg))
+        ? geminiFg.toUpperCase()
         : getContrastColor(finalBg || "#1E293B");
       patchBody.foreground = { iv: finalFg };
       console.log(`  + Assigned Fore colour: ${finalFg}`);
@@ -617,6 +656,22 @@ async function main() {
         if (patchRes.ok) {
           console.log(`  ✅ Successfully updated "${title}" in Squidex!`);
           updatedCount++;
+
+          if (skill.status === "Draft") {
+            try {
+              const pubRes = await fetch(`https://cloud.squidex.io/api/content/${APP_NAME}/skill/${id}/status`, {
+                method: "PUT",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ status: "Published" }),
+              });
+              if (pubRes.ok) {
+                console.log(`  🚀 Auto-published "${title}" to Published status!`);
+              }
+            } catch {}
+          }
         } else {
           console.error(`  ❌ Update failed (${patchRes.status}):`, await patchRes.text());
         }

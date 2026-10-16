@@ -19,7 +19,7 @@ interface GroupBucket {
 const groupMap = new Map<string, GroupBucket>();
 const ungrouped: Skill[] = [];
 
-for (const skill of (skills as Skill[])) {
+for (const skill of skills as Skill[]) {
   const gTitle = skill.groupTitle || (skill.group?.[0] ?? "");
   const gOrder = skill.groupOrder ?? 999;
 
@@ -55,8 +55,10 @@ const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
         <div class="space-y-8">
           {activeGroups.map(([group, groupSkills]) => (
             <div class="pb-6 border-b border-slate/30 last:border-b-0 last:pb-0">
-              <h3 class="text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 text-center md:text-left md:pl-1">{group}</h3>
-              <div class="flex flex-wrap justify-center md:justify-start -m-1 md:-m-2">
+              <h3 class="text-sm font-semibold uppercase tracking-widest text-iron dark:text-mercury mb-3 text-left">
+                {group}
+              </h3>
+              <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 md:gap-3">
                 {groupSkills.map((skill: Skill) => (
                   <SkillItem skill={skill} />
                 ))}
@@ -67,7 +69,7 @@ const isGrouped = activeGroups.some(([key]) => key !== "Other") || false;
       ) : (
         <div
           id="skillCloud"
-          class="flex flex-wrap justify-center -m-1 md:-m-2 mb-2 md:mb-2"
+          class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 md:gap-3 mb-2 md:mb-2"
         >
           {skills.map((skill: Skill) => (
             <SkillItem skill={skill} />

@@ -15,12 +15,18 @@ const leftColStyle = [
 	.join(" ");
 
 const chipClasses = [
-	"group relative inline-flex flex-row items-stretch text-center whitespace-nowrap max-w-full m-1 rounded-md overflow-hidden shadow-xs",
-	"bg-elephant/70 dark:bg-black/80 border border-slate/40 text-sm cursor-pointer min-h-10.5 md:min-h-11.5 will-change-transform no-underline",
-	"transition-[transform,box-shadow,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)]",
-	"hover:bg-elephant hover:border-slate/80 hover:text-white hover:z-30 hover:-translate-y-1 hover:scale-[1.22] hover:shadow-[0_16px_32px_-4px_rgba(0,0,0,0.55),0_6px_14px_-2px_rgba(0,0,0,0.35)] hover:duration-300 hover:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-	"focus-visible:bg-elephant focus-visible:border-slate/80 focus-visible:text-white focus-visible:z-30 focus-visible:-translate-y-1 focus-visible:scale-[1.22] focus-visible:shadow-[0_16px_32px_-4px_rgba(0,0,0,0.55),0_6px_14px_-2px_rgba(0,0,0,0.35)] focus-visible:duration-300 focus-visible:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-	"active:-translate-y-0.5 active:scale-[1.12] active:duration-100",
+	"group relative w-full flex flex-row items-stretch text-left rounded-md overflow-hidden",
+	"bg-gradient-to-r from-elephant/90 via-elephant/75 to-mirage/95 dark:from-[#1b2b3b] dark:via-[#131f2b] dark:to-[#0a1017]",
+	"border border-slate/40 hover:border-ocean/60 focus-visible:border-ocean/60",
+	"shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]",
+	"hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_16px_32px_-4px_rgba(0,0,0,0.55),0_6px_14px_-2px_rgba(7,125,160,0.3)]",
+	"hover:from-[#263e54] hover:via-elephant hover:to-[#172736]",
+	"hover:text-white hover:z-30 hover:-translate-y-1.5 hover:scale-[1.08] hover:duration-300 hover:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+	"focus-visible:from-[#263e54] focus-visible:via-elephant focus-visible:to-[#172736]",
+	"focus-visible:text-white focus-visible:z-30 focus-visible:-translate-y-1.5 focus-visible:scale-[1.08] focus-visible:duration-300 focus-visible:ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+	"text-sm cursor-pointer min-h-10 md:min-h-11 will-change-transform no-underline",
+	"transition-[transform,box-shadow,background-image,border-color,color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)]",
+	"active:-translate-y-0.5 active:scale-[1.02] active:duration-100",
 	"motion-reduce:transform-none motion-reduce:transition-none",
 ].join(" ");
 ---
@@ -37,7 +43,7 @@ const chipClasses = [
 		>
 			{skill.logo && (
 				<span
-					class="w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100"
+					class="relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-85 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
 					style={leftColStyle}
 				>
 					<img
@@ -48,8 +54,18 @@ const chipClasses = [
 					/>
 				</span>
 			)}
-			<span class="flex-1 min-w-max flex items-center justify-center px-4 py-2 text-center">
-				<span class="whitespace-nowrap font-medium text-xs md:text-sm text-white dark:text-mercury">
+			<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
+				<span
+					data-skill-label
+					class:list={[
+						"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
+						"transition-transform duration-250 ease-out",
+						"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
+						"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
+						"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
+						"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
+					]}
+				>
 					{skill.title}
 				</span>
 			</span>
@@ -62,7 +78,7 @@ const chipClasses = [
 		>
 			{skill.logo && (
 				<span
-					class="w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100"
+					class="relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-85 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
 					style={leftColStyle}
 				>
 					<img
@@ -73,11 +89,83 @@ const chipClasses = [
 					/>
 				</span>
 			)}
-			<span class="flex-1 min-w-max flex items-center justify-center px-4 py-2 text-center">
-				<span class="whitespace-nowrap font-medium text-xs md:text-sm text-white dark:text-mercury">
+			<span class="skill-label-track flex-1 min-w-0 flex items-center justify-start px-2.5 md:px-3 py-1 text-left overflow-hidden">
+				<span
+					data-skill-label
+					class:list={[
+						"skill-label-text inline-block max-w-full font-medium text-[clamp(0.68rem,0.9vw,0.875rem)] text-white dark:text-mercury truncate whitespace-nowrap will-change-transform",
+						"transition-transform duration-250 ease-out",
+						"max-md:data-[overflows=true]:max-w-none max-md:data-[overflows=true]:overflow-visible max-md:data-[overflows=true]:text-clip max-md:data-[overflows=true]:animate-skill-marquee max-md:data-[overflows=true]:[animation-delay:1s] max-md:group-active:data-[overflows=true]:[animation-play-state:paused]",
+						"md:group-hover:data-[overflows=true]:max-w-none md:group-hover:data-[overflows=true]:overflow-visible md:group-hover:data-[overflows=true]:text-clip md:group-hover:data-[overflows=true]:animate-skill-marquee",
+						"md:group-focus-visible:data-[overflows=true]:max-w-none md:group-focus-visible:data-[overflows=true]:overflow-visible md:group-focus-visible:data-[overflows=true]:text-clip md:group-focus-visible:data-[overflows=true]:animate-skill-marquee",
+						"motion-reduce:animate-none motion-reduce:transform-none motion-reduce:data-[overflows=true]:max-w-full motion-reduce:data-[overflows=true]:overflow-hidden motion-reduce:data-[overflows=true]:truncate"
+					]}
+				>
 					{skill.title}
 				</span>
 			</span>
 		</div>
 	)
 }
+
+<script>
+	function measureLabel(label: HTMLElement) {
+		// Reset state temporarily to get pure dimensions
+		label.removeAttribute("data-overflows");
+		label.style.removeProperty("--marquee-dist");
+		label.style.removeProperty("--marquee-dur");
+
+		const overflow = label.scrollWidth - label.clientWidth;
+		if (overflow > 2) {
+			const scrollDist = overflow + 6;
+			label.dataset.overflows = "true";
+			label.style.setProperty("--marquee-dist", `-${Math.ceil(scrollDist)}px`);
+			// Smooth comfortable reading speed: ~38px/s with a responsive duration
+			const dur = Math.max(1.8, Math.min(5, scrollDist / 38 + 0.8));
+			label.style.setProperty("--marquee-dur", `${dur.toFixed(2)}s`);
+		}
+		label.dataset.measured = "true";
+	}
+
+	function updateSkillMarquees() {
+		const labels = document.querySelectorAll<HTMLElement>("[data-skill-label]");
+		labels.forEach((label) => {
+			if (label.closest(".group:hover")) return;
+			measureLabel(label);
+		});
+	}
+
+	if (typeof window !== "undefined") {
+		const init = () => updateSkillMarquees();
+
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", init);
+		} else {
+			init();
+		}
+
+		if (document.fonts?.ready) {
+			document.fonts.ready.then(init);
+		}
+
+		let resizeTimer: number | undefined;
+		window.addEventListener("resize", () => {
+			window.clearTimeout(resizeTimer);
+			resizeTimer = window.setTimeout(init, 150);
+		});
+
+		// Dynamic measurement on hover in case layout changed before resize fired
+		document.addEventListener(
+			"pointerenter",
+			(e) => {
+				const group = (e.target as HTMLElement)?.closest?.(".group");
+				if (!group) return;
+				const label = group.querySelector<HTMLElement>("[data-skill-label]");
+				if (label && !label.dataset.measured) {
+					measureLabel(label);
+				}
+			},
+			true
+		);
+	}
+</script>

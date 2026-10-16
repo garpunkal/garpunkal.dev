@@ -138,13 +138,13 @@ const jsonLd = {
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#077DA0" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 
-		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
 		<script src="../scripts/client/entry.js"></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">
-		<a href="#main" class="absolute left-[-9999px] z-999 bg-black p-1 text-white opacity-0 focus:left-1/2 focus:-translate-x-1/2 focus:opacity-100">Skip to main content</a>
+		<a href="#main" class="absolute left-[-9999px] z-[999] bg-black p-1 text-white opacity-0 focus:left-1/2 focus:-translate-x-1/2 focus:opacity-100">Skip to main content</a>
 		<header>
 			{header ? <Profile home={home} /> : ""}
 		</header>
