@@ -1,4 +1,3 @@
-import { initFooterStarfield } from "./footer-starfield.ts";
 
 const MEASUREMENT_ID = "G-3TJPB46KB1";
 
@@ -73,4 +72,3 @@ function initSmoothScroll() {
 initAnalytics();
 initThemeToggle();
 initSmoothScroll();
-initFooterStarfield();
