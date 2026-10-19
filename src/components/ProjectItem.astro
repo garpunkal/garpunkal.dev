@@ -13,13 +13,33 @@ const { project, large, cssClass, personal = false } = Astro.props;
 ---
 
 <div class={"group relative transition-transform duration-300 ease-out hover:scale-105 hover:z-10 " + cssClass}>
-	{
-		project.url ? (
-			<a href={project.url} title={project.title} aria-label={`View project: ${project.title}`} target="_blank" rel="noopener">
-				<ProjectImage project={project} large={large} winner={project.isWinner} personal={personal} />
-			</a>
-		) : (
-			<ProjectImage project={project} large={large} winner={project.isWinner} personal={personal} />
-		)
-	}
+	<button
+		type="button"
+		class="project-lightbox-trigger relative block w-full h-full text-left cursor-pointer bg-transparent border-0 p-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ocean"
+		aria-haspopup="dialog"
+		aria-label={`View ${project.title} picture and details`}
+		data-project-title={project.title}
+		data-project-image={project.image?.url ?? ""}
+		data-project-alt={project.image?.alt ? `screenshot of ${project.image.alt}` : project.title}
+		data-project-url={project.url ?? ""}
+		data-project-winner={project.isWinner ? "true" : "false"}
+		data-project-winner-label={project.winnerLabel ?? ""}
+		data-project-winner-desc={project.winnerDescription ?? ""}
+		data-project-winner-url={project.winnerUrl ?? ""}
+		data-project-personal={personal ? "true" : "false"}
+	>
+		<ProjectImage project={project} large={large} winner={project.isWinner} personal={personal} />
+		<span
+			class="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md backdrop-blur-xs"
+			title="Expand picture"
+			aria-hidden="true"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polyline points="15 3 21 3 21 9"></polyline>
+				<polyline points="9 21 3 21 3 15"></polyline>
+				<line x1="21" y1="3" x2="14" y2="10"></line>
+				<line x1="3" y1="21" x2="10" y2="14"></line>
+			</svg>
+		</span>
+	</button>
 </div>

@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Projects from "../components/Projects.astro";
 import Experiences from "../components/Experiences.astro";
 import SkillCloud from "../components/SkillCloud.astro";
+import ProjectLightbox from "../components/ProjectLightbox.astro";
 import { getExperiences, getProjects, getHome, getSkills } from "../scripts/squidex.ts";
 
 const experiences = await getExperiences();
@@ -15,4 +16,5 @@ const skills = await getSkills();
 	<Experiences home={home} experiences={experiences} />
 	<SkillCloud skills={skills} title={home?.skillsLabel ?? "Skills"} />
 	<Projects projects={projects.filter((x) => x.personal)} title={home?.personalProjectsLabel} personal={true} />	
+	<ProjectLightbox />
 </Layout>
