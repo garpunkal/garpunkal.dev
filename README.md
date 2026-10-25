@@ -158,7 +158,7 @@ npm run test:ui
   - Page metadata and hero navigation.
   - 404 page handling for unknown routes.
 
-Continuous testing runs automatically on pushes and pull requests via GitHub Actions ([`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)).
+Continuous testing runs automatically on pull requests via GitHub Actions ([`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)).
 
 ---
 
