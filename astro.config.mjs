@@ -18,6 +18,7 @@ export default defineConfig({
   prefetch: true,
   image: {
     domains: ["res.cloudinary.com", "cloud.squidex.io", "media2.dev.to"],
+    dangerouslyProcessSVG: true,
   },
   integrations: [
     sitemap(),

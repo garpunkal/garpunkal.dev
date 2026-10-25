@@ -1,5 +1,6 @@
 ---
 import { Skill } from "../scripts/models/skill";
+import { Picture } from "astro:assets";
 
 interface Props {
 	skill: Skill | any | null;
@@ -53,11 +54,17 @@ const chipClasses = [
 						class="skill-chip-left relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
 						style={leftColStyle}
 					>
-						<img
+						<Picture
 							src={skill.logo}
+							formats={["webp"]}
+							widths={[48, 96]}
+							sizes="26px"
+							fit="contain"
 							alt=""
 							class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
 							loading="lazy"
+							width={48}
+							height={48}
 						/>
 					</span>
 				)}
@@ -90,11 +97,17 @@ const chipClasses = [
 						class="skill-chip-left relative w-11 md:w-12 aspect-square flex items-center justify-center self-stretch shrink-0 p-2 md:p-2.5 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 border-r border-black/20 dark:border-white/5 after:absolute after:inset-0 after:bg-gradient-to-b after:from-white/15 after:to-black/25 after:pointer-events-none"
 						style={leftColStyle}
 					>
-						<img
+						<Picture
 							src={skill.logo}
+							formats={["webp"]}
+							widths={[48, 96]}
+							sizes="26px"
+							fit="contain"
 							alt=""
 							class="w-6 h-6 md:w-6.5 md:h-6.5 object-contain inline-block drop-shadow-xs"
 							loading="lazy"
+							width={48}
+							height={48}
 						/>
 					</span>
 				)}

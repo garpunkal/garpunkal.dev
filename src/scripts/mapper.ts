@@ -121,12 +121,12 @@ export function mapSkill(item: any, groupItem?: any) {
   if (item.data.logo) {
     const v = item.version ?? 1;
     if (Array.isArray(item.data.logo) && item.data.logo.length > 0) {
-      logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo[0]}?v=${v}`;
+      logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo[0]}?v=${v}&cache=31536000`;
     } else if (typeof item.data.logo === "string") {
       if (item.data.logo.startsWith("http") || item.data.logo.startsWith("/")) {
         logoUrl = item.data.logo;
       } else {
-        logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo}?v=${v}`;
+        logoUrl = `https://cloud.squidex.io/api/assets/garpunkaldev/${item.data.logo}?v=${v}&cache=31536000`;
       }
     }
   }
