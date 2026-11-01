@@ -74,6 +74,7 @@
   }
   h3 {
     @apply text-vampire dark:text-pale;
+
   }
   a {
     @apply text-ocean dark:text-iron hover:text-black dark:hover:text-white transition-colors duration-200;
