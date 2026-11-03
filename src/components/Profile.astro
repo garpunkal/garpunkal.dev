@@ -31,7 +31,7 @@ const { home } = Astro.props;
 					</h1>
 					<h2 class="mb-5 text-2xl font-extrabold tracking-tighter md:mb-8 md:text-3xl lg:text-4xl sm:text-3xl">
 						<a
-							class="text-black dark:text-pale hover:text-black"
+							class="text-black dark:text-pale hover:text-black dark:hover:text-white"
 							href={home.githubUrl}
 							target="_blank"
 							rel="noopener"
@@ -63,7 +63,7 @@ const { home } = Astro.props;
 						home.socials
 							.filter((x: Link) => x.displayComponent)
 							.map((social: Link) => (
-								<SvgLink href={social.url} title={social.title} svgPath={social.svgPath} rel={social.rel} />
+								<SvgLink href={social.url} title={`${social.title} profile`} svgPath={social.svgPath} rel={social.rel} />
 							))
 					}
 				</div>

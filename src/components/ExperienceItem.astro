@@ -20,7 +20,7 @@ if (experience.to == null) {
 		href={experience.url}
 		target="_blank"
 		rel="noopener"
-		aria-label={`${experience.job} at ${experience.title}`}
+		title={`${experience.job} at ${experience.title}`}
 		style={"--experience-accent:" + experience.logo.background}
 	>
 		<article class="experience-card relative overflow-hidden rounded-[0.35rem] border-l-[3px] border-(--experience-accent) bg-(--experience-accent) p-5 px-6 transition-all duration-300 shadow-md group-hover:shadow-[0_14px_32px_-6px_rgba(0,0,0,0.55),0_0_22px_-3px_var(--experience-accent)]" style={"--experience-accent:" + experience.logo.background}>
@@ -41,7 +41,7 @@ if (experience.to == null) {
 				<div class="min-w-0">
 					<h3 class="m-0 text-xl font-bold" style={"color:" + experience.logo.foreground}>{experience.job}</h3>
 					<h4 class="m-0 mt-[0.2rem] text-sm font-medium" style={"color:" + experience.logo.foreground}>{experience.title}</h4>
-					<div class="mt-[0.55rem] flex flex-col gap-[0.15rem] text-xs opacity-90" style={"color:" + experience.logo.foreground}>
+					<div class="mt-[0.55rem] flex flex-col gap-[0.15rem] text-xs" style={"color:" + experience.logo.foreground}>
 						<span>{experience.location}</span>
 						{!experience.isCurrent && getMonths(experience.from, experience.to) != "0 months" && <span>{getMonths(experience.from, experience.to)}</span>}
 					</div>
@@ -70,7 +70,7 @@ if (experience.to == null) {
 				<div class="min-w-0">
 					<h3 class="m-0 text-xl font-bold" style={"color:" + experience.logo.foreground}>{experience.job}</h3>
 					<h4 class="m-0 mt-[0.2rem] text-sm font-medium" style={"color:" + experience.logo.foreground}>{experience.title}</h4>
-					<div class="mt-[0.55rem] flex flex-col gap-[0.15rem] text-xs opacity-90" style={"color:" + experience.logo.foreground}>
+					<div class="mt-[0.55rem] flex flex-col gap-[0.15rem] text-xs" style={"color:" + experience.logo.foreground}>
 						<span>{experience.location}</span>
 						{!experience.isCurrent && getMonths(experience.from, experience.to) != "0 months" && <span>{getMonths(experience.from, experience.to)}</span>}
 					</div>
