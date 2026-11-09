@@ -420,11 +420,3 @@ export function initVectorCanvas(): void {
 		window.addEventListener("load", beginLoopWhenIdle, { once: true });
 	}
 }
-
-if (typeof window !== "undefined") {
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", initVectorCanvas);
-	} else {
-		initVectorCanvas();
-	}
-}

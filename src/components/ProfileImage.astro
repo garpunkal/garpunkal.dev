@@ -78,7 +78,7 @@ const { image } = Astro.props;
   id="switchTheme"
   aria-label="Toggle dark/light theme"
   title="Toggle dark/light theme"
-  class="w-full cursor-pointer filter-[url(#ca-animated)] bg-transparent border-0 p-0 text-left block"
+  class="w-full cursor-pointer hover:filter-[url(#ca-animated)] bg-transparent border-0 p-0 text-left block"
 >
   <div
     class="w-48 h-48 mx-auto bg-top bg-cover rounded-full lg:w-auto lg:h-auto aspect-square"
@@ -86,7 +86,7 @@ const { image } = Astro.props;
     <Image
       src={image.url}
       format="webp"
-      quality={80}
+      quality={72}
       widths={[192, 336, 499]}
       sizes="(max-width: 1023px) 192px, (max-width: 1279px) 396px, 499px"
       alt={image.alt || "Gareth Wright profile picture"}
