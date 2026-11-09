@@ -7,6 +7,9 @@ import favicons from "astro-favicons";
 import mkcert from'vite-plugin-mkcert'
 
 export default defineConfig({
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     // @ts-ignore
     plugins: [tailwindcss(),mkcert()],

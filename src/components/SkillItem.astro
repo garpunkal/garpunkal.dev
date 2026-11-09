@@ -127,17 +127,17 @@ const chipClasses = [
 
 <script>
 	function measureLabel(label: HTMLElement) {
-		// Reset state temporarily to get pure dimensions
-		label.removeAttribute("data-overflows");
-		label.style.removeProperty("--marquee-dist");
-		label.style.removeProperty("--marquee-dur");
+		if (label.hasAttribute("data-overflows")) {
+			label.removeAttribute("data-overflows");
+			label.style.removeProperty("--marquee-dist");
+			label.style.removeProperty("--marquee-dur");
+		}
 
 		const overflow = label.scrollWidth - label.clientWidth;
 		if (overflow > 2) {
 			const scrollDist = overflow + 6;
 			label.dataset.overflows = "true";
 			label.style.setProperty("--marquee-dist", `-${Math.ceil(scrollDist)}px`);
-			// Smooth comfortable reading speed: ~38px/s with a responsive duration
 			const dur = Math.max(1.8, Math.min(5, scrollDist / 38 + 0.8));
 			label.style.setProperty("--marquee-dur", `${dur.toFixed(2)}s`);
 		}
@@ -145,33 +145,71 @@ const chipClasses = [
 	}
 
 	function updateSkillMarquees() {
-		const labels = document.querySelectorAll<HTMLElement>("[data-skill-label]");
-		labels.forEach((label) => {
-			if (label.closest(".group:hover")) return;
-			measureLabel(label);
-		});
+		const allLabels = Array.from(document.querySelectorAll<HTMLElement>("[data-skill-label]"));
+		const labels = allLabels.filter((label) => !label.closest(".group:hover"));
+		if (labels.length === 0) return;
+
+		// Phase 1: Batch DOM writes to reset previously overflowing labels
+		for (let i = 0; i < labels.length; i++) {
+			const label = labels[i];
+			if (label.hasAttribute("data-overflows")) {
+				label.removeAttribute("data-overflows");
+				label.style.removeProperty("--marquee-dist");
+				label.style.removeProperty("--marquee-dur");
+			}
+		}
+
+		// Phase 2: Batch all DOM geometry reads in a single pass (prevents forced reflow)
+		const overflows = new Array<number>(labels.length);
+		for (let i = 0; i < labels.length; i++) {
+			const label = labels[i];
+			overflows[i] = label.scrollWidth - label.clientWidth;
+		}
+
+		// Phase 3: Batch all DOM writes in a single pass
+		for (let i = 0; i < labels.length; i++) {
+			const label = labels[i];
+			const overflow = overflows[i];
+			if (overflow > 2) {
+				const scrollDist = overflow + 6;
+				const dur = Math.max(1.8, Math.min(5, scrollDist / 38 + 0.8));
+				label.dataset.overflows = "true";
+				label.style.setProperty("--marquee-dist", `-${Math.ceil(scrollDist)}px`);
+				label.style.setProperty("--marquee-dur", `${dur.toFixed(2)}s`);
+			}
+			label.dataset.measured = "true";
+		}
 	}
 
 	if (typeof window !== "undefined") {
-		const init = () => updateSkillMarquees();
-
-		if (document.readyState === "loading") {
-			document.addEventListener("DOMContentLoaded", init);
-		} else {
-			init();
-		}
+		let rafId = 0;
+		const scheduleUpdate = () => {
+			if (rafId) cancelAnimationFrame(rafId);
+			rafId = requestAnimationFrame(() => {
+				rafId = 0;
+				updateSkillMarquees();
+			});
+		};
 
 		if (document.fonts?.ready) {
-			document.fonts.ready.then(init);
+			document.fonts.ready.then(scheduleUpdate);
+		} else if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", scheduleUpdate);
+		} else {
+			scheduleUpdate();
 		}
 
 		let resizeTimer: number | undefined;
-		window.addEventListener("resize", () => {
-			window.clearTimeout(resizeTimer);
-			resizeTimer = window.setTimeout(init, 150);
-		});
+		window.addEventListener(
+			"resize",
+			() => {
+				window.clearTimeout(resizeTimer);
+				resizeTimer = window.setTimeout(scheduleUpdate, 150);
+			},
+			{ passive: true }
+		);
 
-		// Dynamic measurement on hover in case layout changed before resize fired
+		// Dynamic measurement on hover in case a chip is hovered before initial measurement finishes
 		document.addEventListener(
 			"pointerenter",
 			(e) => {

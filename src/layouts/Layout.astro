@@ -143,6 +143,11 @@ const jsonLd = {
 		<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
 		<GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" />
+		<script is:inline>
+			if (typeof localStorage !== "undefined" && localStorage.theme === "dark") {
+				document.documentElement.classList.add("dark");
+			}
+		</script>
 		<script src="../scripts/client/entry.js"></script>
 	</head>
 	<body class="bg-ocean dark:bg-black">

@@ -12,6 +12,7 @@ export interface WaveRibbon {
 	colorEnd: string;
 	alpha: number;
 	hasFill: boolean;
+	strokeGradient?: CanvasGradient;
 }
 
 export function initVectorCanvas(): void {
@@ -196,6 +197,16 @@ export function initVectorCanvas(): void {
 		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
 		initRibbons();
+		if (width > 0) {
+			for (let i = 0; i < ribbons.length; i++) {
+				const r = ribbons[i];
+				const grad = ctx.createLinearGradient(0, 0, width, 0);
+				grad.addColorStop(0, r.colorStart);
+				grad.addColorStop(0.5, r.colorMid);
+				grad.addColorStop(1, r.colorEnd);
+				r.strokeGradient = grad;
+			}
+		}
 	}
 
 	function getWaveY(x: number, r: WaveRibbon, time: number): number {
@@ -243,11 +254,8 @@ export function initVectorCanvas(): void {
 				points.push({ x, y: getWaveY(x, r, time) });
 			}
 
-			// Linear horizontal gradient for the ribbon stroke
-			const grad = ctx.createLinearGradient(0, 0, width, 0);
-			grad.addColorStop(0, r.colorStart);
-			grad.addColorStop(0.5, r.colorMid);
-			grad.addColorStop(1, r.colorEnd);
+			// Linear horizontal gradient for the ribbon stroke (cached on resize)
+			const grad = r.strokeGradient || r.colorMid;
 
 			// Translucent underfill
 			if (r.hasFill) {
@@ -354,6 +362,7 @@ export function initVectorCanvas(): void {
 	window.addEventListener("resize", onResize, { passive: true });
 
 	// Intersection observer: only animate and show when main is in viewport
+	let canAnimate = false;
 	if (mainEl && "IntersectionObserver" in window) {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -362,7 +371,7 @@ export function initVectorCanvas(): void {
 				if (isVisible && document.visibilityState === "visible") {
 					canvas.classList.remove("opacity-0");
 					canvas.classList.add("opacity-95");
-					start();
+					if (canAnimate) start();
 				} else {
 					canvas.classList.remove("opacity-95");
 					canvas.classList.add("opacity-0");
@@ -372,13 +381,11 @@ export function initVectorCanvas(): void {
 			{ threshold: 0.02 }
 		);
 		observer.observe(mainEl);
-	} else {
-		start();
 	}
 
 	// Visibility change listener (pause when tab inactive)
 	const onVisibilityChange = () => {
-		if (document.visibilityState === "visible" && isVisible) {
+		if (document.visibilityState === "visible" && isVisible && canAnimate) {
 			start();
 		} else {
 			stop();
@@ -386,8 +393,32 @@ export function initVectorCanvas(): void {
 	};
 	document.addEventListener("visibilitychange", onVisibilityChange);
 
-	resize();
-	start();
+	// Render static initial frame on next animation frame to avoid synchronous layout read after DOM mutations
+	requestAnimationFrame(() => {
+		resize();
+		draw(1000);
+	});
+
+	// Start continuous animation loop after initial page load settles to avoid blocking main thread during LCP/TBT
+	const beginLoopWhenIdle = () => {
+		const run = () => {
+			canAnimate = true;
+			if (isVisible && document.visibilityState === "visible") {
+				start();
+			}
+		};
+		if (typeof window.requestIdleCallback === "function") {
+			window.requestIdleCallback(run, { timeout: 2000 });
+		} else {
+			setTimeout(run, 500);
+		}
+	};
+
+	if (document.readyState === "complete") {
+		beginLoopWhenIdle();
+	} else {
+		window.addEventListener("load", beginLoopWhenIdle, { once: true });
+	}
 }
 
 if (typeof window !== "undefined") {

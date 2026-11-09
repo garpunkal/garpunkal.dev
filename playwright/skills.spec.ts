@@ -43,6 +43,13 @@ test.describe('Skills Section', () => {
         const src = await logo.getAttribute('src');
         expect(src).toBeTruthy();
         expect(src).toMatch(/^https?:\/\/|\/|data:/);
+
+        if (i === 0) {
+          await logo.scrollIntoViewIfNeeded();
+          await expect
+            .poll(async () => logo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0))
+            .toBe(true);
+        }
       }
     }
   });

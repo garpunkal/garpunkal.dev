@@ -69,6 +69,21 @@ function initSmoothScroll() {
 	});
 }
 
-initAnalytics();
+function deferAnalytics() {
+	const load = () => {
+		if ("requestIdleCallback" in window) {
+			window.requestIdleCallback(() => initAnalytics(), { timeout: 3000 });
+		} else {
+			window.setTimeout(initAnalytics, 1500);
+		}
+	};
+	if (document.readyState === "complete") {
+		load();
+	} else {
+		window.addEventListener("load", load, { once: true });
+	}
+}
+
+deferAnalytics();
 initThemeToggle();
 initSmoothScroll();

@@ -1,9 +1,9 @@
 ---
-import { Picture } from "astro:assets";
-import type { Image } from "../scripts/models/image";
+import { Image } from "astro:assets";
+import type { Image as ImageModel } from "../scripts/models/image";
 
 interface Props {
-  image: Image | any | null;
+  image: ImageModel | any | null;
 }
 
 const { image } = Astro.props;
@@ -81,20 +81,22 @@ const { image } = Astro.props;
   class="w-full cursor-pointer filter-[url(#ca-animated)] bg-transparent border-0 p-0 text-left block"
 >
   <div
-    class="w-48 h-48 mx-auto bg-top bg-cover rounded-full lg:w-auto lg:h-auto"
+    class="w-48 h-48 mx-auto bg-top bg-cover rounded-full lg:w-auto lg:h-auto aspect-square"
   >
-    <Picture
+    <Image
       src={image.url}
-      formats={["webp"]}
-      widths={[192, 396, 499]}
-      sizes={`(max-width: 375px) 192px, (max-width: 768px) 396px, 499px`}
+      format="webp"
+      quality={80}
+      widths={[192, 336, 499]}
+      sizes="(max-width: 1023px) 192px, (max-width: 1279px) 396px, 499px"
       alt={image.alt || "Gareth Wright profile picture"}
       class="object-cover object-top w-full h-full rounded-full lg:rounded-lg lg:block dark:brightness-75 dark:hover:brightness-100 filter-grayscale"
-      width="499"
-      height="499"
+      width={499}
+      height={499}
       fit="cover"
       position="top"
       loading="eager"
+      fetchpriority="high"
     />
   </div>
 </button>

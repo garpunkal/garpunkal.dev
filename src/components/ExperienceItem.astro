@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import { Experience } from "../scripts/models/experience";
 import { getMonthYear, getMonths } from "../scripts/utils.ts";
 
@@ -35,7 +35,7 @@ if (experience.to == null) {
 
 			<div class="flex gap-4 max-lg:flex-col">
 				<div class="mr-4 h-24 w-24 shrink-0 overflow-hidden rounded-[0.3rem] bg-(--experience-accent) max-lg:mr-0 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100">
-					<Picture src={experience.logo.url} formats={["webp"]} widths={[200]} sizes="96px" fit="contain" alt={experience.logo.alt || `${experience.title} logo`} class="h-full w-full object-contain" loading="lazy" width="200" height="200" style={"background-color:" + experience.logo.background} />
+					<Image src={experience.logo.url} format="webp" quality={80} widths={[96, 168]} sizes="96px" fit="contain" alt={experience.logo.alt || `${experience.title} logo`} class="h-full w-full object-contain" loading="lazy" width={96} height={96} style={"background-color:" + experience.logo.background} />
 				</div>
 
 				<div class="min-w-0">
@@ -64,7 +64,7 @@ if (experience.to == null) {
 
 			<div class="flex gap-4 max-lg:flex-col">
 				<div class="mr-4 h-24 w-24 shrink-0 overflow-hidden rounded-[0.3rem] bg-(--experience-accent) max-lg:mr-0 transition-opacity duration-200 dark:opacity-75 group-hover:opacity-100">
-					<Picture src={experience.logo.url} formats={["webp"]} widths={[200]} sizes="96px" fit="contain" alt={experience.logo.alt || `${experience.title} logo`} class="h-full w-full object-contain" loading="lazy" width="200" height="200" style={"background-color:" + experience.logo.background} />
+					<Image src={experience.logo.url} format="webp" quality={80} widths={[96, 168]} sizes="96px" fit="contain" alt={experience.logo.alt || `${experience.title} logo`} class="h-full w-full object-contain" loading="lazy" width={96} height={96} style={"background-color:" + experience.logo.background} />
 				</div>
 
 				<div class="min-w-0">
