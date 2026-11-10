@@ -8,29 +8,45 @@ interface Props {
 	fill?: string;
 	cssclass?: string;
 	rel?: string;
-	viewBox?: string
+	viewBox?: string;
 }
 
 const { href, title, svgPath, strokeWidth, stroke, fill, cssclass, rel, viewBox } = Astro.props;
+const isCustom = Boolean(cssclass);
 ---
 <a
-	class="inline-flex justify-center link w-14 h-14 md:w-10 md:h-10 transition-opacity duration-200 dark:opacity-75 dark:hover:opacity-100 hover:opacity-100 focus-visible:opacity-100"
+	class:list={[
+		"group relative inline-flex items-center justify-center link focus-visible:outline-2 focus-visible:outline-ocean focus-visible:outline-offset-2",
+		isCustom
+			? "w-12 h-12 md:w-10 md:h-10 transition-opacity duration-200 dark:opacity-75 dark:hover:opacity-100 hover:opacity-100 focus-visible:opacity-100"
+			: [
+					"w-12 h-12 md:w-11 md:h-11",
+					"text-vampire hover:text-ocean dark:text-iron dark:hover:text-ocean",
+					"transition-all duration-200 ease-out",
+					"hover:-translate-y-1 hover:scale-110 active:translate-y-0 active:scale-95",
+					"dark:opacity-80 dark:hover:opacity-100",
+					"motion-reduce:transform-none motion-reduce:transition-none",
+				],
+	]}
 	href={href}
 	target="_blank"
 	rel={"noopener " + (rel || "")}
+	title={title}
 	aria-label={title || "Link"}
-	>
+>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		class={cssclass ||
-			"h-10 w-10 fill-current text-vampire hover:text-slate dark:text-iron dark:hover:text-white hover:animate-pulse"}
+		class={
+			cssclass ||
+			"w-9 h-9 md:w-8 md:h-8 xl:w-9 xl:h-9 fill-current"
+		}
 		stroke-width={strokeWidth}
 		stroke={stroke}
 		fill={fill || "currentColor"}
 		role="img"
-		viewBox={viewBox || "0 0 30 30"}
-		width="30"
-		height="30"
+		viewBox={viewBox || "0 0 24 24"}
+		width="36"
+		height="36"
 	>
 		<title>{title}</title>
 		<path d={svgPath}></path>

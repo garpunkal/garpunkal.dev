@@ -55,7 +55,7 @@ const { home } = Astro.props;
 							svgPath={social.svgPath}
 							rel={social.rel}
 							viewBox={social.viewBox}
-							cssclass={social.cssClass + ' text-white hover:text-mirage dark:text-pale'}
+							cssclass={[social.cssClass, "w-6 h-6 text-white hover:text-mirage dark:text-pale"].filter(Boolean).join(" ")}
 						/>
 					</div>
 				))
@@ -66,7 +66,8 @@ const { home } = Astro.props;
 					href="/colours"
 					title="Colour Palette"
 					svgPath="M5 3H25V27H5ZM6 4V26H24V4ZM6 4H24V17H6ZM6 19.5H17V21.5H6ZM6 23H12V24.5H6Z"
-					cssclass="text-white hover:text-mirage dark:text-pale"
+					viewBox="0 0 30 30"
+					cssclass="w-6 h-6 text-white hover:text-mirage dark:text-pale"
 				/>
 			</div>
 		</div>
