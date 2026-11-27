@@ -5,7 +5,12 @@ import { Project } from "./models/project.ts";
 import { Experience } from "./models/experience.ts";
 import { Skill } from "./models/skill.ts";
 
-const squidexKey = import.meta.env.SQUIDEX_KEY || import.meta.env.SQUIDEX_APP_NAME;
+const squidexKey =
+  import.meta.env.SQUIDEX_KEY ||
+  import.meta.env.SQUIDEX_APP_NAME ||
+  process.env.SQUIDEX_KEY ||
+  process.env.SQUIDEX_APP_NAME ||
+  "garpunkaldev";
 const squidexUrl = "https://cloud.squidex.io/api/content/" + squidexKey + "/";
 
 let squidexHeaders = new Headers();
@@ -16,22 +21,45 @@ squidexHeaders.append("timeout", "1000");
 squidexHeaders.append("retry", "3");
 squidexHeaders.append("retryDelay", "4000");
 
+const endpointCache = new Map<string, Promise<any>>();
+
+async function fetchEndpointJson(endpoint: string, retries = 3): Promise<any> {
+  const cached = endpointCache.get(endpoint);
+  if (cached) return cached;
+
+  const requestPromise = (async () => {
+    let lastError: unknown;
+    for (let attempt = 0; attempt < retries; attempt++) {
+      try {
+        const response = await fetch(squidexUrl + endpoint, {
+          headers: squidexHeaders,
+        });
+        if (!response.ok) {
+          throw new Error(`Squidex ${endpoint} HTTP ${response.status}`);
+        }
+        return await response.json();
+      } catch (err) {
+        lastError = err;
+        if (attempt < retries - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+        }
+      }
+    }
+    endpointCache.delete(endpoint);
+    throw lastError;
+  })();
+
+  endpointCache.set(endpoint, requestPromise);
+  return requestPromise;
+}
+
 export async function getExperiences() {
   try {
-    const experienceData = await fetch(squidexUrl + "experience", {
-      headers: squidexHeaders,
-    });
-    const experienceJson = await experienceData.json();
-
-    const companyData = await fetch(squidexUrl + "company", {
-      headers: squidexHeaders,
-    });
-    const companyJson = await companyData.json();
-
-    const projectData = await fetch(squidexUrl + "project", {
-      headers: squidexHeaders,
-    });
-    const projectJson = await projectData.json();
+    const [experienceJson, companyJson, projectJson] = await Promise.all([
+      fetchEndpointJson("experience"),
+      fetchEndpointJson("company"),
+      fetchEndpointJson("project"),
+    ]);
 
     // experiences
     const experiences: Experience[] = [];
@@ -55,11 +83,7 @@ export async function getExperiences() {
 
 export async function getProjects() {
   try {
-    const projectData = await fetch(squidexUrl + "project", {
-      headers: squidexHeaders,
-    });
-
-    const projectJson = await projectData.json();
+    const projectJson = await fetchEndpointJson("project");
 
     const projects: Project[] = [];
 
@@ -75,14 +99,9 @@ export async function getProjects() {
 
 export async function getSkills() {
   try {
-    const [skillData, skillGroupData] = await Promise.all([
-      fetch(squidexUrl + "skill", { headers: squidexHeaders }),
-      fetch(squidexUrl + "skillgroup", { headers: squidexHeaders }),
-    ]);
-
     const [skillJson, skillGroupJson] = await Promise.all([
-      skillData.json(),
-      skillGroupData.json(),
+      fetchEndpointJson("skill"),
+      fetchEndpointJson("skillgroup"),
     ]);
 
     const groupItems = skillGroupJson.items || [];
@@ -104,11 +123,7 @@ export async function getSkills() {
 
 export async function getHome() {
   try {
-    const homeData = await fetch(squidexUrl + "home", {
-      headers: squidexHeaders,
-    });
-
-    const homeJson = await homeData.json();
+    const homeJson = await fetchEndpointJson("home");
     return mapHome(homeJson.items[0]);
   } catch {
     return null;

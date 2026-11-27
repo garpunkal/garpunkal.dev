@@ -18,8 +18,8 @@ const sortedProjects = projects
 	.sort((n1: Project, n2: Project) => (n1.sortOrder > n2.sortOrder ? 1 : n1.sortOrder < n2.sortOrder ? -1 : 0))
 	.reverse();
 
-const largeProjects = sortedProjects.slice(0, personal ? 4 : 6);
-const smallProjects = sortedProjects.slice(personal ? 4 : 6, sortedProjects.length).sort((a: Project, b: Project) => a.title.localeCompare(b.title));
+const largeProjects = sortedProjects.slice(0, 6);
+const smallProjects = sortedProjects.slice(6, sortedProjects.length).sort((a: Project, b: Project) => a.title.localeCompare(b.title));
 ---
 
 
